@@ -12,7 +12,7 @@
         <div class="detail-info">最高：{{stockDetailData.highest}}<br>最低：{{stockDetailData.lowest}}</div>
         <div class="detail-info">今开：{{stockDetailData.todayOpenPrice}}<br>昨收：{{stockDetailData.yesterdayPrice}}</div>
         <div class="detail-info">成交量：{{(stockDetailData.volume2/100000000).toFixed(2)}}亿手<br>成交额：{{(stockDetailData.turnover/10000).toFixed(2)}}亿</div>
-        <div class="detail-info">总市值：{{stockDetailData.marketValue.toFixed(0)}}万亿<br>振<span style="display: inline-block;padding-left: 1em"></span>幅：{{stockDetailData.amplitude}}%</div>
+        <div class="detail-info">总市值：{{(stockDetailData.marketValue*1).toFixed(0)}}万亿<br>振<span style="display: inline-block;padding-left: 1em"></span>幅：{{stockDetailData.amplitude}}%</div>
       </div>
     </div>
     <div class="chart-wrap">
