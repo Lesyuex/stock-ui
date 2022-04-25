@@ -3,11 +3,12 @@
     <div class="box-wrap">
       <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
     </div>
-
-    <OverView></OverView>
-    <!--     <div class="box-wrap">
-            <main-stocks-index/>
-         </div>-->
+    <div class="box-wrap">
+   <OverView></OverView>
+         </div>
+    <div class="box-wrap">
+      <count-view/>
+    </div>
 
   </v-card>
 </template>
@@ -16,13 +17,15 @@
 import MinutesLineBar from '../components/MinutesLineBar'
 import MainStocksIndex from './OtherChartIndex'
 import OverView from './OverView'
+import CountView from './CountView'
 
 export default {
   name: 'MainTest',
   components: {
     MinutesLineBar,
     MainStocksIndex,
-    OverView
+    OverView,
+    CountView
   },
   data () {
     return {
