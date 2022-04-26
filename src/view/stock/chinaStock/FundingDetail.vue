@@ -21,27 +21,21 @@ export default {
     return {
       activeName: '北向资金',
       s2n: {
-        legendShow: true,
+        hideX1: true,
+        hideSeriLabel: true,
         xAxisData: [],
         seriesData: [],
-        chartTitle: '北向资金',
         seriesNameArr: ['沪股通', '深股通', '北向资金'],
         seriesType: ['line', 'line', 'line'],
         labelShow: false,
         doubleYLine: false,
         labelColor: ['#ccc'],
         yLabelFormatter: '{value} 亿',
-        showBottomX: true,
-        yAxisVisible: true,
-        yAxisLabelVisible: true,
-        gridLeft: 'center',
-        barCategoryGap: 15,
-        openTooltip: true
+        showHelpX: true,
       },
       n2s: {
         xAxisData: [],
         seriesData: [],
-        chartTitle: '南向资金',
         seriesType: ['line', 'line', 'line'],
         labelShow: false,
         seriesNameArr: ['沪股通', '深股通', '南向资金'],
@@ -50,7 +44,6 @@ export default {
         doubleYLine: false,
         labelColor: ['#ccc'],
         xAxisLabelColor: '#fff',
-        gridLeft: 'center',
         barCategoryGap: 15,
         openTooltip: true
       }

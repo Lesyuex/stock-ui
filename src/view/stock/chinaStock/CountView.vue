@@ -14,16 +14,15 @@ export default {
   data () {
     return {
       customOption: {
+        hideLegend: true,
         xAxisData: [],
         seriesData: [],
-        chartTitle: '市场总览',
+        seriLabelFS: 15,
+        chartTitle: '涨跌总览',
         seriesNameArr: ['涨跌家数'],
         doubleYLine: false,
-        labelColor: ['#ccc'],
-        xAxisLabelColor: '#fff',
-        gridLeft: 'center',
-        barCategoryGap: 15,
-        openTooltip: true
+        seriLabelClr: ['#ccc'],
+        x1LabelColor: '#fff',
       }
     }
   },
