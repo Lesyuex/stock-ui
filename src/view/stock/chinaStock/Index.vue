@@ -1,15 +1,19 @@
 <template>
   <v-card>
-    <div class="box-wrap">
-      <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
-    </div>
-    <div class="box-wrap">
-   <OverView></OverView>
-         </div>
-    <div class="box-wrap">
-      <count-view/>
-    </div>
-
+    <g-row>
+      <g-col :sm="24" :md="24" :lg="10">
+        <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
+      </g-col>
+      <g-col :sm="24" :md="8" :lg="5">
+        <OverView></OverView>
+      </g-col>
+      <g-col :sm="24" :md="16" :lg="9">
+        <count-view/>
+      </g-col>
+      <g-col :sm="24" :md="24" :lg="10">
+        <funding-detail/>
+      </g-col>
+    </g-row>
   </v-card>
 </template>
 
@@ -18,6 +22,7 @@ import MinutesLineBar from '../components/MinutesLineBar'
 import MainStocksIndex from './OtherChartIndex'
 import OverView from './OverView'
 import CountView from './CountView'
+import FundingDetail from './FundingDetail'
 
 export default {
   name: 'MainTest',
@@ -25,7 +30,8 @@ export default {
     MinutesLineBar,
     MainStocksIndex,
     OverView,
-    CountView
+    CountView,
+    FundingDetail
   },
   data () {
     return {
@@ -56,14 +62,7 @@ export default {
   width: 540px;
 }
 
-/*  @media screen and (max-width: 1408px){
-    .box-wrap{
-      width: 100%;
-    }
-  }
-  @media screen and (min-width: 1408px){
-    .box-wrap{
-      width: 50%;
-    }
-  }*/
+.g-col {
+  height: 320px;
+}
 </style>

@@ -30,13 +30,17 @@ export default {
     }
   },
   methods: {
+    resize () {
+      const that = this
+      that.chart.resize()
+    },
     drawChart (options) {
       const that = this
       if (!that.chart && this.$refs['chart']) that.chart = that.$echarts.init(this.$refs['chart'])
       if (that.chart) {
         that.chart.setOption(options)
         window.addEventListener('resize', () => {
-          that.chart.resize()
+          that.resize()
         })
       }
     }

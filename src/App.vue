@@ -77,7 +77,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@color: #101116;
 #app1 {
   height: 100vh;
   width: 100vw;
@@ -86,6 +87,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #adb4c2;
-  background-color: #101116;
+  background-color: @color;
+
 }
 </style>

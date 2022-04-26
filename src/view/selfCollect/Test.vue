@@ -1,7 +1,19 @@
 <template>
-<div class="box1">
-  <div class="box2"></div>
-</div>
+  <section>
+    <g-row>
+      <g-col :sm="24" :md="24" :lg="12">1</g-col>
+      <g-col :sm="12" :md="18" :lg="8">1</g-col>
+      <g-col :sm="6" :md="10" :lg="6">1</g-col>
+    </g-row>
+    <div class="box1 box3">
+      box1
+    </div>
+
+    <div class="box2">
+      box2
+    </div>
+  </section>
+
 </template>
 
 <script>
@@ -11,14 +23,17 @@ export default {
 </script>
 
 <style scoped lang="less">
-.box1{
-  width: 600px;
-  height: 600px;
-  background-color: #42b983;
-  .box2{
-    width: 200px;
-    height: 200px;
-    background-color: red;
+section {
+  width: 100%;
+  height: calc(100vh - 40px);
+  background-color: #051e2e;
+  box-sizing: border-box;
+  *{
+    box-sizing: border-box;
   }
+}
+[class^=box1]{
+  height: 100px;
+  background-color: skyblue;
 }
 </style>

@@ -105,11 +105,10 @@ export default {
 
 .header-wrap {
   height: 40px;
-  margin: 8px 12px;
+  margin: 8px 16px;
   border-radius: 4px;
   background-color: #161a23;
 }
-
 /*清楚浮动导致父元素高度为0*/
 .header-wrap::before, .header-wrap::after {
   display: block;

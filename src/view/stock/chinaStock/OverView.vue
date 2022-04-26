@@ -1,5 +1,5 @@
 <template>
-  <el-carousel indicator-position="none" style="width: 360px;background-color: transparent" :autoplay="false">
+  <el-carousel indicator-position="none" style="background-color: transparent" :autoplay="false">
     <el-carousel-item v-for="(arr,index) in singleList" :key="index">
       <div class="main-stocks-wrap">
         <div
@@ -91,52 +91,50 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .main-stocks-wrap {
-  margin: 6px 0;
-  background-color: #313237;
-  border-radius: 4px;
+  height: 100%;
+  &::before,&::after{
+    content: '';
+    display: block;
+    clear: both;
+  }
+  margin: 8px 4px;
 }
-
-.main-stocks-wrap {
-  height: 294px;
-  background-color: transparent;
-  width: 360px;
-}
-
 .main-stocks-wrap .stock-single-info {
   float: left;
-  width: 160px;
-  margin: 0 4px 4px 0;
-  padding: 0 8px;
+  width: calc(50% - 4px);
   cursor: pointer;
   color: #ffffff;
+  margin-bottom: 8px;
 }
-
+.stock-single-info:nth-child(2n+1){
+  margin-right: 4px;
+}
+.stock-single-info:nth-child(2n){
+  margin-left: 4px;
+}
 .green-class {
   background: linear-gradient(to bottom, #1d9a63, 100%, #161a23);
 }
-
 .red-class {
   background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
 }
-
 .stock-single-info .title-wrap {
   height: 30px;
   line-height: 30px;
   font-size: 13px;
 }
-
 .stock-single-info .index-wrap {
-  height: 35px;
-  line-height: 35px;
+  height: 36px;
+  line-height: 36px;
 }
-
 .stock-single-info .updown-wrap {
   height: 30px;
   line-height: 30px;
   font-size: 12px;
-
 }
-
+/deep/ .el-carousel__container {
+  height: 320px !important;
+}
 </style>

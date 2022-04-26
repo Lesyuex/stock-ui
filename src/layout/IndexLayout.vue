@@ -113,7 +113,6 @@ export default {
 <style>
 .el-header {
   padding: 0;
-  height: 40px !important;
 }
 .el-aside {
   color: #333;
@@ -134,5 +133,8 @@ export default {
 .el-menu-item:hover {
   background-color: #000000 !important;
   color: dodgerblue !important;
+}
+.el-container{
+  transition: 5s;
 }
 </style>

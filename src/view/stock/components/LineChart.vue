@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%;height: 100%;">
-    <echarts :options="option" ref="chart"/>
+    <echarts :options="option"/>
   </div>
 </template>
 
@@ -17,7 +17,6 @@ export default {
   components: {
     Echarts
   },
-  name: 'BarChart',
   data () {
     return {
       option: {}
@@ -76,86 +75,42 @@ export default {
           left: data.containLabel ? data.gridLeft ? data.gridLeft : 2 : data.gridLeft || 55,
           right: data.gridRight ? data.gridRight : 0,
           top: data.gridTop || 70,
-          containLabel: data.containLabel
+          containLabel: data.containLabel || false
         },
-        xAxis: [{
-          show: data.xAxisVisible,
+        xAxis: {
+          show: data.xAxisVisible || true,
           type: 'category',
           data: data.xAxisData,
           fontSize: data.xFontSize || 16,
           axisLine: {
-            show: data.xAxisLineVisible
+            show: data.xAxisLineVisible || true
           },
           axisLabel: {
-            show: data.xAxisLabelVisible,
-            formatter: data.xLableFormatter ? data.xLableFormatter : null,
+            show: data.xAxisLabelVisible || true,
             color: data.xAxisLabelColor
           },
           splitLine: {
-            show: data.xSplitLineVisible
+            show: data.xSplitLineVisible || false
           },
           axisTick: {
-            show: data.xAxisTickVisible
+            show: data.xAxisTickVisible || false
           }
         },
-        {
-          show: data.showBottomX,
-          type: 'value',
-          gridIndex: 0,
-          z: 1,
-          boundaryGap: false,
-          position: 'bottom',
-          data: [1, 2, 3, 4, 5],
-          min: 1,
-          max: 5,
-          interval: 1,
-          axisLabel: {
-            show: true,
-            color: '#ccc',
-            formatter: function (value) {
-              if (value === 1) return '09:30'
-              if (value === 2) return '10:30'
-              if (value === 3) return '11:30/13:00'
-              if (value === 4) return '14:00'
-              if (value === 5) return '15:00'
-            }
-          },
-          axisLine: {
-            show: false,
-            lineStyle: {
-              color: '#1e3139'
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          splitLine: {
-            show: false,
-            lineStyle: {
-              color: '#1e3139'
-            }
-          },
-          axisPointer: {
-            show: false
-          }
-        }
-        ],
         yAxis: {
-          show: data.yAxisVisible,
+          show: data.yAxisVisible || true,
           type: 'value',
           fontSize: data.yFontSize || 16,
           axisLine: {
-            show: data.yAxisLineVisible
+            show: data.yAxisLineVisible || false
           },
           axisLabel: {
-            show: data.yAxisLabelVisible,
-            formatter: data.yLabelFormatter ? data.yLabelFormatter : null
+            show: data.yAxisLabelVisible || false
           },
           splitLine: {
-            show: data.ySplitLineVisible
+            show: data.ySplitLineVisible || false
           },
           axisTick: {
-            show: data.yAxisTickVisible
+            show: data.yAxisTickVisible || false
           }
         },
         series: this.initSeries()
@@ -177,7 +132,7 @@ export default {
             // 左边放数值，右边放百分比
             yAxisIndex: data.doubleYLine ? (data.seriesType[index] === 'bar' ? 0 : 1) : 0,
             symbol: 'circle',
-            symbolSize: data.symbolSize ? data.symbolSize : null,
+            symbolSize: data.symbolSize ? data.symbolSize : seriesData[index].length === 1 ? 5 : 0,
             barWidth: data.barWidth ? data.barWidth : 25,
             barMaxWith: data.barMaxWith ? data.barMaxWith : 50,
             // 右边柱子离左边柱子的距离（双柱子的时候）
@@ -185,7 +140,7 @@ export default {
             // 单柱子之间的距离
             barCategoryGap: data.barCategoryGap ? data.barCategoryGap : null,
             label: {
-              show: data.labelPosition ? true : data.labelShow,
+              show: data.labelPosition ? !!data.labelPosition[index] : true,
               position: data.labelPosition ? data.labelPosition[index] : 'outside',
               color: data.labelColor ? data.labelColor[index] : '#21D8FF',
               fontSize: data.labelFont || 14,

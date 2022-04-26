@@ -14,8 +14,9 @@ export default {
 .card-wrap{
   height: calc(100vh - 56px);
   background-color: transparent;
-  padding: 8px;
+  padding: 12px;
   overflow: auto;
+  box-sizing: border-box;
 }
 .card-wrap::before,.card-wrap::after{
   content: '';

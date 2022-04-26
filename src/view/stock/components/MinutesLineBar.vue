@@ -20,7 +20,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import Echarts from '../../../components/Echarts'
 import {timeXData} from '../js/xAxisData'
@@ -481,9 +480,10 @@ export default {
 </script>
 <style scoped>
 .minutes-wrap{
-  margin: 6px 1%;
   background-color: #161a23;
-  border-radius: 4px;
+  border-radius: 5px;
+  height: calc(100% - 16px);
+  margin: 8px 4px;
 }
 .minutes-wrap:before,.minutes-wrap:after{
   content: '';
@@ -492,16 +492,16 @@ export default {
 }
 .minutes-wrap>div{
   float: left;
+  width: 100%;
 }
 .minutes-wrap .info-wrap{
-  width: 96%;
-  margin: 0 2%;
   color: #c7c6c6;
+  padding: 0 12px;
+  box-sizing: border-box;
 }
 .title-wrap{
   position: relative;
   height: 30px;
-  margin: 6px 0;
   text-align: left;
 }
 .title-wrap span{
@@ -522,6 +522,6 @@ export default {
 
 .chart-wrap{
   width: 100%;
-  height: 220px;
+  height: calc(100% - 62px);
 }
 </style>

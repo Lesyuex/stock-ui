@@ -2,7 +2,10 @@
   <el-dialog
     :visible.sync="dialogVisible"
     destroy-on-close
-    width="600px"
+    width="60%"
+    height="500px"
+    :modal-append-to-body="true"
+    :append-to-body="true"
     style="border-radius: 5px">
     <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
   </el-dialog>
@@ -50,12 +53,12 @@ export default {
 }
 </script>
 <style scoped>
-/deep/ ..el-dialog{
-  background-color: #121420 !important;
+/deep/ .el-dialog{
+  background-color: #161a23 !important;
 }
 /deep/ .el-dialog__header,/deep/ .el-dialog__body{
   padding: 8px;
-  background-color: #121420;
+  background-color:  #161a23;
 }
 /deep/ .el-dialog__header{
   padding: 0;
@@ -65,6 +68,8 @@ export default {
   border-top-right-radius: 5px;
 }
 /deep/ .el-dialog__body{
+  height: 500px;
+  min-width: 625px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
