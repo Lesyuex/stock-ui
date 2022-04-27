@@ -1,7 +1,7 @@
 export const openTimer = {
   data () {
     return {
-      timer: null,
+      timer: false,
       timerId: null
     }
   },
@@ -22,16 +22,10 @@ export const openTimer = {
   },
   methods: {
     startRequestInterval () {
-      const that = this
-      that.timer = setInterval(function () {
-        setTimeout(function () {
-          that.refreshData()
-        }, 0)
-      }, 2000)
+      this.timer = true
     },
     stopRequestInterval () {
-      const that = this
-      window.clearInterval(that.timer)
+      this.timer = false
     }
   },
   beforeDestroy () {

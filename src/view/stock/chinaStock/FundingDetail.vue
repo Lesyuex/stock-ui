@@ -13,7 +13,11 @@
 
 <script>
 import BarLineChart from '../components/BarLineChart'
+import openTimer from '../../../mixins'
+
 export default {
+  mixins: [openTimer],
+  name: 'FondingDetail',
   components: {
     BarLineChart
   },
@@ -31,7 +35,7 @@ export default {
         doubleYLine: false,
         labelColor: ['#ccc'],
         yLabelFormatter: '{value} 亿',
-        showHelpX: true,
+        showHelpX: true
       },
       n2s: {
         xAxisData: [],
@@ -62,6 +66,7 @@ export default {
       }
     },
     getCount () {
+      const that = this
       this.$axiosGet('/funding/get/minutes/detail').then(res => {
         const s2n = res.data.s2n
         const n2s = res.data.s2n
@@ -107,6 +112,12 @@ export default {
         this.s2n.seriesData = [s2nshDiff, s2nszDiff, s2nFoudingDiff]
         this.s2n.xAxisData = n2sXdata
         this.s2n.seriesData = [n2sshDiff, n2sszDiff, n2sFoudingDiff]
+      }).finally(() => {
+        if (this.timer) {
+          setTimeout(function () {
+            that.getCount()
+          }, 2000)
+        }
       })
     }
   }

@@ -2,17 +2,27 @@
   <div class="minutes-wrap">
     <div class="info-wrap">
       <div class="title-wrap">
-        <span class="font-size-18">{{stockDetailData.name}}</span>
-        <span style="padding: 0 10px" class="font-size-13">sh{{stockDetailData.code}}</span>
-        <span :style="tooltipStyle" class="font-size-18 font-weight-800">{{stockDetailData.currentPrice}}</span>
-        <span :style="tooltipStyle" class="font-size-10 text-indent-1em">{{stockDetailData.upDownValue}} {{`${stockDetailData.upDownPercent}%`}}</span>
+        <span class="font-size-18">{{ stockDetailData.name }}</span>
+        <span style="padding: 0 10px" class="font-size-13">sh{{ stockDetailData.code }}</span>
+        <span :style="tooltipStyle" class="font-size-18 font-weight-800">{{ stockDetailData.currentPrice }}</span>
+        <span :style="tooltipStyle"
+              class="font-size-10 text-indent-1em">{{
+            stockDetailData.upDownValue
+          }} {{ `${stockDetailData.upDownPercent}%` }}</span>
         <el-button type="danger" size="mini" class="collect-btn font-size-10">+自选</el-button>
       </div>
       <div class="detail-wrap">
-        <div class="detail-info">最高：{{stockDetailData.highest}}<br>最低：{{stockDetailData.lowest}}</div>
-        <div class="detail-info">今开：{{stockDetailData.todayOpenPrice}}<br>昨收：{{stockDetailData.yesterdayPrice}}</div>
-        <div class="detail-info">成交量：{{(stockDetailData.volume2/100000000).toFixed(2)}}亿手<br>成交额：{{(stockDetailData.turnover/10000).toFixed(2)}}亿</div>
-        <div class="detail-info">总市值：{{(stockDetailData.marketValue*1).toFixed(0)}}万亿<br>振<span style="display: inline-block;padding-left: 1em"></span>幅：{{stockDetailData.amplitude}}%</div>
+        <div class="detail-info">最高：{{ stockDetailData.highest }}<br>最低：{{ stockDetailData.lowest }}</div>
+        <div class="detail-info">今开：{{ stockDetailData.todayOpenPrice }}<br>昨收：{{ stockDetailData.yesterdayPrice }}
+        </div>
+        <div class="detail-info">
+          成交量：{{
+            (stockDetailData.volume2 / 100000000).toFixed(2)
+          }}亿手<br>成交额：{{ (stockDetailData.turnover / 10000).toFixed(2) }}亿
+        </div>
+        <div class="detail-info">总市值：{{ (stockDetailData.marketValue * 1).toFixed(0) }}万亿<br>振<span
+          style="display: inline-block;padding-left: 1em"></span>幅：{{ stockDetailData.amplitude }}%
+        </div>
       </div>
     </div>
     <div class="chart-wrap">
@@ -25,6 +35,7 @@ import Echarts from '../../../components/Echarts'
 import {timeXData} from '../js/xAxisData'
 import moment from 'moment'
 import openTimer from '../../../mixins'
+
 export default {
   mixins: [openTimer],
   name: 'LineBar', // 上下两个grid(分时图和量图)
@@ -76,12 +87,6 @@ export default {
         this.getDetailsData()
         this.getMinutesData()
       }
-    },
-    chartData: {
-      deep: true,
-      handler (newVal) {
-        this.initOptions(newVal)
-      }
     }
   },
   methods: {
@@ -132,7 +137,14 @@ export default {
     },
     initOptions (chartData) {
       const stockData = chartData.stockData
-      const {xDataArr, yestClosePrice, averagePriceArr, percentArr, focusPoint, volumeArr} = this.getSeriesData(stockData)
+      const {
+        xDataArr,
+        yestClosePrice,
+        averagePriceArr,
+        percentArr,
+        focusPoint,
+        volumeArr
+      } = this.getSeriesData(stockData)
       const {rightYMaxValue, leftYMaxValue, leftYMinValue} = this.getDoubleYInfo(percentArr, yestClosePrice)
       this.options = {
         tooltip: {
@@ -143,10 +155,13 @@ export default {
               return a.seriesIndex - b.seriesIndex
             })
             let html = '<div>' + moment(arr[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
-            const averagePriceText = '<div style="text-align: left">' + arr[0].marker + arr[0].seriesName + ':' + (arr[0].value * 1).toFixed(2) + '</div>'
-            const percentText = '<div style="text-align: left">' + arr[1].marker + arr[1].seriesName + ':' + (arr[1].value * 1).toFixed(2) + '%</div>'
-            const volumeText = '<div style="text-align: left">' + arr[2].marker + arr[2].seriesName + ':' + arr[2].value + '(手)</div>'
-            return html + averagePriceText + percentText + volumeText
+            const value1 = arr[0].value ? (arr[0].value * 1).toFixed(2) : '-'
+            const value2 = arr[1].value ? (arr[1].value * 1).toFixed(2) : '-'
+            const value3 = arr[2].value ? (arr[2].value * 1).toFixed(2) : '-'
+            const percentText = '<div style="text-align: left">' + arr[0].marker + arr[0].seriesName + ':' + value1 + '%</div>'
+            const volumeText = '<div style="text-align: left">' + arr[1].marker + arr[1].seriesName + ':' + value2 + '(手)</div>'
+            const averagePriceText = '<div style="text-align: left">' + arr[2].marker + arr[2].seriesName + ':' + value3 + '</div>'
+            return html + percentText + volumeText + averagePriceText
           }
         },
         axisPointer: {
@@ -365,22 +380,7 @@ export default {
           }
         ],
         series: [
-          {
-            name: '均价',
-            type: 'line',
-            // 以哪个y轴为参考线
-            xAxisIndex: 0,
-            yAxisIndex: 0,
-            // 关掉y轴小圆圈
-            showSymbol: false,
-            // 折线参数
-            lineStyle: {
-              color: '#ff9e12',
-              width: 1
-            },
-            // data:[ [xValue,yValue]]
-            data: averagePriceArr
-          },
+
           {
             name: '涨跌幅',
             type: 'line',
@@ -401,25 +401,6 @@ export default {
             },
             // data:[ [xValue,yValue]]
             data: percentArr
-          },
-          {
-            name: '光圈',
-            type: 'effectScatter',
-            effectType: 'ripple',
-            xAxisIndex: 0,
-            yAxisIndex: 1,
-            symbolSize: 3,
-            rippleEffect: {
-              color: '#24e5ee', // 涟漪的颜色
-              number: 2, // 波纹数量
-              period: 2, // 动画周期
-              scale: 6 // 缩放比例
-            },
-            itemStyle: {
-              color: '#24e5ee' // 颜色
-            },
-            // data:[ [xValue,yValue]]
-            data: focusPoint
           },
           // 成交量
           {
@@ -448,7 +429,43 @@ export default {
               }
               return {value, itemStyle}
             })
+          },
+          {
+            name: '均价',
+            type: 'line',
+            // 以哪个y轴为参考线
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            // 关掉y轴小圆圈
+            showSymbol: false,
+            // 折线参数
+            lineStyle: {
+              color: '#ff9e12',
+              width: 1
+            },
+            // data:[ [xValue,yValue]]
+            data: averagePriceArr
+          },
+          {
+            name: '光圈',
+            type: 'effectScatter',
+            effectType: 'ripple',
+            xAxisIndex: 0,
+            yAxisIndex: 1,
+            symbolSize: 3,
+            rippleEffect: {
+              color: '#24e5ee', // 涟漪的颜色
+              number: 2, // 波纹数量
+              period: 2, // 动画周期
+              scale: 6 // 缩放比例
+            },
+            itemStyle: {
+              color: '#24e5ee' // 颜色
+            },
+            // data:[ [xValue,yValue]]
+            data: focusPoint
           }
+
         ]
       }
     },
@@ -462,6 +479,13 @@ export default {
       }
       this.$axiosGet('/getminutes', param).then(res => {
         that.chartData.stockData = res.data
+      }).finally(() => {
+        if (this.timer) {
+          this.initOptions(that.chartData)
+          setTimeout(function () {
+            that.refreshData()
+          }, 2000)
+        }
       })
     },
     getDetailsData () {
@@ -479,40 +503,47 @@ export default {
 }
 </script>
 <style scoped>
-.minutes-wrap{
+.minutes-wrap {
   background-color: #161a23;
   border-radius: 5px;
   height: calc(100% - 16px);
   margin: 8px 4px;
 }
-.minutes-wrap:before,.minutes-wrap:after{
+
+.minutes-wrap:before, .minutes-wrap:after {
   content: '';
   display: block;
   clear: both;
 }
-.minutes-wrap>div{
+
+.minutes-wrap > div {
   float: left;
   width: 100%;
 }
-.minutes-wrap .info-wrap{
+
+.minutes-wrap .info-wrap {
   color: #c7c6c6;
   padding: 0 12px;
   box-sizing: border-box;
 }
-.title-wrap{
+
+.title-wrap {
   position: relative;
   height: 30px;
   text-align: left;
 }
-.title-wrap span{
+
+.title-wrap span {
   display: inline-block;
   line-height: 30px;
 }
-.title-wrap  .collect-btn{
+
+.title-wrap .collect-btn {
   position: absolute;
   right: 8px;
 }
-.detail-info{
+
+.detail-info {
   float: left;
   height: 32px;
   width: 25%;
@@ -520,7 +551,7 @@ export default {
   text-align: left;
 }
 
-.chart-wrap{
+.chart-wrap {
   width: 100%;
   height: calc(100% - 62px);
 }

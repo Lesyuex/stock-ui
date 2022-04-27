@@ -5,12 +5,17 @@
         <div
           v-for="(item,sort) in arr"
           :class="{'stock-single-info':true,
-           'green-class':item.upDownValue<0,'red-class':item.upDownValue>0,
+           'green-class':item.upDownValue<0,'red-class':item.upDownValue>0,'default-color':item.upDownValue === 0,
            'border-top-left-radius':sort===0,'border-top-right-radius':sort===1,'border-bottom-left-radius':sort===4 ,'border-bottom-right-radius':sort===5}"
           :key="item.code"
           @click="checkIndex(item)">
           <div class="title-wrap ">{{ item.name }}</div>
-          <div class="index-wrap font-weight-800"><i class="el-icon-caret-bottom"></i>{{ item.currentPrice }}</div>
+          <div class="index-wrap font-weight-800">
+            <i class="el-icon-caret-bottom" v-if="item.upDownValue<0"/>
+            <i class="el-icon-minus" v-else-if="item.upDownValue===0"/>
+            <i class="el-icon-caret-top" v-else/>
+            {{ item.currentPrice }}
+          </div>
           <div class="updown-wrap ">{{ item.upDownValue }}&nbsp;{{ item.upDownPercent }}%</div>
         </div>
       </div>
@@ -21,8 +26,9 @@
 <script>
 import SingleMinutesLineChart from '../components/SingleMinutesLineChart'
 import Chart from '../../test/Chart'
-
+import openTimer from '../../../mixins'
 export default {
+  mixins: [openTimer],
   name: 'MainStocksIndex',
   components: {
     SingleMinutesLineChart,
@@ -67,6 +73,7 @@ export default {
       this.$bus.$emit('currentIndexChange', this.currentStock)
     },
     getSingleInfo () {
+      const that = this
       const filter = this.indexList.map(item => {
         return item.code
       })
@@ -84,8 +91,14 @@ export default {
             arr = []
           }
         }
+      }).finally(() => {
+        this.singleList = singleList
+        if (this.timer) {
+          setTimeout(function () {
+            that.getSingleInfo()
+          }, 2000)
+        }
       })
-      this.singleList = singleList
     }
   }
 }
@@ -113,6 +126,9 @@ export default {
 }
 .stock-single-info:nth-child(2n){
   margin-left: 4px;
+}
+.default-color{
+  background-color: #161a23;
 }
 .green-class {
   background: linear-gradient(to bottom, #1d9a63, 100%, #161a23);

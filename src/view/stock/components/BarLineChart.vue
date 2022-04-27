@@ -18,12 +18,12 @@ export default {
     Echarts
   },
   name: 'BarChart',
-  data() {
+  data () {
     return {
       option: {}
     }
   },
-  mounted() {
+  mounted () {
     this.initOptions()
   },
   watch: {
@@ -35,7 +35,7 @@ export default {
     }
   },
   methods: {
-    initOptions() {
+    initOptions () {
       const data = this.customOption
       this.option = {
         // 自定义系列颜色
@@ -71,12 +71,12 @@ export default {
           formatter: data.formatter ? data.formatter : null
         },
         grid: {
-          width: '85%',
+          width: '100%',
           left: data.containLabel ? (data.gridLeft ? data.gridLeft : 0) : data.gridLeft || 'center',
           bottom: data.containLabel ? (data.gridBottom ? data.gridBottom : 2) : data.gridBottom || 35,
           right: data.gridRight ? data.gridRight : 0,
           top: data.gridTop || 70,
-          containLabel: data.containLabel
+          containLabel: !data.notContainLabel
         },
         xAxis: [
           {
@@ -86,18 +86,19 @@ export default {
             data: data.xAxisData,
             fontSize: data.x1FontSize || 16,
             axisLine: {
-              show: data.hideX1 ? false: !data.hideX1Line
+              show: data.hideX1 ? false : !data.hideX1Line
             },
             axisLabel: {
-              show: data.hideX1 ? false: !data.hideX1Label ,
-              formatter: data.x1LableFormatter ? data.x1LableFormatter : null,
+              show: data.hideX1 ? false : !data.hideX1Label,
+              interval: data.showX1AllLabel ? 0 : null,
+              formatter: data.x1LableFormatter ? data.x1LableFormatter : '{value}',
               color: data.x1LabelColor
             },
             splitLine: {
-              show: data.hideX1 ? false: data.showX1Split
+              show: data.hideX1 ? false : data.showX1Split
             },
             axisTick: {
-              show: data.hideX1 ? false:data.showX1Tick
+              show: data.hideX1 ? false : data.showX1Tick
             }
           },
           {
@@ -146,6 +147,7 @@ export default {
           show: !data.hideY1,
           type: 'value',
           fontSize: data.yFontSize || 16,
+          splitNumber: data.splitNumber || 3,
           axisLine: {
             show: data.hideY1 ? false : !data.hideY1Line
           },
@@ -169,7 +171,7 @@ export default {
       }
     },
     // 自定义series项数据
-    initSeries() {
+    initSeries () {
       const data = this.customOption
       // 生成series的对应数据
       const seriesData = data.seriesData.map(data => {

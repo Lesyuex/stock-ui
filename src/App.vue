@@ -24,14 +24,14 @@ export default {
     moment,
     timeoutTask (currentTime, startTime, endTime, componentName) {
       const that = this
-      console.log('开始请求数据时间：' + startTime.format('YYYY-MM-DD HH:mm:ss'))
+      console.log(componentName + '开始请求数据时间：' + startTime.format('YYYY-MM-DD HH:mm:ss'))
       const diffSeconds = startTime.diff(currentTime, 'seconds')
       setTimeout(() => {
         // 告知所有组件可以开始请求数据
         console.log(`通知[${componentName}]-> 开启定时任务`)
         that.$bus.$emit(`${componentName}StartRequest`)
       }, diffSeconds * 1000)
-      console.log('停止请求数据时间：' + endTime.format('YYYY-MM-DD HH:mm:ss'))
+      console.log(componentName + '停止请求数据时间：' + endTime.format('YYYY-MM-DD HH:mm:ss'))
       const validSeconds = endTime.diff(currentTime, 'seconds')
       setTimeout(function () {
         // 告知所有组件可以停止请求数据
