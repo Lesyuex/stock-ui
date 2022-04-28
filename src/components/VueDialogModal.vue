@@ -17,35 +17,14 @@ export default {
     MinutesLineBar
   },
   props: {
-    checkStock: {
+    currentStock: {
       type: Object,
       required: true
     }
   },
   data () {
     return {
-      dialogVisible: true,
-      currentStock: {
-        market: 'cn-stock',
-        id: '603138'
-      }
-    }
-  },
-  watch: {
-    checkStock: {
-      deep: true,
-      handler (newVal) {
-        console.log(newVal)
-        this.currentStock = {id: this.checkStock.id, market: this.checkStock.market}
-      }
-    }
-  },
-  created(){
-    this.currentStock = {id: this.checkStock.id, market: this.checkStock.market}
-  },
-  methods: {
-    handleClose (done) {
-      this.$emit('closeDialog')
+      dialogVisible: false
     }
   }
 }

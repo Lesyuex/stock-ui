@@ -36,8 +36,8 @@
       </el-button-group>
     </div>
     <div class="chart-wrap">
-      <echarts :options="options" style="width: 80%;float: left"></echarts>
-      <handicap :newest-info="stockData.newestInfo" style="width: 20%;"/>
+      <echarts :options="options" :style="{width: showHandicap ? '80%' : '100%'}"></echarts>
+      <handicap :newest-info="stockData.newestInfo" style="width: 20%;" v-if="showHandicap"/>
     </div>
   </div>
 </template>
@@ -65,7 +65,6 @@ export default {
         newestInfo: {},
         newestMinutes: []
       },
-      animation: false,
       requestNum: 0,
       currentDay: '2088-08-08',
       timer: null,
@@ -73,6 +72,9 @@ export default {
     }
   },
   computed: {
+    showHandicap(){
+      return this.currentStock.market === 'cn-stock'
+    },
     tooltipStyle () {
       if (this.stockData.newestInfo.upDownValue > 0) {
         return 'color:#ee4957'
@@ -84,9 +86,6 @@ export default {
         return 'color:#01d078'
       }
     }
-  },
-  created () {
-
   },
   watch: {
     currentStock: {
@@ -492,7 +491,7 @@ export default {
     getMinutesData () {
       const that = this
       const stock = this.currentStock
-      this.$axiosGet(`/${stock.market}/quey/minutes/${stock.id}`).then(res => {
+      this.$axiosGet(`/${stock.market}/quey/minutes/${stock.code}`).then(res => {
         that.stockData = res.data
       }).finally(() => {
         this.$nextTick(function () {

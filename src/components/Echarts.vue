@@ -49,6 +49,7 @@ export default {
 </script>
 <style scoped>
 #chart-wrap{
+  float: left;
   height: 100%;
   width: 100%;
 }

@@ -73,6 +73,7 @@ export default {
       deep: true,
       handler: function (val) {
         this.initPkList()
+        this.refreshData()
       }
     }
   },
@@ -143,8 +144,7 @@ export default {
       return mark === 'M' ? 'gray' : (mark === 'B' ? '#ee4957' : '#01d078')
     },
     getPriceColor(price) {
-      const diff = this.newestInfo.upDownValue
-      return diff === 0 ? 'gray' : (diff > 0 ? '#9b3038' : '#049155')
+      return this.newestInfo.upDownValue === 0 ? 'gray' : (this.newestInfo.upDownValue > 0 ? '#9b3038' : '#049155')
     }
   }
 }
@@ -214,6 +214,9 @@ export default {
       float: left;
       width: 100%;
       list-style: none;
+      &:nth-child(5){
+        margin-bottom: 8px;
+      }
       ul {
         width: 100%;
         li {
@@ -223,6 +226,7 @@ export default {
           line-height: 14px;
           font-size: 12px;
           height: 14px;
+
           span:nth-child(1){
             float: right;
             display: block;
@@ -267,17 +271,17 @@ export default {
     }
 
     &::-webkit-scrollbar {
-      width: 0px;
+      width: 0;
       position: absolute;
     }
 
     &::-webkit-scrollbar-thumb {
-      width: 0px;
+      width: 0;
       background-color: rgba(0, 0, 0, .1);
     }
 
     &::-webkit-scrollbar-track {
-      width: 0px;
+      width: 0;
       border-radius: 1px;
       background-color: rgba(0, 0, 0, .3);
     }

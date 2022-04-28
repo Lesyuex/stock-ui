@@ -37,7 +37,7 @@ export default {
     return {
       currentStock: {
         market: 'cn-index',
-        id: '000001'
+        code: '000001'
       }
     }
   },
@@ -45,8 +45,8 @@ export default {
     console.log(this.currentStock)
   },
   mounted () {
-    this.$bus.$on('currentIndexChange', index => {
-      this.currentStock = index
+    this.$bus.$on('currentIndexChange', stock => {
+      this.currentStock.code = stock.code
     })
   },
   beforeDestroy () {

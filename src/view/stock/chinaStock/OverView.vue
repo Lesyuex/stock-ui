@@ -56,19 +56,8 @@ export default {
   },
   methods: {
     checkIndex (index) {
-      let market = 'sh'
-      if (index.market === '1') {
-        market = 'sh'
-      }
-      if (index.market === '51') {
-        market = 'sz'
-      }
-      if (index.market === '100') {
-        market = 'HK'
-      }
       this.currentStock = {
-        market: market,
-        id: index.code
+        code: index.code
       }
       this.$bus.$emit('currentIndexChange', this.currentStock)
     },

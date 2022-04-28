@@ -19,10 +19,10 @@
           <li>板块</li>
         </ul>
         <ul class="result-nav">
-          <li v-for="(item, index) in showList" :key="index">
-            <div class="text-align-left info-wrap" @click="showMinutesModal(item)">
-              {{ item.secNameCn }} <span class="belong-span">cn</span>
-              <p style="font-size: 12px;padding-top: 4px">{{ `${item.listBoardName} ${item.astockCode}` }}</p>
+          <li v-for="(stock, index) in showList" :key="index">
+            <div class="text-align-left info-wrap" @click="showMinutesModal(stock)">
+              {{ stock.secNameCn }} <span class="belong-span">cn</span>
+              <p style="font-size: 12px;padding-top: 4px">{{ `${stock.listBoardName} ${stock.astockCode}` }}</p>
             </div>
             <div class="collect-wrap text-align-right">
               <span class="collect-btn">加自选</span>
@@ -37,10 +37,9 @@
     <div class="right-wrap">
       <img src="../assets/head.gif">
     </div>
-    <vue-dialog-modal ref="modal" :checkStock="checkStock" @closeDialog="closeDialog"></vue-dialog-modal>
+    <vue-dialog-modal ref="modal" :currentStock="currentStock" @closeDialog="closeDialog"></vue-dialog-modal>
   </div>
 </template>
-
 <script>
 import VueCard from '../components/VueCard'
 import VueDialogModal from '../components/VueDialogModal'
@@ -54,7 +53,7 @@ export default {
   data () {
     return {
       dialogVisible: false,
-      checkStock: {},
+      currentStock: {},
       choiceVisible: false,
       inputTextValue: undefined,
       visibleMenu: false,
@@ -73,9 +72,8 @@ export default {
       this.dialogVisible = false
     },
     showMinutesModal (stock) {
-      console.log(stock)
-      this.checkStock = {
-        id: stock.astockCode,
+      this.currentStock = {
+        code: stock.astockCode,
         market: 'cn-stock'
       }
       this.$refs.modal.dialogVisible = true
