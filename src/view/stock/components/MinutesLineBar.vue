@@ -30,9 +30,9 @@
     </div>
     <div style="height: 40px;background-color: #676767">
       <el-button-group>
-        <el-button type="primary" icon="el-icon-edit"></el-button>
-        <el-button type="primary" icon="el-icon-share"></el-button>
-        <el-button type="primary" icon="el-icon-delete"></el-button>
+        <el-button type="primary" icon="el-icon-edit" size="small"></el-button>
+        <el-button type="primary" icon="el-icon-share" size="small"></el-button>
+        <el-button type="primary" icon="el-icon-delete" size="small"></el-button>
       </el-button-group>
     </div>
     <div class="chart-wrap">

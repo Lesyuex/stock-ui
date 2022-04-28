@@ -8,6 +8,19 @@
         <bar-line-chart :custom-option="n2s" ref="n2s"/>
       </el-tab-pane>
     </el-tabs>
+    <div class="info-wrap">
+      <g-row>
+        <g-col :span="8">
+          北向资金净流入：
+        </g-col>
+        <g-col :span="8">
+          沪股通：
+        </g-col>
+        <g-col :span="8">
+          深股通：
+        </g-col>
+      </g-row>
+    </div>
   </div>
 </template>
 <script>
@@ -128,9 +141,14 @@ export default {
 .funding-wrap {
   background-color: #161a23;
   height: 100%;
-
+  .info-wrap{
+    height: 60px;
+    background-color: #42b983;
+    padding: 0 100px;
+    box-sizing: border-box;
+  }
   .el-tabs {
-    height: 100%;
+    height: calc(100% - 60px);
 
     /deep/ .el-tabs__content {
       height: calc(100% - 45px);
