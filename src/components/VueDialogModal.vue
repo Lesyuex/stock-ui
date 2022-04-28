@@ -6,7 +6,6 @@
     height="500px"
     :modal-append-to-body="true"
     :append-to-body="true"
-    @close="handleClose"
     style="border-radius: 5px">
     <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
   </el-dialog>
@@ -37,9 +36,12 @@ export default {
       deep: true,
       handler (newVal) {
         console.log(newVal)
-        this.currentStock = {id: newVal.id, market: newVal.market}
+        this.currentStock = {id: this.checkStock.id, market: this.checkStock.market}
       }
     }
+  },
+  created(){
+    this.currentStock = {id: this.checkStock.id, market: this.checkStock.market}
   },
   methods: {
     handleClose (done) {

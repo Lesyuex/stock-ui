@@ -37,7 +37,7 @@
     <div class="right-wrap">
       <img src="../assets/head.gif">
     </div>
-    <vue-dialog-modal ref="modal" :checkStock="checkStock" v-if="dialogVisible" @closeDialog="closeDialog"></vue-dialog-modal>
+    <vue-dialog-modal ref="modal" :checkStock="checkStock" @closeDialog="closeDialog"></vue-dialog-modal>
   </div>
 </template>
 
@@ -78,7 +78,7 @@ export default {
         id: stock.astockCode,
         market: 'cn-stock'
       }
-      this.dialogVisible = true
+      this.$refs.modal.dialogVisible = true
       this.choiceVisible = !this.choiceVisible
     },
     menuVisible () {

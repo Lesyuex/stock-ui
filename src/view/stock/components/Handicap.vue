@@ -14,8 +14,8 @@
             {{ item.price.toFixed(2) }}
           </li>
           <li class="li-box" style="color: whitesmoke;text-align:right">
-            <span style="display: block;width: 100%;background-color: red;"></span>
-            <span style="position: absolute">{{ item.volume }}</span>
+            <span :style="{backgroundColor:getPriceColor(item.price),width:getWidth(item.volume)}"></span>
+            <span >{{ item.volume }}</span>
           </li>
         </ul>
       </li>
@@ -58,7 +58,7 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       pkList: [],
       max: 0,
@@ -77,7 +77,7 @@ export default {
     }
   },
   computed: {
-    sellWidth () {
+    sellWidth() {
       let num = 0
       let sell = 0
       this.pkList.filter((item, index) => {
@@ -88,18 +88,19 @@ export default {
       })
       return sell * 100 / num + '%'
     },
-    disabled () {
+    disabled() {
       return this.loading || this.noMore
     }
   },
-  created () {
+  created() {
     this.initPkList()
     this.refreshData()
   },
   methods: {
-    refreshData () {
+    refreshData() {
       const that = this
-      this.$axiosGet(`/cn-stock/query/clinch/603138/100`).then(res => {
+      console.log(this.newestInfo)
+      this.$axiosGet(`/cn-stock/query/clinch/${this.newestInfo.code}/100`).then(res => {
         this.mingxiArr = res.data
       }).finally(() => {
         if (this.timer) {
@@ -109,7 +110,7 @@ export default {
         }
       })
     },
-    initPkList () {
+    initPkList() {
       const sellFifthVolume = this.newestInfo.sellFifthVolume
       const sellForthVolume = this.newestInfo.sellForthVolume
       const sellThirdVolume = this.newestInfo.sellThirdVolume
@@ -135,13 +136,13 @@ export default {
         {name: '买5', price: this.newestInfo.buyFifthPrice, volume: buyFifthVolume}
       ]
     },
-    getWidth (volume) {
+    getWidth(volume) {
       return volume * 100 / this.max + '%'
     },
-    getMarkColor (mark) {
+    getMarkColor(mark) {
       return mark === 'M' ? 'gray' : (mark === 'B' ? '#ee4957' : '#01d078')
     },
-    getPriceColor (price) {
+    getPriceColor(price) {
       const diff = this.newestInfo.upDownValue
       return diff === 0 ? 'gray' : (diff > 0 ? '#9b3038' : '#049155')
     }
@@ -209,18 +210,33 @@ export default {
       display: block;
       clear: both;
     }
-    ul{
+    li {
+      float: left;
       width: 100%;
-      li{
-        float: left;
+      list-style: none;
+      ul {
         width: 100%;
-        height: 14px;
-        list-style: none;
-        ul{
-          height: 100%;
-          li{
-            width: 30%;
+        li {
+          position: relative;
+          width: calc(100% / 3);
+          margin-bottom: 4px;
+          line-height: 14px;
+          font-size: 12px;
+          height: 14px;
+          span:nth-child(1){
+            float: right;
+            display: block;
+            height: 14px;
           }
+          span:nth-child(2){
+            position: absolute;
+            top:0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            text-align: right
+          }
+
         }
       }
     }

@@ -28,7 +28,13 @@
         </div>
       </div>
     </div>
-    <div style="height: 40px;background-color: #676767"></div>
+    <div style="height: 40px;background-color: #676767">
+      <el-button-group>
+        <el-button type="primary" icon="el-icon-edit"></el-button>
+        <el-button type="primary" icon="el-icon-share"></el-button>
+        <el-button type="primary" icon="el-icon-delete"></el-button>
+      </el-button-group>
+    </div>
     <div class="chart-wrap">
       <echarts :options="options" style="width: 80%;float: left"></echarts>
       <handicap :newest-info="stockData.newestInfo" style="width: 20%;"/>
