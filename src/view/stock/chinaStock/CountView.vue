@@ -41,8 +41,7 @@ export default {
         chartTitle: '涨跌总览',
         seriesNameArr: ['涨跌家数'],
         doubleYLine: false,
-        seriLabelClr: ['#ccc'],
-        x1LabelColor: '#fff',
+        seriLabelClr: ['#adb4c2'],
         showX1AllLabel: true,
         gridBottom: 8
       }

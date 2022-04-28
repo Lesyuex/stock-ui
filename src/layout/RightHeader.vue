@@ -37,13 +37,14 @@
     <div class="right-wrap">
       <img src="../assets/head.gif">
     </div>
-    <vue-dialog-modal ref="modal" :checkStock="checkStock"></vue-dialog-modal>
+    <vue-dialog-modal ref="modal" :checkStock="checkStock" v-if="dialogVisible" @closeDialog="closeDialog"></vue-dialog-modal>
   </div>
 </template>
 
 <script>
 import VueCard from '../components/VueCard'
 import VueDialogModal from '../components/VueDialogModal'
+
 export default {
   name: 'RightHeader',
   components: {
@@ -52,6 +53,7 @@ export default {
   },
   data () {
     return {
+      dialogVisible: false,
       checkStock: {},
       choiceVisible: false,
       inputTextValue: undefined,
@@ -67,9 +69,16 @@ export default {
     })
   },
   methods: {
+    closeDialog () {
+      this.dialogVisible = false
+    },
     showMinutesModal (stock) {
-      this.checkStock = stock
-      this.$refs.modal.dialogVisible = true
+      console.log(stock)
+      this.checkStock = {
+        id: stock.astockCode,
+        market: 'cn-stock'
+      }
+      this.dialogVisible = true
       this.choiceVisible = !this.choiceVisible
     },
     menuVisible () {

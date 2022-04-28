@@ -23,6 +23,7 @@ export const openTimer = {
   methods: {
     startRequestInterval () {
       this.timer = true
+      this.refreshData()
     },
     stopRequestInterval () {
       this.timer = false

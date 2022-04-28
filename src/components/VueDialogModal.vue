@@ -6,6 +6,7 @@
     height="500px"
     :modal-append-to-body="true"
     :append-to-body="true"
+    @close="handleClose"
     style="border-radius: 5px">
     <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
   </el-dialog>
@@ -24,9 +25,9 @@ export default {
   },
   data () {
     return {
-      dialogVisible: false,
+      dialogVisible: true,
       currentStock: {
-        market: 'sh',
+        market: 'cn-stock',
         id: '603138'
       }
     }
@@ -36,18 +37,13 @@ export default {
       deep: true,
       handler (newVal) {
         console.log(newVal)
-        this.currentStock = {id: newVal.astockCode, market: newVal.listBoardName}
+        this.currentStock = {id: newVal.id, market: newVal.market}
       }
     }
   },
   methods: {
     handleClose (done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {
-        })
+      this.$emit('closeDialog')
     }
   }
 }

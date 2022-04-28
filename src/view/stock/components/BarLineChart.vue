@@ -71,7 +71,7 @@ export default {
           formatter: data.formatter ? data.formatter : null
         },
         grid: {
-          width: '100%',
+          width: data.gridWidth || '100%',
           left: data.containLabel ? (data.gridLeft ? data.gridLeft : 0) : data.gridLeft || 'center',
           bottom: data.containLabel ? (data.gridBottom ? data.gridBottom : 2) : data.gridBottom || 35,
           right: data.gridRight ? data.gridRight : 0,
@@ -92,7 +92,7 @@ export default {
               show: data.hideX1 ? false : !data.hideX1Label,
               interval: data.showX1AllLabel ? 0 : null,
               formatter: data.x1LableFormatter ? data.x1LableFormatter : '{value}',
-              color: data.x1LabelColor
+              color: data.x1LabelColor || '#adb4c2'
             },
             splitLine: {
               show: data.hideX1 ? false : data.showX1Split

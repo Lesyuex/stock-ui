@@ -10,7 +10,6 @@
     </el-tabs>
   </div>
 </template>
-
 <script>
 import BarLineChart from '../components/BarLineChart'
 import openTimer from '../../../mixins'
@@ -25,6 +24,8 @@ export default {
     return {
       activeName: '北向资金',
       s2n: {
+        gridWidth: '90%',
+        gridLeft: 10,
         hideX1: true,
         hideSeriLabel: true,
         xAxisData: [],
@@ -116,7 +117,7 @@ export default {
         if (this.timer) {
           setTimeout(function () {
             that.getCount()
-          }, 2000)
+          }, 5000)
         }
       })
     }
