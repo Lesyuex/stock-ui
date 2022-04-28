@@ -15,7 +15,7 @@
           </li>
           <li class="li-box" style="color: whitesmoke;text-align:right">
             <span :style="{backgroundColor:getPriceColor(item.price),width:getWidth(item.volume)}"></span>
-            <span >{{ item.volume }}</span>
+            <span>{{ item.volume }}</span>
           </li>
         </ul>
       </li>
@@ -35,7 +35,7 @@
         <li v-for="(item,index) in mingxiArr" :key="index">
           <ul>
             <li class="li-box">{{ item.time.substring(0, 5) }}</li>
-            <li class="li-box" style="text-align: center;color: #a4a3a3">{{ item.price.toFixed(2) }}</li>
+            <li class="li-box" style="text-align: center;color: #a4a3a3">{{ item.price }}</li>
             <li class="li-box" style="text-align: right;color: #a4a3a3">{{ item.volume }} <span
               :style="{color:getMarkColor(item.mark)}">{{ item.mark }}</span></li>
           </ul>
@@ -60,12 +60,23 @@ export default {
   },
   data() {
     return {
-      pkList: [],
       max: 0,
       mingxiArr: [],
       loading: false,
       size: 6,
-      noMore: false
+      noMore: false,
+      pkList: [
+        {name: '卖5', price: '-', volume: '-'},
+        {name: '卖4', price: '-', volume: '-'},
+        {name: '卖3', price: '-', volume: '-'},
+        {name: '卖2', price: '-', volume: '-'},
+        {name: '卖1', price: '-', volume: '-'},
+        {name: '买1', price: '-', volume: '-'},
+        {name: '买2', price: '-', volume: '-'},
+        {name: '买3', price: '-', volume: '-'},
+        {name: '买4', price: '-', volume: '-'},
+        {name: '买5', price: '-', volume: '-'}
+      ]
     }
   },
   watch: {
@@ -112,30 +123,19 @@ export default {
       })
     },
     initPkList() {
-      const sellFifthVolume = this.newestInfo.sellFifthVolume
-      const sellForthVolume = this.newestInfo.sellForthVolume
-      const sellThirdVolume = this.newestInfo.sellThirdVolume
-      const sellSecondVolume = this.newestInfo.sellSecondVolume
-      const sellFirstVolume = this.newestInfo.sellFirstVolume
-      const buyFirstVolume = this.newestInfo.buyFirstVolume
-      const buySecondVolume = this.newestInfo.buySecondVolume
-      const buyThirdVolume = this.newestInfo.buyThirdVolume
-      const buyForthVolume = this.newestInfo.buyForthVolume
-      const buyFifthVolume = this.newestInfo.buyFifthVolume
-      const allVolume = [sellFifthVolume, sellForthVolume, sellThirdVolume, sellSecondVolume, sellFirstVolume, buyFirstVolume, buySecondVolume, buyThirdVolume, buyForthVolume, buyFifthVolume]
+      const allVolume = []
+      for (let i = 4; i >= 0; i--) {
+        this.pkList[i].price = this.newestInfo[`sellPrice${5-i}`]
+        const sellVolume = this.newestInfo[`sellVolume${5-i}`]
+        this.pkList[i].volume = sellVolume
+
+        this.pkList[i + 5].price = this.newestInfo[`buyPrice${i + 1}`]
+        const buyVolume = this.newestInfo[`buyVolume${i + 1}`]
+        this.pkList[i + 5].volume = buyVolume
+        allVolume.push(...[buyVolume, sellVolume])
+
+      }
       this.max = Math.max(...allVolume)
-      this.pkList = [
-        {name: '卖5', price: this.newestInfo.sellFirstPrice, volume: sellFifthVolume},
-        {name: '卖4', price: this.newestInfo.sellSecondPrice, volume: sellForthVolume},
-        {name: '卖3', price: this.newestInfo.sellThirdPrice, volume: sellThirdVolume},
-        {name: '卖2', price: this.newestInfo.sellForthPrice, volume: sellSecondVolume},
-        {name: '卖1', price: this.newestInfo.sellFifthPrice, volume: sellFirstVolume},
-        {name: '买1', price: this.newestInfo.buyFirstPrice, volume: buyFirstVolume},
-        {name: '买2', price: this.newestInfo.buySecondPrice, volume: buySecondVolume},
-        {name: '买3', price: this.newestInfo.buyThirdPrice, volume: buyThirdVolume},
-        {name: '买4', price: this.newestInfo.buyForthPrice, volume: buyForthVolume},
-        {name: '买5', price: this.newestInfo.buyFifthPrice, volume: buyFifthVolume}
-      ]
     },
     getWidth(volume) {
       return volume * 100 / this.max + '%'
@@ -205,20 +205,25 @@ export default {
     margin-bottom: 4px;
     float: left;
     width: 100%;
+
     &::before, &::after {
       content: '';
       display: block;
       clear: both;
     }
+
     li {
       float: left;
       width: 100%;
       list-style: none;
-      &:nth-child(5){
+
+      &:nth-child(5) {
         margin-bottom: 8px;
       }
+
       ul {
         width: 100%;
+
         li {
           position: relative;
           width: calc(100% / 3);
@@ -227,14 +232,15 @@ export default {
           font-size: 12px;
           height: 14px;
 
-          span:nth-child(1){
+          span:nth-child(1) {
             float: right;
             display: block;
             height: 14px;
           }
-          span:nth-child(2){
+
+          span:nth-child(2) {
             position: absolute;
-            top:0;
+            top: 0;
             right: 0;
             width: 100%;
             height: 100%;

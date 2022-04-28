@@ -6,19 +6,19 @@
         <span style="padding: 0 10px" class="font-size-13">sh{{ stockData.newestInfo.code }}</span>
         <span :style="tooltipStyle" class="font-size-18 font-weight-800">{{ stockData.newestInfo.currentPrice }}</span>
         <span :style="tooltipStyle" class="font-size-10 text-indent-1em">
-          {{stockData.newestInfo.upDownValue }} {{ `${stockData.newestInfo.upDownPercent}%` }}
+          {{ stockData.newestInfo.upDownValue }} {{ `${stockData.newestInfo.upDownPercent}%` }}
         </span>
         <el-button type="danger" size="mini" class="collect-btn font-size-10">+自选</el-button>
       </div>
       <div class="detail-wrap">
         <div class="detail-info">最高：{{ stockData.newestInfo.highest }}<br>最低：{{ stockData.newestInfo.lowest }}</div>
         <div class="detail-info">
-          今开：{{stockData.newestInfo.todayOpenPrice }}
+          今开：{{ stockData.newestInfo.todayOpenPrice }}
           <br>
           昨收：{{ stockData.newestInfo.yesterdayPrice }}
         </div>
         <div class="detail-info">
-          成交量：{{(stockData.newestInfo.volume2 / 100000000).toFixed(2) }}亿手
+          成交量：{{ (stockData.newestInfo.volume2 / 100000000).toFixed(2) }}亿手
           <br>
           成交额：{{ (stockData.newestInfo.turnover / 10000).toFixed(2) }}亿
         </div>
@@ -58,7 +58,7 @@ export default {
     }
   },
   components: {Echarts, Handicap},
-  data () {
+  data() {
     return {
       options: {},
       stockData: {
@@ -72,10 +72,10 @@ export default {
     }
   },
   computed: {
-    showHandicap(){
+    showHandicap() {
       return this.currentStock.market === 'cn-stock'
     },
-    tooltipStyle () {
+    tooltipStyle() {
       if (this.stockData.newestInfo.upDownValue > 0) {
         return 'color:#ee4957'
       }
@@ -90,19 +90,19 @@ export default {
   watch: {
     currentStock: {
       deep: true,
-      handler (newVal) {
+      handler(newVal) {
         this.getMinutesData()
       }
     }
   },
-  mounted () {
+  mounted() {
     this.getMinutesData()
   },
   methods: {
-    refreshData () {
+    refreshData() {
       this.getMinutesData()
     },
-    getSeriesData (stockData) {
+    getSeriesData(stockData) {
       const xDataArr = [] // 时间轴
       const averagePriceArr = [] // 均价 数据
       const percentArr = [] // 涨跌幅 数据
@@ -136,7 +136,7 @@ export default {
       console.log(param)
       return param
     },
-    getDoubleYInfo (percentArr, yestClosePrice) {
+    getDoubleYInfo(percentArr, yestClosePrice) {
       // 计算两边Y轴的最大最小值
       const max = Math.max(...percentArr)
       const min = Math.min(...percentArr)
@@ -145,7 +145,7 @@ export default {
       const leftYMinValue = yestClosePrice * (1 - (rightYMaxValue / 100)).toFixed(2)
       return {rightYMaxValue, leftYMaxValue, leftYMinValue}
     },
-    initOptions (stockData) {
+    initOptions(stockData) {
       const {
         xDataArr,
         yestClosePrice,
@@ -488,7 +488,7 @@ export default {
         ]
       }
     },
-    getMinutesData () {
+    getMinutesData() {
       const that = this
       const stock = this.currentStock
       this.$axiosGet(`/${stock.market}/quey/minutes/${stock.code}`).then(res => {
