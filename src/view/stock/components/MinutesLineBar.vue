@@ -28,13 +28,13 @@
         </div>
       </div>
     </div>
-    <div style="height: 40px;background-color: #676767">
-      <el-button-group>
-        <el-button type="primary" icon="el-icon-edit" size="small"></el-button>
-        <el-button type="primary" icon="el-icon-share" size="small"></el-button>
-        <el-button type="primary" icon="el-icon-delete" size="small"></el-button>
-      </el-button-group>
-    </div>
+    <el-tag
+      v-for="item in items"
+      :key="item.label"
+      :type="item.type"
+      effect="dark">
+      {{ item.label }}
+    </el-tag>
     <div class="chart-wrap">
       <echarts :options="options" :style="{width: showHandicap ? '80%' : '100%'}"></echarts>
       <handicap :newest-info="stockData.newestInfo" style="width: 20%;" v-if="showHandicap"/>
@@ -58,8 +58,15 @@ export default {
     }
   },
   components: {Echarts, Handicap},
-  data() {
+  data () {
     return {
+      items: [
+        { type: '', label: '标签一' },
+        { type: '', label: '标签二' },
+        { type: '', label: '标签三' },
+        { type: '', label: '标签四' },
+        { type: '', label: '标签五' }
+      ],
       options: {},
       stockData: {
         newestInfo: {},
@@ -72,10 +79,10 @@ export default {
     }
   },
   computed: {
-    showHandicap() {
+    showHandicap () {
       return this.currentStock.market === 'cn-stock'
     },
-    tooltipStyle() {
+    tooltipStyle () {
       if (this.stockData.newestInfo.upDownValue > 0) {
         return 'color:#ee4957'
       }
@@ -90,19 +97,19 @@ export default {
   watch: {
     currentStock: {
       deep: true,
-      handler(newVal) {
+      handler (newVal) {
         this.getMinutesData()
       }
     }
   },
-  mounted() {
+  mounted () {
     this.getMinutesData()
   },
   methods: {
-    refreshData() {
+    refreshData () {
       this.getMinutesData()
     },
-    getSeriesData(stockData) {
+    getSeriesData (stockData) {
       const xDataArr = [] // 时间轴
       const averagePriceArr = [] // 均价 数据
       const percentArr = [] // 涨跌幅 数据
@@ -133,10 +140,9 @@ export default {
         }
       }
       const param = {xDataArr, yestClosePrice, averagePriceArr, percentArr, focusPoint, volumeArr}
-      console.log(param)
       return param
     },
-    getDoubleYInfo(percentArr, yestClosePrice) {
+    getDoubleYInfo (percentArr, yestClosePrice) {
       // 计算两边Y轴的最大最小值
       const max = Math.max(...percentArr)
       const min = Math.min(...percentArr)
@@ -145,7 +151,7 @@ export default {
       const leftYMinValue = yestClosePrice * (1 - (rightYMaxValue / 100)).toFixed(2)
       return {rightYMaxValue, leftYMaxValue, leftYMinValue}
     },
-    initOptions(stockData) {
+    initOptions (stockData) {
       const {
         xDataArr,
         yestClosePrice,
@@ -488,7 +494,7 @@ export default {
         ]
       }
     },
-    getMinutesData() {
+    getMinutesData () {
       const that = this
       const stock = this.currentStock
       this.$axiosGet(`/${stock.market}/quey/minutes/${stock.code}`).then(res => {
@@ -500,7 +506,7 @@ export default {
         if (this.timer) {
           setTimeout(function () {
             that.refreshData()
-          }, 5000)
+          }, 3333)
         }
       })
     }

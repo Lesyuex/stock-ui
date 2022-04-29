@@ -51,7 +51,7 @@
 
     <el-container>
       <el-header>
-        <right-header @menuVisible="menuVisible" ref="choice"></right-header>
+        <right-header @menuVisible="menuVisible" ref="header"></right-header>
       </el-header>
 
       <el-main id="el-main">
@@ -87,11 +87,11 @@ export default {
       const that = this
       const dom = document.getElementById('el-main')
       dom.addEventListener('click', () => {
-        that.hiddenChilChoiceWrap()
+        that.hideHeaderEventMenu()
       })
       const menu = document.getElementById('el-aside')
       menu.addEventListener('click', () => {
-        that.hiddenChilChoiceWrap()
+        that.hideHeaderEventMenu()
       })
     })
   },
@@ -103,9 +103,8 @@ export default {
       console.log(path)
       this.$router.push({path})
     },
-    hiddenChilChoiceWrap () {
-      console.log(this.$refs.choice.choiceVisible)
-      this.$refs.choice.choiceVisible = false
+    hideHeaderEventMenu () {
+      this.$refs.header.choiceVisible = this.$refs.header.userMenuVisible = false
     }
   }
 }

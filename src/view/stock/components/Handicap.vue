@@ -14,21 +14,12 @@
             {{ item.price.toFixed(2) }}
           </li>
           <li class="li-box" style="color: whitesmoke;text-align:right">
-            <span :style="{backgroundColor:getPriceColor(item.price),width:getWidth(item.volume)}"></span>
+            <span :style="{backgroundColor: index < 5 ? '#049155' : '#9b3038',width:getWidth(item.volume)}"></span>
             <span>{{ item.volume }}</span>
           </li>
         </ul>
       </li>
     </ul>
-    <!--    <div  >
-          <div style="">{{ item.name }}</div>
-          <div </div>
-          <div style="height: 100%">
-            <div
-              :style="{backgroundColor:getPriceColor(item.price),width:getWidth(item.volume),height:'100%',float:'right'}"></div>
-            <div style="color: whitesmoke;background-color: transparent;position: absolute;right: 0">{{ item.volume }}</div>
-          </div>
-        </div>-->
     <div style="text-align: center;margin:8px 0 12px 0;font-size: 12px">分时成交</div>
     <div class="clinch-class" style="overflow:auto">
       <ul style="height: 100%">
@@ -58,7 +49,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       max: 0,
       mingxiArr: [],
@@ -84,12 +75,11 @@ export default {
       deep: true,
       handler: function (val) {
         this.initPkList()
-        this.refreshData()
       }
     }
   },
   computed: {
-    sellWidth() {
+    sellWidth () {
       let num = 0
       let sell = 0
       this.pkList.filter((item, index) => {
@@ -100,50 +90,48 @@ export default {
       })
       return sell * 100 / num + '%'
     },
-    disabled() {
+    disabled () {
       return this.loading || this.noMore
     }
   },
-  created() {
+  created () {
     this.initPkList()
     this.refreshData()
   },
   methods: {
-    refreshData() {
+    refreshData () {
       const that = this
-      console.log(this.newestInfo)
       this.$axiosGet(`/cn-stock/query/clinch/${this.newestInfo.code}/100`).then(res => {
         this.mingxiArr = res.data
       }).finally(() => {
         if (this.timer) {
           setTimeout(function () {
             that.refreshData()
-          }, 2000)
+          }, 3333)
         }
       })
     },
-    initPkList() {
+    initPkList () {
       const allVolume = []
       for (let i = 4; i >= 0; i--) {
-        this.pkList[i].price = this.newestInfo[`sellPrice${5-i}`]
-        const sellVolume = this.newestInfo[`sellVolume${5-i}`]
+        this.pkList[i].price = this.newestInfo[`sellPrice${5 - i}`]
+        const sellVolume = this.newestInfo[`sellVolume${5 - i}`]
         this.pkList[i].volume = sellVolume
 
         this.pkList[i + 5].price = this.newestInfo[`buyPrice${i + 1}`]
         const buyVolume = this.newestInfo[`buyVolume${i + 1}`]
         this.pkList[i + 5].volume = buyVolume
         allVolume.push(...[buyVolume, sellVolume])
-
       }
       this.max = Math.max(...allVolume)
     },
-    getWidth(volume) {
+    getWidth (volume) {
       return volume * 100 / this.max + '%'
     },
-    getMarkColor(mark) {
+    getMarkColor (mark) {
       return mark === 'M' ? 'gray' : (mark === 'B' ? '#ee4957' : '#01d078')
     },
-    getPriceColor(price) {
+    getPriceColor (price) {
       return this.newestInfo.upDownValue === 0 ? 'gray' : (this.newestInfo.upDownValue > 0 ? '#9b3038' : '#049155')
     }
   }

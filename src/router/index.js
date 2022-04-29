@@ -23,7 +23,7 @@ export default new Router({
         {
           path: '/test-page',
           name: 'TestPage',
-          component: () => import('../view/selfCollect/Test')
+          component: () => import('../view/main/Home')
         }
       ]
     }

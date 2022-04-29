@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
 .card-wrap{
-  height: calc(100vh - 56px);
+  height: calc(100vh - 60px);
   background-color: transparent;
   padding: 12px;
   overflow: auto;

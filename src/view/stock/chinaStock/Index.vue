@@ -2,7 +2,7 @@
   <v-card>
     <g-row>
       <g-col :sm="24" :md="24" :lg="10">
-          <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
+        <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
       </g-col>
       <g-col :sm="24" :md="8" :lg="5">
         <OverView></OverView>

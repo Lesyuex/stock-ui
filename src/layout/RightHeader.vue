@@ -1,41 +1,63 @@
 <template>
   <div class="header-wrap">
-    <div class="text-align-left left-wrap">
-      <i class="el-icon-s-unfold header-icon" @click="menuVisible()" v-if="visibleMenu"></i>
-      <i class="el-icon-s-fold header-icon" @click="menuVisible()" v-else></i>
+    <div class="left-wrap text-align-left">
+      <i class="el-icon-s-unfold" @click="menuVisible" v-if="visibleMenu"></i>
+      <i class="el-icon-s-fold" @click="menuVisible" v-else></i>
     </div>
-    <div class="input-wrap">
-      <i class="el-icon-search"></i>
-      <input
-        type="text"
-        placeholder="搜索股票/板块"
-        @input="inputText"
-        v-model="inputTextValue"
-        @focus="choiceVisible = true"/>
-      <div class="nav-tip" id="nav-tip" v-if="choiceVisible"></div>
-      <div class="choice-wrap" id="choice-wrap" v-if="choiceVisible">
-        <ul class="title-nav">
-          <li>股票</li>
-          <li>板块</li>
-        </ul>
-        <ul class="result-nav">
-          <li v-for="(stock, index) in showList" :key="index">
-            <div class="text-align-left info-wrap" @click="showMinutesModal(stock)">
-              {{ stock.secNameCn }} <span class="belong-span">cn</span>
-              <p style="font-size: 12px;padding-top: 4px">{{ `${stock.listBoardName} ${stock.astockCode}` }}</p>
-            </div>
-            <div class="collect-wrap text-align-right">
-              <span class="collect-btn">加自选</span>
-            </div>
+    <div class="right-wrap">
+      <div class="search-wrap">
+        <i class="el-icon-search"></i>
+        <input
+          v-model="inputTextValue"
+          type="text"
+          placeholder="搜索股票/板块"
+          @input="inputText"
+          @blur="inputBlur"
+          @focus="inputFocus"/>
+        <!--小三角形-->
+        <div class="nav-tip" v-if="choiceVisible"></div>
+        <ul class="nav-stock-wrap" v-if="choiceVisible">
+          <!--  导航栏        -->
+          <li class="row-li">
+            <ul class="nav-wrap">
+              <li :class="{'li-active':type === 0}" @click="checkType(0)">全部</li>
+              <li :class="{'li-active':type === 1}" @click="checkType(1)">股票<span></span></li>
+              <li :class="{'li-active':type === 2}" @click="checkType(2)">板块<span></span></li>
+            </ul>
           </li>
-          <li v-if="filterList.length > 10 && this.showList.length <= 10">
-            <span @click="showList = filterList" style="cursor: pointer">查看更多股票></span>
+          <!-- 股票选择  -->
+          <li class="row-li">
+            <ul class="stock-wrap">
+              <li v-for="(stock, index) in showList" :key="index">
+                <div class="info-wrap text-align-left" @click="showMinutesModal(stock)">
+                  <span style="width: 100%;font-size: 13px;line-height: 20px">
+                    {{ stock.secNameCn }}
+                    <img src="../assets/nation/china.png" style="height: 11px;vertical-align: middle;margin-left: 6px">
+                  </span>
+                  <span style="display:block;font-size: 12px;margin-top: 4px">
+                    {{ stock.board }} {{ stock.code }}
+                  </span>
+                </div>
+                <div class="collect-wrap text-align-right">
+                  <span class="collect-btn" @click="collectStock(stock)">加自选</span>
+                </div>
+              </li>
+              <li v-if="filterList.length > 10 && this.showList.length <= 10">
+                <span @click="showList = filterList" style="cursor: pointer;font-size: 12px">查看更多股票></span>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
-    </div>
-    <div class="right-wrap">
-      <img src="../assets/head.gif">
+      <div class="img-wrap">
+        <img src="../assets/head.gif" @click="showUserMenu">
+        <i class="el-icon-caret-bottom" @click="showUserMenu"></i>
+        <div class="nav-tip" v-if="userMenuVisible"></div>
+        <ul v-if="userMenuVisible">
+          <li>我的自选</li>
+          <li>退出登录</li>
+        </ul>
+      </div>
     </div>
     <vue-dialog-modal ref="modal" :currentStock="currentStock" @closeDialog="closeDialog"></vue-dialog-modal>
   </div>
@@ -43,6 +65,7 @@
 <script>
 import VueCard from '../components/VueCard'
 import VueDialogModal from '../components/VueDialogModal'
+import PinyinMatch from 'pinyin-match'
 
 export default {
   name: 'RightHeader',
@@ -52,6 +75,7 @@ export default {
   },
   data () {
     return {
+      userMenuVisible: false,
       dialogVisible: false,
       currentStock: {},
       choiceVisible: false,
@@ -59,25 +83,44 @@ export default {
       visibleMenu: false,
       stockList: [],
       filterList: [],
-      showList: []
+      showList: [],
+      type: 0
     }
   },
   created () {
     this.$axiosGet('/stock/list/all').then(res => {
-      this.stockList = res.data
+      this.stockList = res.data.filter(item => {
+        item.board = item.listBoard === '1' ? 'sh' : 'sz'
+        return true
+      })
     })
   },
   methods: {
+    showUserMenu () {
+      this.userMenuVisible = !this.userMenuVisible
+      if (this.userMenuVisible) this.choiceVisible = false
+    },
+    inputBlur () {
+    },
+    inputFocus (e) {
+      this.choiceVisible = true
+      this.userMenuVisible = false
+    },
     closeDialog () {
       this.dialogVisible = false
     },
+    checkType (type) {
+      this.type = type
+    },
+    collectStock (stock) {
+      this.$message.success('恭喜你，请登录')
+    },
     showMinutesModal (stock) {
       this.currentStock = {
-        code: stock.astockCode,
+        code: stock.code,
         market: 'cn-stock'
       }
       this.$refs.modal.dialogVisible = true
-      this.choiceVisible = !this.choiceVisible
     },
     menuVisible () {
       this.visibleMenu = !this.visibleMenu
@@ -86,212 +129,257 @@ export default {
     inputText () {
       const value = this.inputTextValue
       const arr = []
+      if (!value || value === '') return
       for (let i = 0; i < this.stockList.length; i++) {
         const stock = this.stockList[i]
-        let listBoardName = 'sz'
-        if (stock.listBoard === '1') {
-          listBoardName = 'sh'
-        }
-        stock.listBoardName = listBoardName
-        if (stock.astockCode.indexOf(value) > -1 || stock.bstockCode.indexOf(value) > -1 || stock.secNameCn.indexOf(value) > -1) {
+        if (stock.code.indexOf(value) > -1 || stock.secNameCn.indexOf(value) > -1 || PinyinMatch.match(stock.secNameCn, value)) {
           arr.push(stock)
         }
       }
       this.filterList = arr
-      if (arr.length > 10) {
-        this.showList = arr.slice(0, 10)
-      } else {
-        this.showList = this.filterList
-      }
+      this.showList = arr.length > 10 ? arr.slice(0, 10) : arr
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 
 .header-wrap {
   height: 40px;
-  margin: 8px 16px;
+  margin: 8px;
+  box-sizing: border-box;
   border-radius: 4px;
   background-color: #161a23;
-}
-/*清楚浮动导致父元素高度为0*/
-.header-wrap::before, .header-wrap::after {
-  display: block;
-  content: '';
-  clear: both;
-}
+  /*清楚浮动导致父元素高度为0*/
 
-@media screen and (max-width: 1408px) {
-  .header-wrap {
-
+  &::before, &::after {
+    display: block;
+    content: '';
+    clear: both;
   }
-}
 
-@media screen and (min-width: 1408px) {
-  .header-wrap {
-
+  .left-wrap, .right-wrap {
+    position: relative;
+    height: 100%;
   }
-}
 
-.header-wrap .left-wrap, .input-wrap {
-  position: relative;
-  float: left;
-  height: 100%;
-}
+  .left-wrap {
+    float: left;
 
-/*
-.left-wrap::before, .left-wrap::after {
-  content: '';
-  display: block;
-  clear: both;
-}
-*/
+    i {
+      padding: 0 12px;
+      font-size: 26px;
+      line-height: 40px;
+      cursor: pointer;
+    }
+  }
 
-.left-wrap .header-icon {
-  display: inline-block;
-  padding: 0 12px;
-  height: 100%;
-  margin-top: 7px;
-  font-size: 26px;
-  cursor: pointer;
-  vertical-align: middle;
-}
+  .right-wrap {
+    float: right;
 
-.left-wrap .el-icon-search {
-  font-size: 12px;
-}
+    .search-wrap {
+      position: relative;
+      float: left;
+      width: 363px;
 
-.input-wrap .el-icon-search {
-  position: relative;
-  left: 10px;
-  font-size: 12px;
-  margin-top: 14px;
-  cursor: pointer;
-  z-index: 999;
-}
+      i {
+        position: absolute;
+        left: 5px;
+        top: 13px;
+        font-size: 14px;
+        cursor: pointer;
+        z-index: 999;
+      }
 
-.input-wrap input {
-  position: relative;
-  left: -10px;
-  width: 338px;
-  height: 26px;
-  padding-left: 20px;
-  color: #adb4c2;
-  background-color: rgba(0, 0, 0, 0.5);
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  transition: 0.5s;
-}
+      input {
+        position: relative;
+        top: 4px;
+        width: 338px;
+        height: 32px;
+        padding-left: 25px;
+        color: #adb4c2;
+        background-color: rgba(0, 0, 0, 0.5);
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        transition: 0.5s;
 
-.input-wrap input:focus {
-  color: black;
-  background-color: #c9c7c7;
-  transition: 0.5s;
-}
+        &:focus {
+          color: black;
+          background-color: #c9c7c7;
+        }
+      }
 
-.input-wrap .nav-tip {
-/ / display: none;
-  position: absolute;
-  left: 5px;
-  width: 0;
-  font-size: 14px;
-  font-weight: 600;
-  border: 10px solid rgba(0, 0, 0, 0);
-  border-bottom-color: rgba(0,0,0,.94);
-  transition: 0.5s;
-}
+      .nav-tip {
+        position: absolute;
+        left: 5px;
+        border: 10px solid rgba(0, 0, 0, 0);
+        border-bottom-color: #161a23;
+        transition: 0.5s;
+        z-index: 999;
+      }
 
-.input-wrap .choice-wrap {
-/ / display: none;
-  position: absolute;
-  top: 50px;
-  width: 364px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #c7c6c6;
-  background-color: rgba(0,0,0,.94);
-  border-radius: 5px;
-  z-index: 999;
-  transition: 0.5s;
-}
+      .nav-stock-wrap {
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        background-color: #161a23;
+        border-radius: 5px;
+        transition: 0.5s;
+        z-index: 999;
 
-.choice-wrap .title-nav {
-  height: 36px;
-}
+        li {
+          list-style: none;
+        }
 
-.title-nav li {
-  float: left;
-  padding-left: 12px;
-  line-height: 36px;
-  list-style: none;
-}
+        .row-li {
+          width: 100%;
 
-.choice-wrap .result-nav {
-  width: 100%;
-  max-height: calc(100vh - 180px);
-  overflow: auto;
-}
+          .nav-wrap {
+            li {
+              position: relative;
+              float: left;
+              padding-left: 8px;
+              font-size: 14px;
+              line-height: 40px;
+              cursor: pointer;
+            }
 
-.result-nav::-webkit-scrollbar{
-  width: 7px;
-}
-.result-nav::-webkit-scrollbar-thumb{
-  background-color: red;
-}
-.result-nav::-webkit-scrollbar-track{
-  background-color:black;
-}
-.result-nav li {
-  padding: 6px 12px;
-  list-style: none;
-  border-top: 1px solid #171717;
-}
+            .li-active::after {
+              content: '';
+              display: block;
+              position: absolute;
+              bottom: 6px;
+              left: 12px;
+              width: 18px;
+              height: 2px;
+              background-color: skyblue;
+            }
+          }
 
-.result-nav li::before, li::after {
-  content: '';
-  display: block;
-  clear: both;
-}
+          .stock-wrap {
+            width: 100%;
+            max-height: calc(100vh - 180px);
+            box-sizing: border-box;
+            overflow: auto;
 
-.result-nav li .info-wrap {
-  float: left;
-  width: 280px;
-  height: 38px;
-  cursor: pointer;
-}
-.result-nav li .collect-wrap {
-  float: left;
-  width: 50px;
-  height: 38px;
-  line-height: 38px;
-}
-.belong-span{
-  padding: 1px;
-  background-color: #ee4957;
-  font-size: 12px;
-  border-radius: 2px;
-  color:black
-}
-.collect-btn{
-  color: #c7c6c6;
-  padding:3px 6px;
-  font-size: 12px;
-  border-radius: 6px;
-  background-color: royalblue;
-  cursor: pointer;
-}
-.header-wrap .right-wrap {
-  float: right;
-  height: 100%;
-}
+            li {
+              float: left;
+              width: 100%;
+              //height: 38px;
+              padding: 4px 8px;
+              border-top: 1px solid #24272f;
+              box-sizing: border-box;
+              cursor: pointer;
 
-.right-wrap img {
-  height: 26px;
-  margin: 7px 12px;
-  border-radius: 5px;
-}
+              &::before, &::after {
+                content: '';
+                display: block;
+                clear: both;
+              }
 
+              div {
+                float: left;
+                width: 50%;
+              }
+
+              .info-wrap, .collect-wrap {
+                height: 38px;
+              }
+
+              .collect-wrap {
+                line-height: 38px;
+
+                .collect-btn {
+                  color: #c7c6c6;
+                  padding: 3px 6px;
+                  font-size: 12px;
+                  border-radius: 6px;
+                  background-color: royalblue;
+                  cursor: pointer;
+                }
+              }
+            }
+
+            &::-webkit-scrollbar {
+              width: 2px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background-color: #a17f7f;
+            }
+
+            &::-webkit-scrollbar-track {
+              background-color: black;
+            }
+          }
+        }
+      }
+    }
+
+    .img-wrap {
+      float: right;
+      position: relative;
+      height: 26px;
+      margin: 7px 16px;
+      border-radius: 5px;
+
+      img {
+        height: 100%;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      i {
+        cursor: pointer;
+        position: absolute;
+        right: -12px;
+        bottom: -2px;
+        font-size: 12px;
+      }
+
+      .nav-tip {
+        position: absolute;
+        left: 5px;
+        top: 22px;
+        border: 8px solid transparent;
+        border-bottom-color: whitesmoke;
+        transition: 0.5s;
+        z-index: 2;
+      }
+
+      ul {
+        position: absolute;
+        left: -18px;
+        top: 36px;
+        width: 64px;
+        height: 56px;
+        background-color: whitesmoke;
+        border-radius: 5px;
+        box-shadow: whitesmoke 0 0 3px 0;
+        transition: .5s;
+        z-index: 999;
+
+        li {
+          list-style: none;
+          line-height: 16px;
+          padding: 4px 4px;
+          font-size: 12px;
+          color: #606266;
+          cursor: pointer;
+
+          &:nth-child(1) {
+            padding-top: 8px;
+          }
+
+          &:nth-child(2) {
+            padding-bottom: 8px;
+          }
+        }
+      }
+    }
+  }
+
+}
 </style>

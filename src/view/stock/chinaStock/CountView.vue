@@ -87,7 +87,7 @@ export default {
         if (this.timer) {
           setTimeout(function () {
             that.getCount()
-          }, 5000)
+          }, 3333)
         }
       })
     }

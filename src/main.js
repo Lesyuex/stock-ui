@@ -12,6 +12,8 @@ import './static/css/default.css'
 import store from './store'
 import {axiosGet, axiosPost, axiosPostWithFile} from './util/axios'
 import * as echarts from 'echarts'
+Vue.use(ElementUI)
+
 const bus = new Vue()
 Vue.prototype.$bus = bus
 Vue.prototype.$echarts = echarts
@@ -19,7 +21,6 @@ Vue.prototype.$axiosGet = axiosGet
 Vue.prototype.$axiosPost = axiosPost
 Vue.prototype.$axiosPostWithFile = axiosPostWithFile
 Vue.config.productionTip = false
-Vue.use(ElementUI)
 Vue.component('v-card', VueCard)
 Vue.component('g-row', GRow)
 Vue.component('g-col', GCol)

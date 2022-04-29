@@ -85,7 +85,7 @@ export default {
         if (this.timer) {
           setTimeout(function () {
             that.getSingleInfo()
-          }, 5000)
+          }, 3333)
         }
       })
     }

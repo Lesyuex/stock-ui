@@ -8,24 +8,12 @@
         <bar-line-chart :custom-option="n2s" ref="n2s"/>
       </el-tab-pane>
     </el-tabs>
-    <div class="info-wrap">
-      <g-row>
-        <g-col :span="8">
-          北向资金净流入：
-        </g-col>
-        <g-col :span="8">
-          沪股通：
-        </g-col>
-        <g-col :span="8">
-          深股通：
-        </g-col>
-      </g-row>
-    </div>
   </div>
 </template>
 <script>
 import BarLineChart from '../components/BarLineChart'
 import openTimer from '../../../mixins'
+import moment from 'moment'
 
 export default {
   mixins: [openTimer],
@@ -35,6 +23,7 @@ export default {
   },
   data () {
     return {
+      n2sTurnover: '-',
       activeName: '北向资金',
       s2n: {
         gridWidth: '90%',
@@ -49,7 +38,8 @@ export default {
         doubleYLine: false,
         labelColor: ['#ccc'],
         yLabelFormatter: '{value} 亿',
-        showHelpX: true
+        showHelpX: true,
+        formatter: this.getFormatter()
       },
       n2s: {
         xAxisData: [],
@@ -79,6 +69,20 @@ export default {
         })
       }
     },
+    getFormatter () {
+      const s = moment().format('YYYY-MM-DD ')
+      return (params) => {
+        console.log(params)
+        let html = '<div>' + moment(s + params[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
+        const value1 = params[0].value !== 'NaN' ? (params[0].value * 1).toFixed(2) : '-'
+        const value2 = params[1].value !== 'NaN' ? (params[1].value * 1).toFixed(2) : '-'
+        const value3 = params[2].value !== 'NaN' ? (params[2].value * 1).toFixed(2) : '-'
+        const text1 = '<div style="text-align: left">' + params[0].marker + params[0].seriesName.replaceAll('-', value1) + '</div>'
+        const text2 = '<div style="text-align: left">' + params[1].marker + params[1].seriesName.replaceAll('-', value2) + '</div>'
+        const text3 = '<div style="text-align: left">' + params[2].marker + params[2].seriesName.replaceAll('-', value3) + '</div>'
+        return html + text1 + text2 + text3
+      }
+    },
     getCount () {
       const that = this
       this.$axiosGet('/funding/get/minutes/detail').then(res => {
@@ -91,17 +95,20 @@ export default {
         s2n.forEach(item => {
           s2nXdata.push(item.time)
           const shParam = {
-            value: (item.shDiff / 10000).toFixed(2)
+            value: item.shDiff === '-' ? null : (item.shDiff / 10000).toFixed(2)
           }
           s2nshDiff.push(shParam)
           const szParam = {
-            value: (item.szDiff / 10000).toFixed(2)
+            value: item.szDiff === '-' ? null : (item.szDiff / 10000).toFixed(2)
           }
           s2nszDiff.push(szParam)
           const foudingDiff = {
-            value: (item.foudingDiff / 10000).toFixed(2)
+            value: item.foudingDiff === '-' ? null : (item.foudingDiff / 10000).toFixed(2)
           }
           s2nFoudingDiff.push(foudingDiff)
+          if (foudingDiff.value) {
+            this.s2n.seriesNameArr = [`北向资金净流入:${foudingDiff.value || '-'}亿`, `沪股通净流入:${shParam.value || '-'}亿`, `深股通净流入:${szParam.value || '-'}亿`]
+          }
         })
         const n2sXdata = []
         const n2sshDiff = []
@@ -123,14 +130,14 @@ export default {
           n2sFoudingDiff.push(foudingDiff)
         })
         this.s2n.xAxisData = s2nXdata
-        this.s2n.seriesData = [s2nshDiff, s2nszDiff, s2nFoudingDiff]
+        this.s2n.seriesData = [s2nFoudingDiff, s2nshDiff, s2nszDiff]
         this.s2n.xAxisData = n2sXdata
         this.s2n.seriesData = [n2sshDiff, n2sszDiff, n2sFoudingDiff]
       }).finally(() => {
         if (this.timer) {
           setTimeout(function () {
             that.getCount()
-          }, 5000)
+          }, 3333)
         }
       })
     }
@@ -141,14 +148,9 @@ export default {
 .funding-wrap {
   background-color: #161a23;
   height: 100%;
-  .info-wrap{
-    height: 60px;
-    background-color: #42b983;
-    padding: 0 100px;
-    box-sizing: border-box;
-  }
+
   .el-tabs {
-    height: calc(100% - 60px);
+    height: 100%;
 
     /deep/ .el-tabs__content {
       height: calc(100% - 45px);
