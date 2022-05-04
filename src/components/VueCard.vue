@@ -9,12 +9,11 @@ export default {
   name: 'VueCard'
 }
 </script>
-
 <style scoped>
 .card-wrap{
   height: calc(100vh - 60px);
   background-color: transparent;
-  padding: 12px;
+  padding:8px;
   overflow: auto;
   box-sizing: border-box;
 }

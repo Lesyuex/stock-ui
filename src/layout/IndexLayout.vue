@@ -121,7 +121,8 @@ export default {
   width: 100%;
   height: 100%;
 }
-/deep/ .el-submenu__title {
+.el-submenu__title,.el-menu-item  {
+  font-size: 18px !important;
 }
 .container #el-main {
   padding: 0 !important;

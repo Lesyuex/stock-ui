@@ -7,10 +7,10 @@
 <script>
 export default {
   props: {
-    span: Number,
-    sm: Number,
-    md: Number,
-    lg: Number
+    span: [String, Number],
+    sm: [String, Number],
+    md: [String, Number],
+    lg: [String, Number]
   },
   name: 'GCol',
   data () {
@@ -125,10 +125,10 @@ export default {
   width: (@unit-width)*24;
 }
 /*小屏 把中屏大屏隐藏*/
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1424px) {
   .g-col {
    // background-color: pink;
-    width: 700px;
+    width: 1280px;
   }
 
   .col-sm-1 {
@@ -229,7 +229,7 @@ export default {
 }
 
 /*中屏*/
-@media screen and (min-width: 701px) {
+@media screen and (min-width: 1424px) {
   .g-col {
     //background-color: #21bf74;
   }
@@ -331,7 +331,7 @@ export default {
 }
 
 /*大屏*/
-@media screen and (min-width: 1640px) {
+@media screen and (min-width: 1920px) {
   .g-col {
     //background-color: @red;
   }

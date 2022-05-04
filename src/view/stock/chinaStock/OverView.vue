@@ -8,9 +8,9 @@
            'green-class':item.upDownValue<0,'red-class':item.upDownValue>0,'default-color':item.upDownValue === 0,
            'border-top-left-radius':sort===0,'border-top-right-radius':sort===1,'border-bottom-left-radius':sort===4 ,'border-bottom-right-radius':sort===5}"
           :key="item.code"
-          @click="checkIndex(item)">
+          @click="checkStock(item.marketCode)">
           <div class="title-wrap ">{{ item.name }}</div>
-          <div class="index-wrap font-weight-800">
+          <div class="index-wrap fw800">
             <i class="el-icon-caret-bottom" v-if="item.upDownValue<0"/>
             <i class="el-icon-minus" v-else-if="item.upDownValue===0"/>
             <i class="el-icon-caret-top" v-else/>
@@ -37,42 +37,41 @@ export default {
   data () {
     return {
       indexList: [
-        {name: '上证指数', code: '000001'},
-        {name: '创业板指', code: '399006'},
-        {name: '深证成指', code: '399001'},
-        {name: '沪深300', code: '000300'},
-        {name: '上证50', code: '000016'},
-        {name: '中小100', code: '399005'}
+        {name: '上证指数', marketCode: 'sh000001'},
+        {name: '创业板指', marketCode: 'sz399006'},
+        {name: '深证成指', marketCode: 'sz399001'},
+        {name: '沪深300', marketCode: 'sh000300'},
+        {name: '上证50', marketCode: 'sh000016'},
+        {name: '中小100', marketCode: 'sz399005'}
       ],
-      singleList: [],
-      currentStock: {
-        market: 'sh',
-        id: '000001'
-      }
+      singleList: [
+
+      ],
+      marketCode: 'sh000001'
     }
   },
   created () {
     this.getSingleInfo()
   },
   methods: {
-    checkIndex (index) {
-      this.currentStock = {
-        code: index.code
-      }
-      this.$bus.$emit('currentIndexChange', this.currentStock)
+    checkStock (marketCode) {
+      this.marketCode = marketCode
+      this.$bus.$emit('checkStock', this.marketCode)
     },
     getSingleInfo () {
       const that = this
       const filter = this.indexList.map(item => {
-        return item.code
+        return item.marketCode
       })
       const codes = filter.join(',')
       const singleList = []
-      this.$axiosGet(`/index/query/single/${codes}`).then(res => {
+      this.$axiosGet(`/stock/get/single/${codes}`).then(res => {
         let arr = []
         const data = res.data
         for (let i = 0; i < data.length; i++) {
+          const marketCode = this.indexList[i].marketCode
           const single = data[i]
+          single.marketCode = marketCode
           const count = i + 1
           arr.push(single)
           if (count % 6 === 0) {
@@ -109,6 +108,7 @@ export default {
   cursor: pointer;
   color: #ffffff;
   margin-bottom: 8px;
+  text-align: center;
 }
 .stock-single-info:nth-child(2n+1){
   margin-right: 4px;

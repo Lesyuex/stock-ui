@@ -6,7 +6,7 @@
         <div class="text" style="color: #ee4957;text-align: left">涨{{ upDownDetail.up }}家</div>
       </div>
       <div class="bar" style="background-color: gray">
-        <div class="text" style="font-size: 12px;color: gray;left: -21px">平{{ upDownDetail.flat }}家</div>
+        <div class="text" style="font-size: 12px;color: gray;left: -40px">平{{ upDownDetail.flat }}家</div>
       </div>
       <div class="bar" style="background-color: #01d078">
         <div class="text" style="font-size: 12px;color: #01d078;text-align: right;right: 0">跌{{ upDownDetail.down }}家</div>
@@ -113,7 +113,7 @@ export default {
     div:nth-child(-n+3) {
       position: relative;
       float: left;
-      height: 10px;
+      height: 6px;
       width: calc(100% / 3);
       div{
         position: absolute;

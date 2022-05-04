@@ -1,107 +1,40 @@
 <template>
-  <div class="minutes-wrap">
-    <div class="info-wrap">
-      <div class="title-wrap">
-        <span class="fs18">{{ stockData.newestInfo.name }}</span>
-        <span style="padding: 0 10px" class="fs13">sh{{ stockData.newestInfo.code }}</span>
-        <span :style="tooltipStyle" class="fs18 fw800">{{ stockData.newestInfo.currentPrice }}</span>
-        <span :style="tooltipStyle" class="fs10 ti1em">
-          {{ stockData.newestInfo.upDownValue }} {{ `${stockData.newestInfo.upDownPercent}%` }}
-        </span>
-        <el-button type="danger" size="mini" class="collect-btn fs10">+自选</el-button>
-      </div>
-      <div class="detail-wrap">
-        <div class="detail-info">最高：{{ stockData.newestInfo.highest }}<br>最低：{{ stockData.newestInfo.lowest }}</div>
-        <div class="detail-info">
-          今开：{{ stockData.newestInfo.todayOpenPrice }}
-          <br>
-          昨收：{{ stockData.newestInfo.yesterdayPrice }}
-        </div>
-        <div class="detail-info">
-          成交量：{{ (stockData.newestInfo.volume2 / 100000000).toFixed(2) }}亿手
-          <br>
-          成交额：{{ (stockData.newestInfo.turnover / 10000).toFixed(2) }}亿
-        </div>
-        <div class="detail-info">
-          总市值：{{ (stockData.newestInfo.marketValue * 1).toFixed(0) }}万亿
-          <br>振<span style="display: inline-block;padding-left: 1em"></span>幅：{{ stockData.newestInfo.amplitude }}%
-        </div>
-      </div>
-    </div>
-    <div class="chart-wrap">
-      <echarts :options="options" :style="{width: showHandicap ? '80%' : '100%'}"></echarts>
-      <handicap :newest-info="stockData.newestInfo" style="width: 20%;" v-if="showHandicap"/>
-    </div>
+  <div class="chart-wrap">
+      <echarts :options="options"/>
   </div>
 </template>
 <script>
 import Echarts from '../../../components/Echarts'
 import {timeXData} from '../js/xAxisData'
 import moment from 'moment'
-import Handicap from './Handicap'
-import openTimer from '../../../mixins'
 
 export default {
-  mixins: [openTimer],
-  name: 'LineBar', // 上下两个grid(分时图和量图)
+  name: 'MinutesChart', // 上下两个grid(分时图和量图)
   props: {
-    currentStock: {
+    stockData: {
       type: Object,
       required: true
     }
   },
-  components: {Echarts, Handicap},
+  components: {Echarts},
   data () {
     return {
-      items: [
-        { type: '', label: '标签一' },
-        { type: '', label: '标签二' },
-        { type: '', label: '标签三' },
-        { type: '', label: '标签四' },
-        { type: '', label: '标签五' }
-      ],
       options: {},
-      stockData: {
-        newestInfo: {},
-        newestMinutes: []
-      },
-      requestNum: 0,
-      currentDay: '2088-08-08',
-      timer: null,
-      stockChart: null
-    }
-  },
-  computed: {
-    showHandicap () {
-      return this.currentStock.market === 'cn-stock'
-    },
-    tooltipStyle () {
-      if (this.stockData.newestInfo.upDownValue > 0) {
-        return 'color:#ee4957'
-      }
-      if (this.stockData.newestInfo.upDownValue === 0) {
-        return 'color:gray'
-      }
-      if (this.stockData.newestInfo.upDownValue < 0) {
-        return 'color:#01d078'
-      }
+      currentDay: '2088-08-08'
     }
   },
   watch: {
-    currentStock: {
+    stockData: {
       deep: true,
-      handler (newVal) {
-        this.getMinutesData()
+      handler () {
+        this.initOptions()
       }
     }
   },
   mounted () {
-    this.getMinutesData()
+    this.initOptions()
   },
   methods: {
-    refreshData () {
-      this.getMinutesData()
-    },
     getSeriesData (stockData) {
       const xDataArr = [] // 时间轴
       const averagePriceArr = [] // 均价 数据
@@ -132,8 +65,7 @@ export default {
           }
         }
       }
-      const param = {xDataArr, yestClosePrice, averagePriceArr, percentArr, focusPoint, volumeArr}
-      return param
+      return {xDataArr, yestClosePrice, averagePriceArr, percentArr, focusPoint, volumeArr}
     },
     getDoubleYInfo (percentArr, yestClosePrice) {
       // 计算两边Y轴的最大最小值
@@ -144,7 +76,8 @@ export default {
       const leftYMinValue = yestClosePrice * (1 - (rightYMaxValue / 100)).toFixed(2)
       return {rightYMaxValue, leftYMaxValue, leftYMinValue}
     },
-    initOptions (stockData) {
+    initOptions () {
+      const stockData = this.stockData
       const {
         xDataArr,
         yestClosePrice,
@@ -163,13 +96,17 @@ export default {
               return a.seriesIndex - b.seriesIndex
             })
             let html = '<div>' + moment(arr[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
+            const dataIndex = arr[0].dataIndex
+            const currentPrice = this.stockData.newestMinutes[dataIndex][1]
+            const marker = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
+            const priceText = `<div style="text-align: left">${marker}价格：${currentPrice}</div>`
             const value1 = arr[0].value ? (arr[0].value * 1).toFixed(2) : '-'
             const value2 = arr[1].value ? arr[1].value : '-'
             const value3 = arr[2].value ? (arr[2].value * 1).toFixed(2) : '-'
-            const percentText = '<div style="text-align: left">' + arr[0].marker + arr[0].seriesName + ':' + value1 + '%</div>'
-            const volumeText = '<div style="text-align: left">' + arr[1].marker + arr[1].seriesName + ':' + value2 + '手</div>'
-            const averagePriceText = '<div style="text-align: left">' + arr[2].marker + arr[2].seriesName + ':' + value3 + '</div>'
-            return html + percentText + volumeText + averagePriceText
+            const percentText = '<div style="text-align: left">' + arr[0].marker + arr[0].seriesName + '：' + value1 + '%</div>'
+            const volumeText = '<div style="text-align: left">' + arr[1].marker + arr[1].seriesName + '：' + value2 + '手</div>'
+            const averagePriceText = '<div style="text-align: left">' + arr[2].marker + arr[2].seriesName + '：' + value3 + '</div>'
+            return html + priceText + percentText + volumeText + averagePriceText
           }
         },
         axisPointer: {
@@ -187,18 +124,18 @@ export default {
         grid: [
           {
             containLabel: false,
-            left: 0,
+            left: 'center',
             top: 20,
-            width: '100%',
-            height: '50%'
+            width: '98%',
+            height: '56%'
           },
           {
             containLabel: false,
-            left: 0,
+            left: 'center',
             right: 50,
-            width: '100%',
+            width: '98%',
             height: '20%',
-            bottom: 8
+            bottom: 20
           }
         ],
         xAxis: [
@@ -241,7 +178,7 @@ export default {
             interval: 1,
             axisLabel: {
               show: true,
-              color: '#ccc',
+              color: '#858585',
               formatter: function (value) {
                 if (value === 1) return '{right|09:30}'
                 if (value === 2) return '10:30'
@@ -322,7 +259,7 @@ export default {
               show: false
             },
             axisLabel: {
-              color: '#ccc',
+              color: '#858585',
               inside: true,
               formatter: function (value) {
                 return value.toFixed(2)
@@ -356,7 +293,7 @@ export default {
               }
             },
             axisLabel: {
-              color: '#ccc',
+              color: '#858585',
               formatter: function (value) {
                 return `${value.toFixed(2)}%`
               },
@@ -486,78 +423,14 @@ export default {
 
         ]
       }
-    },
-    getMinutesData () {
-      const that = this
-      const stock = this.currentStock
-      this.$axiosGet(`/${stock.market}/quey/minutes/${stock.code}`).then(res => {
-        that.stockData = res.data
-      }).finally(() => {
-        this.$nextTick(function () {
-          this.initOptions(that.stockData)
-        })
-        if (this.timer) {
-          setTimeout(function () {
-            that.refreshData()
-          }, 3333)
-        }
-      })
     }
   }
 }
 </script>
 <style scoped lang="less">
-.minutes-wrap {
-  background-color: #161a23;
-  border-radius: 5px;
-  height: calc(100% - 16px);
-  margin: 8px 4px;
-}
-
-.minutes-wrap:before, .minutes-wrap:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.minutes-wrap > div {
-  float: left;
-  width: 100%;
-}
-
-.minutes-wrap .info-wrap {
-  color: #c7c6c6;
-  padding: 0 12px;
-  box-sizing: border-box;
-}
-
-.title-wrap {
-  position: relative;
-  height: 30px;
-  text-align: left;
-}
-
-.title-wrap span {
-  display: inline-block;
-  line-height: 30px;
-}
-
-.title-wrap .collect-btn {
-  position: absolute;
-  right: 8px;
-}
-
-.detail-info {
-  float: left;
-  height: 32px;
-  width: 25%;
-  font-size: 12px;
-  text-align: left;
-}
-
 .chart-wrap {
   width: 100%;
-  height: calc(100% - 102px);
+  height: 100%;
 }
 
 </style>

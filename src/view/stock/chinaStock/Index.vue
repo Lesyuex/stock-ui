@@ -1,15 +1,16 @@
 <template>
   <v-card>
     <g-row>
-      <g-col :sm="24" :md="24" :lg="10">
-        <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
+      <g-col sm="24" md="16" lg="12">
+        <choice-chart :market-code="marketCode"/>
       </g-col>
-      <g-col :sm="24" :md="8" :lg="5">
-        <OverView></OverView>
-      </g-col>
-      <g-col :sm="24" :md="16" :lg="9">
+      <g-col :sm="24" :md="16" :lg="12">
         <count-view/>
       </g-col>
+      <g-col :sm="24" :md="8" :lg="8">
+        <OverView></OverView>
+      </g-col>
+
       <g-col :sm="24" :md="24" :lg="10">
         <funding-detail/>
       </g-col>
@@ -23,7 +24,7 @@ import MainStocksIndex from './OtherChartIndex'
 import OverView from './OverView'
 import CountView from './CountView'
 import FundingDetail from './FundingDetail'
-
+import ChoiceChart from '../components/ChoiceChart'
 export default {
   name: 'MainTest',
   components: {
@@ -31,26 +32,21 @@ export default {
     MainStocksIndex,
     OverView,
     CountView,
-    FundingDetail
+    FundingDetail,
+    ChoiceChart
   },
   data () {
     return {
-      currentStock: {
-        market: 'cn-index',
-        code: '000001'
-      }
+      marketCode: 'sh000001'
     }
   },
-  created () {
-    console.log(this.currentStock)
-  },
   mounted () {
-    this.$bus.$on('currentIndexChange', stock => {
-      this.currentStock.code = stock.code
+    this.$bus.$on('checkStock', marketCode => {
+      this.marketCode = marketCode
     })
   },
   beforeDestroy () {
-    this.$bus.$off('currentIndexChange')
+    this.$bus.$off('checkStock')
   }
 }
 </script>
@@ -63,6 +59,6 @@ export default {
 }
 
 .g-col {
-  height: 350px;
+  height: 420px;
 }
 </style>

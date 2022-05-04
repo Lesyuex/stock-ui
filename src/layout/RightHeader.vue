@@ -1,6 +1,6 @@
 <template>
   <div class="header-wrap">
-    <div class="left-wrap text-align-left">
+    <div class="left-wrap tal">
       <i class="el-icon-s-unfold" @click="menuVisible" v-if="visibleMenu"></i>
       <i class="el-icon-s-fold" @click="menuVisible" v-else></i>
     </div>
@@ -29,21 +29,21 @@
           <li class="row-li">
             <ul class="stock-wrap">
               <li v-for="(stock, index) in showList" :key="index">
-                <div class="info-wrap text-align-left" @click="showMinutesModal(stock)">
-                  <span style="width: 100%;font-size: 13px;line-height: 20px">
+                <div class="info-wrap tal" @click="showMinutesModal(stock)">
+                  <span style="width: 100%;font-size: 14px;line-height: 20px">
                     {{ stock.secNameCn }}
                     <img src="../assets/nation/china.png" style="height: 11px;vertical-align: middle;margin-left: 6px">
                   </span>
-                  <span style="display:block;font-size: 12px;margin-top: 4px">
-                    {{ stock.board }} {{ stock.code }}
+                  <span style="display:block;font-size: 14px;margin-top: 4px">
+                    {{ stock.marketCode }}
                   </span>
                 </div>
-                <div class="collect-wrap text-align-right">
+                <div class="collect-wrap tar">
                   <span class="collect-btn" @click="collectStock(stock)">加自选</span>
                 </div>
               </li>
-              <li v-if="filterList.length > 10 && this.showList.length <= 10">
-                <span @click="showList = filterList" style="cursor: pointer;font-size: 12px">查看更多股票></span>
+              <li v-if="filterList.length > 10 && this.showList.length <= 10" class="tac">
+                <span @click="showList = filterList" style="cursor: pointer;font-size: 14px;">查看更多股票></span>
               </li>
             </ul>
           </li>
@@ -59,12 +59,12 @@
         </ul>
       </div>
     </div>
-    <vue-dialog-modal ref="modal" :currentStock="currentStock" @closeDialog="closeDialog"></vue-dialog-modal>
+    <vue-dialog-modal ref="modal" :marketCode="marketCode" @closeDialog="closeDialog"></vue-dialog-modal>
   </div>
 </template>
 <script>
 import VueCard from '../components/VueCard'
-import VueDialogModal from '../components/VueDialogModal'
+import VueDialogModal from '../components/MinuChartDialog'
 import PinyinMatch from 'pinyin-match'
 
 export default {
@@ -77,7 +77,7 @@ export default {
     return {
       userMenuVisible: false,
       dialogVisible: false,
-      currentStock: {},
+      marketCode: 'sh000001',
       choiceVisible: false,
       inputTextValue: undefined,
       visibleMenu: false,
@@ -89,10 +89,7 @@ export default {
   },
   created () {
     this.$axiosGet('/stock/list/all').then(res => {
-      this.stockList = res.data.filter(item => {
-        item.board = item.listBoard === '1' ? 'sh' : 'sz'
-        return true
-      })
+      this.stockList = res.data
     })
   },
   methods: {
@@ -116,10 +113,7 @@ export default {
       this.$message.success('恭喜你，请登录')
     },
     showMinutesModal (stock) {
-      this.currentStock = {
-        code: stock.code,
-        market: 'cn-stock'
-      }
+      this.marketCode = stock.marketCode
       this.$refs.modal.dialogVisible = true
     },
     menuVisible () {
@@ -132,7 +126,7 @@ export default {
       if (!value || value === '') return
       for (let i = 0; i < this.stockList.length; i++) {
         const stock = this.stockList[i]
-        if (stock.code.indexOf(value) > -1 || stock.secNameCn.indexOf(value) > -1 || PinyinMatch.match(stock.secNameCn, value)) {
+        if (stock.marketCode.indexOf(value) > -1 || stock.secNameCn.indexOf(value) > -1 || PinyinMatch.match(stock.secNameCn, value)) {
           arr.push(stock)
         }
       }
@@ -147,7 +141,7 @@ export default {
 
 .header-wrap {
   height: 40px;
-  margin: 8px;
+  margin: 8px 8px 0 8px;
   box-sizing: border-box;
   border-radius: 4px;
   background-color: #161a23;
@@ -294,7 +288,7 @@ export default {
                 .collect-btn {
                   color: #c7c6c6;
                   padding: 3px 6px;
-                  font-size: 12px;
+                  font-size: 14px;
                   border-radius: 6px;
                   background-color: royalblue;
                   cursor: pointer;

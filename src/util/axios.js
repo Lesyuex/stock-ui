@@ -28,7 +28,7 @@ export const axiosGet = (url, param) => {
 export const axiosPost = (url, data) => {
   return axios({
     url: url,
-    method: 'get',
+    method: 'post',
     data: data
   })
 }

@@ -3,7 +3,7 @@
     <div :class="{'second-row':index > 2, 'stock-single-info':true}" v-for="(stock,index) in sixStock" :key="index">
       <div class="content-wrap">
         <h5 class="stock-title">{{stock.name}}</h5>
-        <div class="text-align-left font-size-12 text-indent-1em"><span class=" font-size-16 font-weight-800">21374.37</span> -500.00 -3.90%</div>
+        <div class="tal fs12 ti1em"><span class=" fs16 fw800">21374.37</span> -500.00 -3.90%</div>
       </div>
       <div class="share-chart">
         <single-minutes-line-chart :current-stock="stock"></single-minutes-line-chart>

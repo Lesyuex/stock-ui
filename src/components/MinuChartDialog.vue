@@ -7,18 +7,18 @@
     :modal-append-to-body="true"
     :append-to-body="true"
     style="border-radius: 5px">
-    <minutes-line-bar :current-stock="currentStock"></minutes-line-bar>
+    <choice-chart :market-code="marketCode"/>
   </el-dialog>
 </template>
 <script>
-import MinutesLineBar from '../view/stock/components/MinutesLineBar'
+import ChoiceChart from '../view/stock/components/ChoiceChart'
 export default {
   components: {
-    MinutesLineBar
+    ChoiceChart
   },
   props: {
-    currentStock: {
-      type: Object,
+    marketCode: {
+      type: String,
       required: true
     }
   },

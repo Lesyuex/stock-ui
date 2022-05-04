@@ -77,17 +77,14 @@ export default {
 }
 </script>
 
-<style lang="less">
-@color: #101116;
+<style>
 #app1 {
   height: 100vh;
   width: 100vw;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  background-color: #101116;
   color: #adb4c2;
-  background-color: @color;
-
 }
 </style>
