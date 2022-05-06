@@ -1,27 +1,21 @@
 <template>
   <div class="count-wrap">
-    <bar-line-chart :custom-option="customOption" style="height: calc(100% - 26px)"/>
-    <div class="num-box">
-      <div class="bar" style="background-color: #ee4957">
-        <div class="text" style="color: #ee4957;text-align: left">涨{{ upDownDetail.up }}家</div>
-      </div>
-      <div class="bar" style="background-color: gray">
-        <div class="text" style="font-size: 12px;color: gray;left: -40px">平{{ upDownDetail.flat }}家</div>
-      </div>
-      <div class="bar" style="background-color: #01d078">
-        <div class="text" style="font-size: 12px;color: #01d078;text-align: right;right: 0">跌{{ upDownDetail.down }}家</div>
-      </div>
+    <div style="width: 250px;height: 100px;position: absolute;right: 0;z-index: 999">
+      <bar-pie-chart :pieData="pieData" ref="pie"/>
     </div>
+    <bar-line-chart :custom-option="customOption" style="height: 100%"/>
   </div>
 </template>
 <script>
 import BarLineChart from '../components/BarLineChart'
 import openTimer from '../../../mixins'
+import BarPieChart from '../components/BarPieChart'
 
 export default {
   mixins: [openTimer],
   components: {
-    BarLineChart
+    BarLineChart,
+    BarPieChart
   },
   name: 'CountView',
   data () {
@@ -32,18 +26,22 @@ export default {
         flat: 0,
         num: 0
       },
+      pieData: [],
       customOption: {
         hideY1Line: true,
+        hideY1Label: true,
         hideLegend: true,
         xAxisData: [],
         seriesData: [],
-        seriLabelFS: 15,
-        chartTitle: '涨跌总览',
-        seriesNameArr: ['涨跌家数'],
+        seriLabelFS: 12,
+        x1LabelFS: 12,
+        chartTitle: '市场总览',
+        seriesNameArr: ['市场总览'],
         doubleYLine: false,
         seriLabelClr: ['#adb4c2'],
         showX1AllLabel: true,
-        gridBottom: 8
+        gridBottom: 4,
+        barWidth: 22
       }
     }
   },
@@ -73,16 +71,13 @@ export default {
           ]
         ]
         this.customOption.xAxisData = ['涨停', '>8%', '8~6%', '6~4%', '4~2%', '2~0%', '平', '0~-2%', '-2~-4%', '-4~-6%', '-6~-8%', '<-8%', '跌停']
-        this.upDownDetail = {
-          up: data.allUpNum,
-          down: data.allDownNum,
-          flat: data.flatNum,
-          num: data.allUpNum + data.flatNum + data.allDownNum
-        }
-        const barArr = document.getElementsByClassName('bar')
-        barArr[0].style.width = (this.upDownDetail.up / this.upDownDetail.num * 100) + '%'
-        barArr[1].style.width = (this.upDownDetail.flat / this.upDownDetail.num * 100) + '%'
-        barArr[2].style.width = (this.upDownDetail.down / this.upDownDetail.num * 100) + '%'
+        this.pieData = [
+          {value: data.allUpNum * 1, name: '涨'},
+          {value: data.flatNum * 1, name: '平'},
+          {value: data.allDownNum * 1, name: '跌'}
+        ]
+
+        this.$refs.pie.initOptions()
       }).finally(() => {
         if (this.timer) {
           setTimeout(function () {
@@ -98,32 +93,8 @@ export default {
 .count-wrap {
   position: relative;
   background-color: #161a23;
-  height: calc(100% - 16px);
-  margin: 8px 4px;
+  height: 420px;
+  margin-top: 8px;
   border-radius: 5px;
-
-  .num-box {
-    height: 30px;
-    &::before,&::after{
-      content: '';
-      display: block;
-      clear: both;
-    }
-    // 前三个盒子
-    div:nth-child(-n+3) {
-      position: relative;
-      float: left;
-      height: 6px;
-      width: calc(100% / 3);
-      div{
-        position: absolute;
-        top: 10px;
-        height: 16px;
-        font-size: 12px;
-        line-height: 16px;
-        min-width: 55px;
-      }
-    }
-  }
 }
 </style>

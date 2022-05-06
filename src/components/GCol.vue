@@ -125,7 +125,7 @@ export default {
   width: (@unit-width)*24;
 }
 /*小屏 把中屏大屏隐藏*/
-@media screen and (max-width: 1424px) {
+@media screen and (max-width: 1920px) {
   .g-col {
    // background-color: pink;
     width: 1280px;
@@ -229,7 +229,7 @@ export default {
 }
 
 /*中屏*/
-@media screen and (min-width: 1424px) {
+@media screen and (min-width: 1920px) {
   .g-col {
     //background-color: #21bf74;
   }

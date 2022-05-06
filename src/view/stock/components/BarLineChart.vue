@@ -42,8 +42,8 @@ export default {
         color: data.color || ['#fac858', '#5485E8', '#59D7A5'],
         title: {
           text: data.chartTitle || '',
-          top: data.chartTitleTop || 4,
-          left: data.chartTitleLeft || 0,
+          top: data.chartTitleTop || 12,
+          left: data.chartTitleLeft || 4,
           textStyle: {
             align: 'center',
             color: data.chartTitleColor || '#fff',
@@ -92,7 +92,8 @@ export default {
               show: data.hideX1 ? false : !data.hideX1Label,
               interval: data.showX1AllLabel ? 0 : null,
               formatter: data.x1LableFormatter ? data.x1LableFormatter : '{value}',
-              color: data.x1LabelColor || '#adb4c2'
+              color: data.x1LabelColor || '#adb4c2',
+              fontSize: data.x1LabelFS || 12
             },
             splitLine: {
               show: data.hideX1 ? false : data.showX1Split
@@ -149,10 +150,10 @@ export default {
           fontSize: data.yFontSize || 16,
           splitNumber: data.splitNumber || 3,
           axisLine: {
-            show: data.hideY1 ? false : !data.hideY1Line
+            show: !data.hideY1Line
           },
           axisLabel: {
-            show: data.hideY1 ? false : !data.hideY1Label,
+            show: !data.hideY1Label,
             formatter: data.yLabelFormatter ? data.yLabelFormatter : null
           },
           splitLine: {
@@ -197,7 +198,7 @@ export default {
               show: !data.hideSeriLabel,
               position: data.labelPosition ? data.labelPosition[index] : 'outside',
               color: data.seriLabelClr ? data.seriLabelClr[index] : '#21D8FF',
-              fontSize: data.seriLabelFS || 14,
+              fontSize: data.seriLabelFS || 12,
               formatter: data.dataType ? (data.dataType === 'percent' ? '{c}%' : '{c}') : '{c}'
             },
             itemStyle: {

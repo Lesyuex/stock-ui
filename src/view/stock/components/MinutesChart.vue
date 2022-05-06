@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-wrap">
+  <div style="width: 100%;height: 100%">
       <echarts :options="options"/>
   </div>
 </template>
@@ -97,7 +97,8 @@ export default {
             })
             let html = '<div>' + moment(arr[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
             const dataIndex = arr[0].dataIndex
-            const currentPrice = this.stockData.newestMinutes[dataIndex][1]
+            const currentMinu = this.stockData.newestMinutes[dataIndex]
+            const currentPrice = currentMinu && currentMinu[1] ? currentMinu[1] : '-'
             const marker = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
             const priceText = `<div style="text-align: left">${marker}价格：${currentPrice}</div>`
             const value1 = arr[0].value ? (arr[0].value * 1).toFixed(2) : '-'
@@ -132,10 +133,10 @@ export default {
           {
             containLabel: false,
             left: 'center',
-            right: 50,
+
             width: '98%',
             height: '20%',
-            bottom: 20
+            bottom: 8
           }
         ],
         xAxis: [
@@ -202,7 +203,7 @@ export default {
               }
             },
             axisTick: {
-              show: false
+              show: true
             },
             splitLine: {
               show: false,
@@ -427,10 +428,3 @@ export default {
   }
 }
 </script>
-<style scoped lang="less">
-.chart-wrap {
-  width: 100%;
-  height: 100%;
-}
-
-</style>

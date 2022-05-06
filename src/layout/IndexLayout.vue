@@ -12,6 +12,10 @@
           <i class="el-icon-s-platform"></i>
           <span slot="title">癌股</span>
         </el-menu-item>
+        <el-menu-item index="1" @click="routeTo('/china-share')">
+          <i class="el-icon-coin"></i>
+          <span slot="title">资金</span>
+        </el-menu-item>
         <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-s-grid"></i>
@@ -50,7 +54,7 @@
     </el-aside>
 
     <el-container>
-      <el-header>
+      <el-header style="height: 52px">
         <right-header @menuVisible="menuVisible" ref="header"></right-header>
       </el-header>
 
@@ -111,7 +115,7 @@ export default {
 </script>
 <style>
 .el-header {
-  padding: 0;
+  padding: 12px 12px 0 12px;
 }
 .el-aside {
   color: #333;

@@ -23,11 +23,9 @@ export default {
   *{
     box-sizing: border-box;
   }
-}
-
-/*g-row子孩子带有class属性切为col开头的元素*/
-.g-row div[class^="g-col"] {
-  /*使用float布局*/
-  float: left;
+  >div{
+    /*使用float布局*/
+    float: left;
+  }
 }
 </style>

@@ -13,7 +13,7 @@ export default {
 .card-wrap{
   height: calc(100vh - 60px);
   background-color: transparent;
-  padding:8px;
+  padding:0 8px;
   overflow: auto;
   box-sizing: border-box;
 }

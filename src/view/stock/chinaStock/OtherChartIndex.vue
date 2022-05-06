@@ -1,12 +1,9 @@
 <template>
   <div class="main-stocks-wrap">
-    <div :class="{'second-row':index > 2, 'stock-single-info':true}" v-for="(stock,index) in sixStock" :key="index">
+    <div class="stock-single-info" v-for="(stock,index) in sixStock" :key="index">
       <div class="content-wrap">
         <h5 class="stock-title">{{stock.name}}</h5>
         <div class="tal fs12 ti1em"><span class=" fs16 fw800">21374.37</span> -500.00 -3.90%</div>
-      </div>
-      <div class="share-chart">
-        <single-minutes-line-chart :current-stock="stock"></single-minutes-line-chart>
       </div>
     </div>
   </div>
@@ -25,11 +22,11 @@ export default {
     return {
       sixStock: [
         {name: '上证指数', market: 'sh', code: '000001'},
-        {name: '深证成指', market: 'sz', code: '399001'},
         {name: '创业板指', market: 'sz', code: '399006'},
-        {name: '沪深300', market: 'sh', code: '000300'},
         {name: '上证50', market: 'sh', code: '000016'},
-        {name: '中小100', market: 'sz', code: '399005'}
+        {name: '深证成指', market: 'sz', code: '399001'},
+        {name: '沪深300', market: 'sh', code: '000300'},
+        {name: '科创50', market: 'sh', code: '000688'}
       ],
       currentStock: {
         market: 'sh',
@@ -42,19 +39,14 @@ export default {
 
 <style scoped>
 .main-stocks-wrap{
-  margin: 6px 0;
   background-color: #313237;
   border-radius: 4px;
 }
 .main-stocks-wrap{
-  height: 294px;
   background-color: transparent;
 }
 .main-stocks-wrap .stock-single-info{
   float: left;
-  width: calc(94% / 3);
-  margin: 0 1% 0 1%;
-  height: calc(144px - 1%);
   background-color: #21bf74;
   color: white;
   border-radius: 4px;

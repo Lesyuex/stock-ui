@@ -107,7 +107,7 @@ export default {
       const volume = this.newestInfo.volume
       if (!volume) return ''
       if (volume > 100000000) return (volume / 100000000).toFixed(2) + '亿'
-      if (volume > 10000) return (volume / 10000).toFixed(2) + '万'
+      if (volume > 10000) return (volume / 10000).toFixed(0) + '万'
       return volume
     },
     turnOver () {
@@ -151,8 +151,9 @@ export default {
 <style scoped lang="less">
 .main-wrap {
   padding: 0 12px;
+  height: 100%;
   box-sizing: border-box;
-
+color:#ccc;
   .title-wrap {
     position: relative;
     height: 40px;
@@ -178,7 +179,7 @@ export default {
       background-color: #f56c6c;
       color: #fcecff;
       border-radius: 2px;
-      padding: 1px 4px;
+      padding: 2px 6px;
     }
   }
 

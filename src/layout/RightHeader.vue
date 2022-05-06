@@ -141,12 +141,10 @@ export default {
 
 .header-wrap {
   height: 40px;
-  margin: 8px 8px 0 8px;
   box-sizing: border-box;
   border-radius: 4px;
   background-color: #161a23;
   /*清楚浮动导致父元素高度为0*/
-
   &::before, &::after {
     display: block;
     content: '';
@@ -180,8 +178,8 @@ export default {
       i {
         position: absolute;
         left: 5px;
-        top: 13px;
-        font-size: 14px;
+        top: 12px;
+        font-size: 16px;
         cursor: pointer;
         z-index: 999;
       }
@@ -193,6 +191,7 @@ export default {
         height: 32px;
         padding-left: 25px;
         color: #adb4c2;
+        font-size: 16px;
         background-color: rgba(0, 0, 0, 0.5);
         outline: none;
         border: none;

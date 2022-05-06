@@ -11,7 +11,7 @@
   </el-dialog>
 </template>
 <script>
-import ChoiceChart from '../view/stock/components/ChoiceChart'
+import ChoiceChart from '../view/stock/components/StockChoiceChart'
 export default {
   components: {
     ChoiceChart

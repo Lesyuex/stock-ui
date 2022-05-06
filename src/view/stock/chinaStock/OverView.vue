@@ -1,22 +1,19 @@
 <template>
-  <el-carousel indicator-position="none" style="background-color: transparent" :autoplay="false">
+  <el-carousel indicator-position="none" style="background-color: transparent;height: 420px;margin-top: 8px" :autoplay="false">
     <el-carousel-item v-for="(arr,index) in singleList" :key="index">
       <div class="main-stocks-wrap">
         <div
-          v-for="(item,sort) in arr"
-          :class="{'stock-single-info':true,
-           'green-class':item.upDownValue<0,'red-class':item.upDownValue>0,'default-color':item.upDownValue === 0,
-           'border-top-left-radius':sort===0,'border-top-right-radius':sort===1,'border-bottom-left-radius':sort===4 ,'border-bottom-right-radius':sort===5}"
+          v-for="(item) in arr"
+          class="stock-single-info"
           :key="item.code"
           @click="checkStock(item.marketCode)">
-          <div class="title-wrap ">{{ item.name }}</div>
-          <div class="index-wrap fw800">
+          <span class="title-wrap">{{ item.name }}</span>
+          <span class="index-wrap">
             <i class="el-icon-caret-bottom" v-if="item.upDownValue<0"/>
             <i class="el-icon-minus" v-else-if="item.upDownValue===0"/>
             <i class="el-icon-caret-top" v-else/>
-            {{ item.currentPrice }}
-          </div>
-          <div class="updown-wrap ">{{ item.upDownValue }}&nbsp;{{ item.upDownPercent }}%</div>
+            {{ item.currentPrice }}</span>
+          <span class="updown-wrap">{{ item.upDownValue }}&nbsp;{{ item.upDownPercent }}%</span>
         </div>
       </div>
     </el-carousel-item>
@@ -38,11 +35,13 @@ export default {
     return {
       indexList: [
         {name: '上证指数', marketCode: 'sh000001'},
-        {name: '创业板指', marketCode: 'sz399006'},
         {name: '深证成指', marketCode: 'sz399001'},
-        {name: '沪深300', marketCode: 'sh000300'},
+        {name: '创业板指', marketCode: 'sz399006'},
         {name: '上证50', marketCode: 'sh000016'},
-        {name: '中小100', marketCode: 'sz399005'}
+        {name: '沪深300', marketCode: 'sh000300'},
+        {name: '科创50', marketCode: 'sh000688'},
+        {name: '恒生指数', marketCode: 'hkHSI'},
+        {name: '恒生科技指数', marketCode: 'hkHSTECH'}
       ],
       singleList: [
 
@@ -74,7 +73,7 @@ export default {
           single.marketCode = marketCode
           const count = i + 1
           arr.push(single)
-          if (count % 6 === 0) {
+          if (count % 8 === 0) {
             singleList.push(arr)
             arr = []
           }
@@ -94,28 +93,65 @@ export default {
 
 <style scoped lang="less">
 .main-stocks-wrap {
-  height: 100%;
+  height: 420px;
+  width: 100%;
+  // background-color: #a17f7f;
+  padding: 0 8px;
+  box-sizing: border-box;
   &::before,&::after{
     content: '';
     display: block;
     clear: both;
   }
-  margin: 8px 4px;
 }
 .main-stocks-wrap .stock-single-info {
   float: left;
   width: calc(50% - 4px);
+  height: calc((100% - 24px)/ 4);
   cursor: pointer;
   color: #ffffff;
-  margin-bottom: 8px;
   text-align: center;
+  background-color: #42b983;
+  &:nth-child(-n+6){
+    margin-bottom: 8px;
+  }
+  &:nth-child(2n){
+    margin-left: 4px;
+  }
+  &:nth-child(2n+1){
+    margin-right: 4px;
+  }
+  &:nth-child(1){
+    border-top-left-radius: 5px;
+  }
+  &:nth-child(2){
+    border-top-right-radius: 5px;
+  }
+  &:nth-child(7){
+    border-bottom-left-radius: 5px;
+  }
+  &:nth-child(8){
+    border-bottom-right-radius: 5px;
+  }
+  span{
+    display: block;
+    &.title-wrap {
+      height: 30px;
+      line-height: 30px;
+      font-size: 13px;
+    }
+    &.index-wrap {
+      height: 36px;
+      line-height: 36px;
+    }
+    &.updown-wrap {
+      height: 30px;
+      line-height: 30px;
+      font-size: 12px;
+    }
+  }
 }
-.stock-single-info:nth-child(2n+1){
-  margin-right: 4px;
-}
-.stock-single-info:nth-child(2n){
-  margin-left: 4px;
-}
+
 .default-color{
   background-color: #161a23;
 }
@@ -125,21 +161,7 @@ export default {
 .red-class {
   background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
 }
-.stock-single-info .title-wrap {
-  height: 30px;
-  line-height: 30px;
-  font-size: 13px;
-}
-.stock-single-info .index-wrap {
-  height: 36px;
-  line-height: 36px;
-}
-.stock-single-info .updown-wrap {
-  height: 30px;
-  line-height: 30px;
-  font-size: 12px;
-}
 /deep/ .el-carousel__container {
-  height: 320px !important;
+  height: 420px !important;
 }
 </style>

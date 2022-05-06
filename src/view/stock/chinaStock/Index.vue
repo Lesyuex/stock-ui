@@ -24,7 +24,7 @@ import MainStocksIndex from './OtherChartIndex'
 import OverView from './OverView'
 import CountView from './CountView'
 import FundingDetail from './FundingDetail'
-import ChoiceChart from '../components/ChoiceChart'
+import ChoiceChart from '../components/StockChoiceChart'
 export default {
   name: 'MainTest',
   components: {

@@ -1,13 +1,6 @@
 <template>
   <div class="funding-wrap">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="北向资金" name="北向资金">
-        <bar-line-chart :custom-option="s2n"/>
-      </el-tab-pane>
-      <el-tab-pane label="南向资金" name="南向资金">
-        <bar-line-chart :custom-option="n2s" ref="n2s"/>
-      </el-tab-pane>
-    </el-tabs>
+    <bar-line-chart :custom-option="s2n"/>
   </div>
 </template>
 <script>
@@ -26,10 +19,11 @@ export default {
       n2sTurnover: '-',
       activeName: '北向资金',
       s2n: {
-        gridWidth: '90%',
+        gridWidth: '96%',
         gridLeft: 10,
         hideX1: true,
         hideSeriLabel: true,
+        hideY1Line: true,
         xAxisData: [],
         seriesData: [],
         seriesNameArr: ['沪股通', '深股通', '北向资金'],

@@ -1,13 +1,15 @@
 <template>
   <div class="minutes-wrap">
-    <newest-info :newestInfo="stockData.newestInfo" :marketCode="marketCode"/>
+    <div class="info-wrap">
+      <newest-info :newestInfo="stockData.newestInfo" :marketCode="marketCode"/>
+    </div>
     <div class="choice-wrap">
       <ul>
         <li
-          :key="choice.name"
+          :key="index"
           :class="{'li-active':choice.code === comInfo.code}"
           @click="choiceCom(choice)"
-          v-for="choice in choiceArr">
+          v-for="(choice,index) in choiceArr">
           {{ choice.name }}
         </li>
       </ul>
@@ -17,15 +19,26 @@
         <component :is="comInfo.com" :stockData="stockData"></component>
       </keep-alive>
     </div>
+    <div class="other-wrap">
+      <ul>
+        <li
+          :key="index"
+          :class="{'li-active':other.code === comInfo.code}"
+          v-for="(other,index)  in otherArr">
+          {{ other.name }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
 import NewestInfo from './NewestInfo'
 import Handicap from './Handicap'
 import MinutesChart from './MinutesChart'
+import openTimer from '../../../mixins'
 
 export default {
-  mixins: [],
+  mixins: [openTimer],
   name: 'ChoiceChart', // 上下两个grid(分时图和量图)
   props: {
     marketCode: {
@@ -42,6 +55,9 @@ export default {
         {name: '日K', com: '', code: '3'},
         {name: '周K', com: '', code: '4'},
         {name: '月K', com: '', code: '5'}
+      ],
+      otherArr: [
+        {name: '成分股', com: 'MinutesChart', code: '1'}
       ],
       comInfo: {
         com: 'MinutesChart',
@@ -88,13 +104,14 @@ export default {
     },
     getMinutesData () {
       const that = this
-      this.$axiosGet(`/stock/get/minutes/${this.marketCode}`).then(res => {
+      this.$axiosGet(`/index/get/minutes/${this.marketCode}`).then(res => {
         that.stockData = res.data
       }).finally(() => {
         if (this.timer) {
-          setTimeout(function () {
+          window.clearTimeout(that.timer)
+          that.timer = setTimeout(function () {
             that.refreshData()
-          }, 3333)
+          }, 2000)
         }
       })
     }
@@ -105,24 +122,23 @@ export default {
 .minutes-wrap {
   background-color: #161a23;
   border-radius: 5px;
-  height: 402px;
+  height: calc(100vh - 76px);
+  min-height: 420px;
   margin: 8px 4px;
-}
-
-.minutes-wrap:before, .minutes-wrap:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.minutes-wrap > div {
-  float: left;
-  width: 100%;
-}
-
-.choice-wrap {
+  &:before, &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  > div {
+    float: left;
+    width: 100%;
+  }
+  .info-wrap{
+    height: 112px;
+  }
   ul {
-    height: 28px;
+    height: 44px;
 
     li {
       float: left;
@@ -131,26 +147,31 @@ export default {
       padding: 8px 12px;
       line-height: 28px;
       cursor: pointer;
+      font-size: 15px;
     }
-      .li-active{
-        color: lightskyblue;
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          left: 22px;
-          width: 10px;
-          bottom: 6px;
-          height: 2px;
-          background-color: skyblue;
-        }
+
+    .li-active {
+      color: lightskyblue;
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 12px;
+        bottom: 8px;
+        height: 2px;
+        left: calc(50% - 6px);
+        background-color: skyblue;
       }
+    }
+  }
+  .chart-wrap {
+    width: 100%;
+    height: 264px;
+  }
+  .other-wrap{
+    height: calc(100% - 420px);
+    box-sizing: border-box;
   }
 }
-
-.chart-wrap {
-  width: 100%;
-  height: calc(100% - 130px);
-}
-
 </style>
