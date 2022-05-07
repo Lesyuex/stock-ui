@@ -37,17 +37,19 @@ export default {
   methods: {
     getSeriesData (stockData) {
       const xDataArr = [] // 时间轴
+      const priceArr = []
       const averagePriceArr = [] // 均价 数据
       const percentArr = [] // 涨跌幅 数据
       const focusPoint = [[null, null]] // 最新涨跌幅位置
       const volumeArr = [] // 成交量（手）
-      const yestClosePrice = stockData.yestclose // 昨天收盘价
       const date = moment().format('YYYY-MM-DD')
       const minutesDataArr = stockData.newestMinutes
       for (let index = 0; index < timeXData.length; index++) {
         const x = `${date} ${timeXData[index]}`
         xDataArr.push(x)
         const minutesData = minutesDataArr[index]
+        // 当前价
+        priceArr.push(minutesData ? minutesData[1] : null)
         // 均价,成交量和涨跌幅
         const averagePrice = minutesData ? minutesData[5] : null
         averagePriceArr.push(averagePrice)
@@ -65,49 +67,47 @@ export default {
           }
         }
       }
-      return {xDataArr, yestClosePrice, averagePriceArr, percentArr, focusPoint, volumeArr}
-    },
-    getDoubleYInfo (percentArr, yestClosePrice) {
-      // 计算两边Y轴的最大最小值
-      const max = Math.max(...percentArr)
-      const min = Math.min(...percentArr)
-      const rightYMaxValue = Math.abs(max) > Math.abs(min) ? Math.abs(max) : Math.abs(min)
-      const leftYMaxValue = yestClosePrice * (1 + (rightYMaxValue / 100)).toFixed(2)
-      const leftYMinValue = yestClosePrice * (1 - (rightYMaxValue / 100)).toFixed(2)
-      return {rightYMaxValue, leftYMaxValue, leftYMinValue}
+      return {xDataArr, priceArr, averagePriceArr, percentArr, focusPoint, volumeArr}
     },
     initOptions () {
       const stockData = this.stockData
       const {
         xDataArr,
-        yestClosePrice,
+        priceArr,
         averagePriceArr,
         percentArr,
         focusPoint,
         volumeArr
       } = this.getSeriesData(stockData)
-      const {rightYMaxValue, leftYMaxValue, leftYMinValue} = this.getDoubleYInfo(percentArr, yestClosePrice)
       this.options = {
         tooltip: {
           show: true,
           trigger: 'axis',
           formatter: (params) => {
-            const arr = params.sort((a, b) => {
-              return a.seriesIndex - b.seriesIndex
-            })
-            let html = '<div>' + moment(arr[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
-            const dataIndex = arr[0].dataIndex
+            let html = '<div>' + moment(params[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
+            const dataIndex = params[0].dataIndex
             const currentMinu = this.stockData.newestMinutes[dataIndex]
+            // 价格
+            const marker1 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
             const currentPrice = currentMinu && currentMinu[1] ? currentMinu[1] : '-'
-            const marker = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
-            const priceText = `<div style="text-align: left">${marker}价格：${currentPrice}</div>`
-            const value1 = arr[0].value ? (arr[0].value * 1).toFixed(2) : '-'
-            const value2 = arr[1].value ? arr[1].value : '-'
-            const value3 = arr[2].value ? (arr[2].value * 1).toFixed(2) : '-'
-            const percentText = '<div style="text-align: left">' + arr[0].marker + arr[0].seriesName + '：' + value1 + '%</div>'
-            const volumeText = '<div style="text-align: left">' + arr[1].marker + arr[1].seriesName + '：' + value2 + '手</div>'
-            const averagePriceText = '<div style="text-align: left">' + arr[2].marker + arr[2].seriesName + '：' + value3 + '</div>'
-            return html + priceText + percentText + volumeText + averagePriceText
+            const priceText = `<div style="text-align: left">${marker1}价格：${currentPrice}</div>`
+            // 涨跌幅
+            const percent = currentMinu && currentMinu[6] ? currentMinu[6] : '-'
+            let color
+            if (percent > 0) {
+              color = '#ee4957'
+            } else if (percent < 0) {
+              color = '#01d078'
+            } else {
+              color = 'gray'
+            }
+            const marker2 = `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${color};"></span>`
+            const percentText = `<div style="text-align: left">${marker2}涨幅：${percent}%</div>`
+            // 均价
+            const marker3 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ff9e12;"></span>'
+            const average = currentMinu && currentMinu[5] ? currentMinu[5] : '-'
+            const averagePriceText = `<div style="text-align: left">${marker3}均价：${average}</div>`
+            return html + priceText + percentText + averagePriceText
           }
         },
         axisPointer: {
@@ -241,9 +241,9 @@ export default {
           {
             type: 'value',
             gridIndex: 0,
-            min: leftYMinValue,
-            max: leftYMaxValue,
-            interval: (leftYMaxValue - leftYMinValue) / 4,
+            min: this.stockData.y1MinValue,
+            max: this.stockData.y1MaxValue,
+            interval: (this.stockData.y1MaxValue - this.stockData.y1MinValue) / 4,
             axisLine: {
               show: false,
               lineStyle: {
@@ -260,7 +260,7 @@ export default {
               show: false
             },
             axisLabel: {
-              color: '#858585',
+              color: 'rgba(255,255,255,0.4)',
               inside: true,
               formatter: function (value) {
                 return value.toFixed(2)
@@ -278,9 +278,9 @@ export default {
           {
             type: 'value',
             gridIndex: 0,
-            max: rightYMaxValue,
-            min: -rightYMaxValue,
-            interval: rightYMaxValue / 2,
+            max: this.stockData.y2MaxValue,
+            min: -this.stockData.y2MaxValue,
+            interval: this.stockData.y2MaxValue / 2,
             axisTick: {
               show: false
             },
@@ -294,7 +294,7 @@ export default {
               }
             },
             axisLabel: {
-              color: '#858585',
+              color: 'rgba(255,255,255,0.4)',
               formatter: function (value) {
                 return `${value.toFixed(2)}%`
               },
@@ -336,12 +336,11 @@ export default {
           }
         ],
         series: [
-
           {
-            name: '涨跌幅',
+            name: '当前价',
             type: 'line',
             xAxisIndex: 0,
-            yAxisIndex: 1,
+            yAxisIndex: 0,
             // 是否显示小点点
             showSymbol: false,
             //
@@ -356,7 +355,7 @@ export default {
               opacity: 0.1
             },
             // data:[ [xValue,yValue]]
-            data: percentArr
+            data: priceArr
           },
           // 成交量
           {

@@ -157,7 +157,7 @@ export default {
             formatter: data.yLabelFormatter ? data.yLabelFormatter : null
           },
           splitLine: {
-            show: data.hideY1 ? false : !data.hideY1Split,
+            show: !data.hideY1Split,
             lineStyle: {
               type: 'dashed',
               width: 0.5,

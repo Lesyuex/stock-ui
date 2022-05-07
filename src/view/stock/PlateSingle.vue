@@ -1,6 +1,6 @@
 <template>
   <div class="plate-wrap">
-
+    领涨 - 领跌
   </div>
 </template>
 
@@ -12,10 +12,12 @@ export default {
 
 <style scoped lang="less">
 .plate-wrap {
-  width: 100%;
-  height: 420px;
-  margin: 8px 0;
-  background-color: #ccc;
+  width: calc(100% - 8px);
+  margin: 0 4px;
+  height: calc((100vh - 68px)/2 - 8px);
+  min-height: 420px;
+  background-color: #161a23;
+  border-radius: 5px;
 
   &:nth-child(1) {
     border-right: 1px solid black;

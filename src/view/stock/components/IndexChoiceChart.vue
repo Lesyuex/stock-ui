@@ -1,23 +1,25 @@
 <template>
   <div class="minutes-wrap">
-    <div class="info-wrap">
-      <newest-info :newestInfo="stockData.newestInfo" :marketCode="marketCode"/>
-    </div>
-    <div class="choice-wrap">
-      <ul>
-        <li
-          :key="index"
-          :class="{'li-active':choice.code === comInfo.code}"
-          @click="choiceCom(choice)"
-          v-for="(choice,index) in choiceArr">
-          {{ choice.name }}
-        </li>
-      </ul>
-    </div>
-    <div class="chart-wrap">
-      <keep-alive>
-        <component :is="comInfo.com" :stockData="stockData"></component>
-      </keep-alive>
+    <div class="stock-wrap">
+      <div class="info-wrap">
+        <newest-info :newestInfo="stockData.newestInfo" :marketCode="marketCode"/>
+      </div>
+      <div class="choice-wrap">
+        <ul>
+          <li
+            :key="index"
+            :class="{'li-active':choice.code === comInfo.code}"
+            @click="choiceCom(choice)"
+            v-for="(choice,index) in choiceArr">
+            {{ choice.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="chart-wrap">
+        <keep-alive>
+          <component :is="comInfo.com" :stockData="stockData"></component>
+        </keep-alive>
+      </div>
     </div>
     <div class="other-wrap">
       <ul>
@@ -122,9 +124,11 @@ export default {
 .minutes-wrap {
   background-color: #161a23;
   border-radius: 5px;
-  height: calc(100vh - 76px);
-  min-height: 420px;
-  margin: 8px 4px;
+  height: calc(100vh - 68px);
+  min-height: 840px;
+  width: calc(100% - 8px);
+  margin: 0 4px;
+
   &:before, &:after {
     content: '';
     display: block;
@@ -133,9 +137,16 @@ export default {
   > div {
     float: left;
     width: 100%;
+    height: calc(100% / 2);
+    box-sizing: border-box;
   }
-  .info-wrap{
-    height: 112px;
+  .stock-wrap{
+    .info-wrap{
+      height: 112px;
+    }
+    .chart-wrap{
+      height: calc(100% - 156px);
+    }
   }
   ul {
     height: 44px;
@@ -164,14 +175,6 @@ export default {
         background-color: skyblue;
       }
     }
-  }
-  .chart-wrap {
-    width: 100%;
-    height: 264px;
-  }
-  .other-wrap{
-    height: calc(100% - 420px);
-    box-sizing: border-box;
   }
 }
 </style>

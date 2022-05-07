@@ -9,7 +9,7 @@
 <script>
 import BarLineChart from '../components/BarLineChart'
 import openTimer from '../../../mixins'
-import BarPieChart from '../components/BarPieChart'
+import BarPieChart from '../components/PieChart'
 
 export default {
   mixins: [openTimer],
@@ -28,6 +28,7 @@ export default {
       },
       pieData: [],
       customOption: {
+        hideY1Split: true,
         hideY1Line: true,
         hideY1Label: true,
         hideLegend: true,
@@ -93,8 +94,10 @@ export default {
 .count-wrap {
   position: relative;
   background-color: #161a23;
-  height: 420px;
-  margin-top: 8px;
+  height: calc((100vh - 68px)/2);
+  min-height: 420px;
+  width: calc(100% - 8px);
+  margin: 0 4px;
   border-radius: 5px;
 }
 </style>

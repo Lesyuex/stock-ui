@@ -58,6 +58,9 @@ export default {
               smooth: 0.2,
               length: 5,
               length2: 10
+            },
+            emptyCircleStyle: {
+              color: '#161a23'
             }
           }
         ]
@@ -70,6 +73,6 @@ export default {
   div{
   width:100%;
   height: 100%;
-  background-color: transparent;
+  background-color: #161a23;
 }
 </style>

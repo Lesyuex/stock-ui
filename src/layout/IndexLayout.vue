@@ -51,6 +51,7 @@
           <span slot="title">测试</span>
         </el-menu-item>
       </el-menu>
+      <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>
     </el-aside>
 
     <el-container>
@@ -62,9 +63,7 @@
         <router-view/>
       </el-main>
     </el-container>
-    <img src="../assets/img.png" style="position: absolute;bottom: 20px;right: 20px;height: 60px;cursor: pointer"/>
   </el-container>
-
 </template>
 <script>
 import RightHeader from './RightHeader'
@@ -115,11 +114,12 @@ export default {
 </script>
 <style>
 .el-header {
-  padding: 12px 12px 0 12px;
+  padding: 10px 12px 2px 12px;
 }
 .el-aside {
   color: #333;
   width: unset;
+  position: relative;
 }
 .container {
   width: 100%;
@@ -129,6 +129,7 @@ export default {
   font-size: 18px !important;
 }
 .container #el-main {
+  margin: 0 !important;
   padding: 0 !important;
 }
 .el-menu {

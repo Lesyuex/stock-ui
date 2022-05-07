@@ -1,5 +1,7 @@
 <template>
   <vue-card>
+
+    <span style="background-color: #e45f47;font-size: 200px;font-weight: 800;color: white">涨</span>
     <div class="my-table">
       <el-table
         size="small"

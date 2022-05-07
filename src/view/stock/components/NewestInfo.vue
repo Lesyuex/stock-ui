@@ -179,7 +179,7 @@ color:#ccc;
       background-color: #f56c6c;
       color: #fcecff;
       border-radius: 2px;
-      padding: 2px 6px;
+      padding: 3px 8px;
     }
   }
 

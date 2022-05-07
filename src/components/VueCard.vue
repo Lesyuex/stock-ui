@@ -3,7 +3,6 @@
     <slot></slot>
   </div>
 </template>
-
 <script>
 export default {
   name: 'VueCard'
@@ -11,7 +10,7 @@ export default {
 </script>
 <style scoped>
 .card-wrap{
-  height: calc(100vh - 60px);
+  height: calc(100vh - 52px);
   background-color: transparent;
   padding:0 8px;
   overflow: auto;
