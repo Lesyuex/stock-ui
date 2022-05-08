@@ -12,7 +12,7 @@
       <div class="single-wrap">
         <span class="fs14 marginL6 fw500" :style="color">{{ valueChange }}&nbsp;&nbsp;{{ percentChange }}</span>
       </div>
-      <el-link :underline="false" class="collect-btn fs12">+自选</el-link>
+      <el-link :underline="false" class="collect-btn fs12" @click="collectStock">+自选</el-link>
     </div>
     <div class="detail-wrap">
       <div>
@@ -140,6 +140,11 @@ export default {
     color () {
       if (this.updownValue === 0) return ''
       return this.updownValue > 0 ? 'color:#ee4957' : 'color:#01d078'
+    }
+  },
+  methods: {
+    collectStock (stock) {
+      this.$message.success('恭喜你，请登录！')
     }
   }
 }

@@ -38,6 +38,7 @@ import NewestInfo from './NewestInfo'
 import Handicap from './Handicap'
 import MinutesChart from '../../../components/chart/MinutesChart'
 import openTimer from '../../../mixins'
+import KLineChart from '../../../components/chart/KLineChart'
 
 export default {
   mixins: [openTimer],
@@ -48,13 +49,13 @@ export default {
       required: true
     }
   },
-  components: {Handicap, NewestInfo, MinutesChart},
+  components: {Handicap, NewestInfo, MinutesChart, KLineChart},
   data () {
     return {
       choiceArr: [
         {name: '分时', com: 'MinutesChart', code: '1'},
         {name: '五日', com: 'FiveDay', code: '2'},
-        {name: '日K', com: '', code: '3'},
+        {name: '日K', com: 'KLineChart', code: '3'},
         {name: '周K', com: '', code: '4'},
         {name: '月K', com: '', code: '5'}
       ],
@@ -83,16 +84,6 @@ export default {
   },
   mounted () {
     this.refreshData()
-    const param = {
-      'code': '603138',
-      'endDate': '2022-04-29',
-      'ktype': 'day',
-      'startDate': '2022-04-20',
-      'type': 0
-    }
-    this.$axiosPost('/k/query', param).then(res => {
-      console.log(res)
-    })
   },
   methods: {
     choiceCom (choice) {

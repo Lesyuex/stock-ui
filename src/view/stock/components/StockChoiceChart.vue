@@ -15,14 +15,14 @@
       </ul>
     </div>
     <g-row style="height: 100%;">
-      <g-col md="20" style="height: 100%;">
+      <g-col :md="comInfo.code === 1 ? 20 :24" style="height: 100%;">
         <div class="chart-wrap">
           <keep-alive>
             <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode"></component>
           </keep-alive>
         </div>
       </g-col>
-      <g-col md="4" style="height: 100%;">
+      <g-col :md="comInfo.code === 1 ? 4 :0"   style="height: 100%;">
         <handicap :newest-info="stockData.newestInfo" :marketCode="marketCode"></handicap>
       </g-col>
     </g-row>
@@ -34,6 +34,7 @@ import NewestInfo from './NewestInfo'
 import Handicap from './Handicap'
 import MinutesChart from '../../../components/chart/MinutesChart'
 import openTimer from '../../../mixins'
+import KLineChart from '../../../components/chart/KLineChart'
 
 export default {
   mixins: [openTimer],
@@ -44,19 +45,19 @@ export default {
       required: true
     }
   },
-  components: {Handicap, NewestInfo, MinutesChart},
+  components: {Handicap, NewestInfo, MinutesChart, KLineChart},
   data () {
     return {
       choiceArr: [
-        {name: '分时', com: 'MinutesChart', code: '1'},
-        {name: '五日', com: 'FiveDay', code: '2'},
-        {name: '日K', com: '', code: '3'},
-        {name: '周K', com: '', code: '4'},
-        {name: '月K', com: '', code: '5'}
+        {name: '分时', com: 'MinutesChart', code: 1},
+        {name: '五日', com: 'FiveDay', code: 2},
+        {name: '日K', com: 'KLineChart', code: 3},
+        {name: '周K', com: '', code: 4},
+        {name: '月K', com: '', code: 5}
       ],
       comInfo: {
         com: 'MinutesChart',
-        code: '1'
+        code: 1
       },
       stockData: {
         newestInfo: {},

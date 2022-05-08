@@ -13,31 +13,47 @@ export default {
     lg: [String, Number]
   },
   name: 'GCol',
+  watch: {
+    span: function (){
+      this.initClass()
+    },
+    sm: function () {
+      this.initClass()
+    },
+    md:  function () {
+      this.initClass()
+    },
+    lg: function () {
+      this.initClass()
+    }
+  },
   data () {
     return {
       classList: ['g-col']
     }
   },
   created () {
-    if (this.$props.span) {
-      const span = this.$props.span
-      this.classList.push(`g-col-${span}`)
-    }
-    if (this.$props.sm) {
-      const span = this.$props.sm
-      this.classList.push(`col-sm-${span}`)
-    }
-    if (this.$props.md) {
-      const span = this.$props.md
-      this.classList.push(`col-md-${span}`)
-    }
-    if (this.$props.lg) {
-      const span = this.$props.lg
-      this.classList.push(`col-lg-${span}`)
-    }
+    this.initClass()
   },
-  mounted () {
-    console.log(this.classList)
+  methods: {
+    initClass () {
+      if (this.$props.span) {
+        const span = this.$props.span
+        this.classList.push(`g-col-${span}`)
+      }
+      if (this.$props.sm) {
+        const span = this.$props.sm
+        this.classList.push(`col-sm-${span}`)
+      }
+      if (this.$props.md) {
+        const span = this.$props.md
+        this.classList.push(`col-md-${span}`)
+      }
+      if (this.$props.lg) {
+        const span = this.$props.lg
+        this.classList.push(`col-lg-${span}`)
+      }
+    }
   }
 }
 </script>

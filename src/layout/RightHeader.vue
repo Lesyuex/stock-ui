@@ -123,11 +123,12 @@ export default {
     inputText () {
       const value = this.inputTextValue
       const arr = []
-      if (!value || value === '') return
-      for (let i = 0; i < this.stockList.length; i++) {
-        const stock = this.stockList[i]
-        if (stock.marketCode.indexOf(value) > -1 || stock.secNameCn.indexOf(value) > -1 || PinyinMatch.match(stock.secNameCn, value)) {
-          arr.push(stock)
+      if (value || value !== '') {
+        for (let i = 0; i < this.stockList.length; i++) {
+          const stock = this.stockList[i]
+          if (stock.marketCode.indexOf(value) > -1 || stock.secNameCn.indexOf(value) > -1 || PinyinMatch.match(stock.secNameCn, value)) {
+            arr.push(stock)
+          }
         }
       }
       this.filterList = arr
