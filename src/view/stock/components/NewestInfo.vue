@@ -3,7 +3,7 @@
     <div class="title-wrap">
       <div class="single-wrap">
         <span class="fs22 fw700">{{ newestInfo.name }}</span>
-        <img src="../../../assets/nation/china.png"/>
+        <img src="../../../assets/nation/china.png" alt="123"/>
         <span class="fs14 marginL6 fw500">{{ marketCode }}</span>
       </div>
       <div class="single-wrap">
@@ -131,9 +131,6 @@ export default {
     updownValue () {
       return this.newestInfo.upDownValue
     },
-    stockMarket () {
-      return 'sh'
-    },
     valueChange () {
       return this.updownValue ? (this.updownValue < 0 ? `-${this.updownValue}` : `+${this.updownValue}`) : ''
     },
@@ -153,7 +150,8 @@ export default {
   padding: 0 12px;
   height: 100%;
   box-sizing: border-box;
-color:#ccc;
+  color: #ccc;
+
   .title-wrap {
     position: relative;
     height: 40px;

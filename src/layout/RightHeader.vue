@@ -63,8 +63,8 @@
   </div>
 </template>
 <script>
-import VueCard from '../components/VueCard'
-import VueDialogModal from '../components/MinuChartDialog'
+import VueCard from '../components/layout/VueCard'
+import VueDialogModal from '../components/dialog/MinuChartDialog'
 import PinyinMatch from 'pinyin-match'
 
 export default {

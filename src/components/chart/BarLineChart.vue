@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Echarts from '../../../components/Echarts'
+import Echarts from './Echarts'
 
 export default {
   props: {
@@ -29,7 +29,7 @@ export default {
   watch: {
     customOption: {
       deep: true,
-      handler: function (val) {
+      handler: function () {
         this.initOptions()
       }
     }
@@ -41,13 +41,13 @@ export default {
         // 自定义系列颜色
         color: data.color || ['#fac858', '#5485E8', '#59D7A5'],
         title: {
-          text: data.chartTitle || '',
-          top: data.chartTitleTop || 12,
-          left: data.chartTitleLeft || 4,
+          text: data.title || '',
+          left: data.titleLeft || 4,
+          top: data.titleTop || 12,
           textStyle: {
             align: 'center',
-            color: data.chartTitleColor || '#fff',
-            fontSize: data.chartTitleFontSize || 16,
+            color: data.titleColor || '#fff',
+            fontSize: data.titleFS || 16,
             fontWeight: 400
           }
         },

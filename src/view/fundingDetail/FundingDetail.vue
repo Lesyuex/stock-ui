@@ -4,8 +4,8 @@
   </div>
 </template>
 <script>
-import BarLineChart from '../components/BarLineChart'
-import openTimer from '../../../mixins'
+import BarLineChart from '../../components/chart/BarLineChart'
+import openTimer from '../../mixins'
 import moment from 'moment'
 
 export default {

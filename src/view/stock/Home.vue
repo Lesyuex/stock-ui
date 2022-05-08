@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import IndexChoiceChart from '../stock/components/IndexChoiceChart'
-import OverView from '../stock/chinaStock/OverView'
-import FundingDetail from '../stock/chinaStock/FundingDetail'
-import CountView from '../stock/chinaStock/CountView'
-import PlateSingle from '../stock/PlateSingle'
-import BarPieChart from '../stock/components/PieChart'
+import IndexChoiceChart from './components/IndexChoiceChart'
+import OverView from './OverView'
+import FundingDetail from '../fundingDetail/FundingDetail'
+import CountView from './CountView'
+import PlateSingle from '../components/PlateSingle'
+import BarPieChart from '../../components/chart/PieChart'
 export default {
   name: 'Home',
   components: {

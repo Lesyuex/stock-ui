@@ -1,64 +1,12 @@
 <template>
   <el-container class="container">
     <el-aside :width="visibleMenu ? '64px' : '140px' " style="background-color: #161a23;" id="el-aside">
-      <el-menu
-        :collapse="visibleMenu"
-        :default-openeds="['2']"
-        :collapse-transition="false"
-        background-color="transparent"
-        text-color="#adb4c2"
-        active-text-color="dodgerblue">
-        <el-menu-item index="1" @click="routeTo('/china-share')">
-          <i class="el-icon-s-platform"></i>
-          <span slot="title">癌股</span>
-        </el-menu-item>
-        <el-menu-item index="1" @click="routeTo('/china-share')">
-          <i class="el-icon-coin"></i>
-          <span slot="title">资金</span>
-        </el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-s-grid"></i>
-            <span>板块</span>
-          </template>
-          <el-menu-item-group style="background-color: #121420">
-            <el-menu-item index="2-1" style="padding:0 0 0 20px;background-color: #121420;min-width: unset">
-              <template slot="title">
-                <i class="el-icon-place"></i>
-                <span>地域</span>
-              </template>
-            </el-menu-item>
-            <el-menu-item index="2-2"  style="padding:0 0 0 20px;background-color: #121420;min-width: unset">
-              <template slot="title">
-                <i class="el-icon-office-building"></i>
-                <span>行业</span>
-              </template>
-            </el-menu-item>
-            <el-menu-item index="2-3"  style="padding:0 0 0 20px;background-color: #121420;min-width: unset">
-              <template slot="title">
-                <i class="el-icon-s-opportunity"></i>
-                <span>概念</span>
-              </template>
-            </el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-menu-item index="3" @click="routeTo('/self-collect')">
-          <i class="el-icon-star-on"></i>
-          <span slot="title">自选</span>
-        </el-menu-item>
-        <el-menu-item index="4" @click="routeTo('/test-page')">
-          <i class="el-icon-toilet-paper"></i>
-          <span slot="title">测试</span>
-        </el-menu-item>
-      </el-menu>
-      <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>
+      <left-layout @routeTo="routeTo" @hideHeaderEventMenu="hideHeaderEventMenu" ref="asideMenu"/>
     </el-aside>
-
     <el-container>
       <el-header style="height: 52px">
         <right-header @menuVisible="menuVisible" ref="header"></right-header>
       </el-header>
-
       <el-main id="el-main">
         <router-view/>
       </el-main>
@@ -66,11 +14,13 @@
   </el-container>
 </template>
 <script>
+import LeftLayout from './LeftLayout'
 import RightHeader from './RightHeader'
-import VueCard from '../components/VueCard'
+import VueCard from '../components/layout/VueCard'
 
 export default {
   components: {
+    LeftLayout,
     RightHeader,
     VueCard
   },
@@ -92,15 +42,11 @@ export default {
       dom.addEventListener('click', () => {
         that.hideHeaderEventMenu()
       })
-      const menu = document.getElementById('el-aside')
-      menu.addEventListener('click', () => {
-        that.hideHeaderEventMenu()
-      })
     })
   },
   methods: {
     menuVisible (visible) {
-      this.visibleMenu = visible
+      this.$refs.asideMenu.visibleMenu = this.visibleMenu = visible
     },
     routeTo (path) {
       console.log(path)

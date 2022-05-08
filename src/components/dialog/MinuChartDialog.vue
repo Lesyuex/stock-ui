@@ -7,11 +7,11 @@
     :modal-append-to-body="true"
     :append-to-body="true"
     style="border-radius: 5px">
-    <choice-chart :market-code="marketCode"/>
+    <choice-chart :market-code="marketCode" v-if="dialogVisible"/>
   </el-dialog>
 </template>
 <script>
-import ChoiceChart from '../view/stock/components/StockChoiceChart'
+import ChoiceChart from '../../view/stock/components/StockChoiceChart'
 export default {
   components: {
     ChoiceChart

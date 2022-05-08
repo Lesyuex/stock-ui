@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import Echarts from '../../../components/Echarts'
-import {timeXData} from '../js/xAxisData'
+import Echarts from './Echarts'
+import {timeXData} from '../../view/stock/js/xAxisData'
 import moment from 'moment'
 export default {
   name: 'SingleMinutesLineChart',

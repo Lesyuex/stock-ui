@@ -7,13 +7,13 @@ export default new Router({
     {
       path: '/',
       name: 'IndexLayout',
-      redirect: '/self-collect',
+      redirect: '/stock-home',
       component: () => import('../layout/IndexLayout'),
       children: [
         {
-          path: '/china-share',
-          name: 'Index',
-          component: () => import('../view/stock/chinaStock/Index')
+          path: '/stock-home',
+          name: 'Home',
+          component: () => import('../view/stock/Home')
         },
         {
           path: '/self-collect',
@@ -23,7 +23,7 @@ export default new Router({
         {
           path: '/test-page',
           name: 'TestPage',
-          component: () => import('../view/main/Home')
+          component: () => import('../view/stock')
         }
       ]
     }

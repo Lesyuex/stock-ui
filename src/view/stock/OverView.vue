@@ -10,10 +10,11 @@
             @click="checkStock(item.marketCode)">
             <div class="title-wrap fs13">{{ item.name }}</div>
             <div class="index-wrap">
-            <i class="el-icon-caret-bottom" v-if="item.upDownValue<0"/>
-            <i class="el-icon-minus" v-else-if="item.upDownValue===0"/>
-            <i class="el-icon-caret-top" v-else/>
-            {{ item.currentPrice }}</div>
+              <i class="el-icon-caret-bottom" v-if="item.upDownValue<0"/>
+              <i class="el-icon-minus" v-else-if="item.upDownValue===0"/>
+              <i class="el-icon-caret-top" v-else/>
+              {{ item.currentPrice }}
+            </div>
             <div class="updown-wrap fs12">{{ item.upDownValue }}&nbsp;{{ item.upDownPercent }}%</div>
           </div>
         </div>
@@ -23,9 +24,10 @@
 </template>
 
 <script>
-import SingleMinutesLineChart from '../components/SingleMinutesLineChart'
-import Chart from '../../test/Chart'
-import openTimer from '../../../mixins'
+import SingleMinutesLineChart from '../../components/chart/SingleMinutesLineChart'
+import Chart from '../test/Chart'
+import openTimer from '../../mixins'
+
 export default {
   mixins: [openTimer],
   name: 'MainStocksIndex',
@@ -45,9 +47,7 @@ export default {
         {name: '恒生指数', marketCode: 'hkHSI', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
         {name: '恒生科技指数', marketCode: 'hkHSTECH', currentPrice: '-', upDownValue: '-', upDownPercent: '-'}
       ],
-      singleList: [
-
-      ],
+      singleList: [],
       marketCode: 'sh000001'
     }
   },
@@ -55,6 +55,9 @@ export default {
     this.getSingleInfo()
   },
   methods: {
+    refreshData () {
+      this.getSingleInfo()
+    },
     checkStock (marketCode) {
       this.marketCode = marketCode
       this.$bus.$emit('checkStock', this.marketCode)
@@ -82,9 +85,10 @@ export default {
       }).finally(() => {
         this.singleList = singleList.length === 0 ? [this.indexList] : singleList
         if (this.timer) {
-          setTimeout(function () {
-            that.getSingleInfo()
-          }, 3333)
+          window.clearTimeout(that.timer)
+          that.timer = setTimeout(function () {
+            that.refreshData()
+          }, 3000)
         }
       })
     }
@@ -93,70 +97,87 @@ export default {
 </script>
 
 <style scoped lang="less">
-.carousel-wrap{
-  height: calc((100vh - 68px)/2);
+.carousel-wrap {
+  height: calc((100vh - 68px) / 2);
   min-height: 420px;
+
   .main-stocks-wrap {
     width: calc(100% - 8px);
     margin: 0 4px;
     height: 100%;
     box-sizing: border-box;
-    &::before,&::after{
+
+    &::before, &::after {
       content: '';
       display: block;
       clear: both;
     }
+
     .stock-single-info {
       float: left;
       width: calc(50% - 4px);
-      height: calc((100% - 24px)/ 4);
+      height: calc((100% - 24px) / 4);
       cursor: pointer;
       color: #ffffff;
       text-align: center;
       background-color: #42b983;
-      &:nth-child(-n+6){
+
+      &:nth-child(-n+6) {
         margin-bottom: 8px;
       }
-      &:nth-child(2n){
+
+      &:nth-child(2n) {
         margin-left: 4px;
       }
-      &:nth-child(2n+1){
+
+      &:nth-child(2n+1) {
         margin-right: 4px;
       }
-      &:nth-child(1){
+
+      &:nth-child(1) {
         border-top-left-radius: 5px;
       }
-      &:nth-child(2){
+
+      &:nth-child(2) {
         border-top-right-radius: 5px;
       }
-      &:nth-child(7){
+
+      &:nth-child(7) {
         border-bottom-left-radius: 5px;
       }
-      &:nth-child(8){
+
+      &:nth-child(8) {
         border-bottom-right-radius: 5px;
       }
-      >div{
+
+      > div {
         display: flex;
         justify-content: center;
         align-items: center;
+
         &.title-wrap, &.updown-wrap {
           height: 30%;
         }
+
         &.index-wrap {
           height: 40%;
         }
       }
     }
   }
-  .default-color{
+
+  .default-color {
     background-color: #161a23;
   }
+
   .green-class {
     background: linear-gradient(to bottom, #1d9a63, 100%, #161a23);
   }
+
   .red-class {
     background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
   }
+
   /deep/ .el-carousel__container {
     height: 100% !important;
   }

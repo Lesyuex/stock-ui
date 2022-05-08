@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Echarts from '../../../components/Echarts'
+import Echarts from './Echarts'
 
 export default {
   props: {

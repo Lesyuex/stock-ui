@@ -20,7 +20,7 @@
         </ul>
       </li>
     </ul>
-    <div style="text-align: center;margin:8px 0 12px 0;font-size: 12px">分时成交</div>
+    <div style="text-align: center;margin:4px 0;font-size: 12px">分时成交</div>
     <div class="clinch-class" style="overflow:auto">
       <ul style="height: 100%">
         <li v-for="(item,index) in mingxiArr" :key="index">
@@ -47,7 +47,8 @@ export default {
     newestInfo: {
       type: Object,
       required: true
-    }
+    },
+    marketCode: String
   },
   data () {
     return {
@@ -101,13 +102,14 @@ export default {
   methods: {
     refreshData () {
       const that = this
-      this.$axiosGet(`/cn-stock/query/clinch/${this.newestInfo.code}/100`).then(res => {
+      this.$axiosGet(`/clinch/get/${this.marketCode}/100`).then(res => {
         this.mingxiArr = res.data
       }).finally(() => {
         if (this.timer) {
-          setTimeout(function () {
+          window.clearTimeout(that.timer)
+          that.timer = setTimeout(function () {
             that.refreshData()
-          }, 3333)
+          }, 3000)
         }
       })
     },
@@ -255,7 +257,7 @@ export default {
 
   .clinch-class {
     overflow-y: scroll;
-    height: 130px;
+    height: 98px;
 
     ul .li-box {
       width: calc(100% / 3);

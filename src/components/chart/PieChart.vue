@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Echarts from '../../../components/Echarts'
+import Echarts from './Echarts'
 export default {
   components: {
     Echarts
@@ -41,7 +41,7 @@ export default {
         },
         series: [
           {
-            name: 'Access From',
+            name: '',
             type: 'pie',
             radius: '60%',
             startAngle: 270,
@@ -49,7 +49,8 @@ export default {
             data: this.pieData,
             label: {
               color: '#ccc',
-              formatter: '{b}:{c}家'
+              formatter: '{b}{c}家',
+              fontSize: 13
             },
             labelLine: {
               lineStyle: {

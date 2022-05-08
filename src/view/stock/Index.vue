@@ -19,17 +19,13 @@
 </template>
 
 <script>
-import MinutesLineBar from '../components/MinutesLineBar'
-import MainStocksIndex from './OtherChartIndex'
 import OverView from './OverView'
 import CountView from './CountView'
-import FundingDetail from './FundingDetail'
-import ChoiceChart from '../components/StockChoiceChart'
+import FundingDetail from '../fundingDetail/FundingDetail'
+import ChoiceChart from './components/StockChoiceChart'
 export default {
   name: 'MainTest',
   components: {
-    MinutesLineBar,
-    MainStocksIndex,
     OverView,
     CountView,
     FundingDetail,

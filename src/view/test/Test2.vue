@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import VueCard from '../../components/VueCard'
+import VueCard from '../../components/layout/VueCard'
 export default {
   name: 'Test2',
   components: {

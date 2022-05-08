@@ -37,8 +37,8 @@
 
 <script>
 import moment from 'moment'
-import VueCard from '../../components/VueCard'
-import VueDialogModal from '../../components/MinuChartDialog'
+import VueCard from '../../components/layout/VueCard'
+import VueDialogModal from '../../components/dialog/MinuChartDialog'
 export default {
   name: 'SelfCollect',
   components: {

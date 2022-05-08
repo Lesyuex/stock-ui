@@ -14,17 +14,25 @@
         </li>
       </ul>
     </div>
-    <div class="chart-wrap">
-      <keep-alive>
-        <component :is="comInfo.com" :stockData="stockData"></component>
-      </keep-alive>
-    </div>
+    <g-row style="height: 100%;">
+      <g-col md="20" style="height: 100%;">
+        <div class="chart-wrap">
+          <keep-alive>
+            <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode"></component>
+          </keep-alive>
+        </div>
+      </g-col>
+      <g-col md="4" style="height: 100%;">
+        <handicap :newest-info="stockData.newestInfo" :marketCode="marketCode"></handicap>
+      </g-col>
+    </g-row>
+
   </div>
 </template>
 <script>
 import NewestInfo from './NewestInfo'
 import Handicap from './Handicap'
-import MinutesChart from './MinutesChart'
+import MinutesChart from '../../../components/chart/MinutesChart'
 import openTimer from '../../../mixins'
 
 export default {
@@ -98,7 +106,7 @@ export default {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {
             that.refreshData()
-          }, 2000)
+          }, 3000)
         }
       })
     }
@@ -137,7 +145,7 @@ export default {
       padding: 8px 12px;
       line-height: 28px;
       cursor: pointer;
-      color:#Ccc;
+      color: #Ccc;
       font-size: 15px;
     }
 
@@ -158,7 +166,6 @@ export default {
   }
 
   .chart-wrap {
-    width: 100%;
     height: calc(100% - 156px);
   }
 }

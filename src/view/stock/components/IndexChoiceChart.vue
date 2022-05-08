@@ -17,7 +17,7 @@
       </div>
       <div class="chart-wrap">
         <keep-alive>
-          <component :is="comInfo.com" :stockData="stockData"></component>
+          <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode"></component>
         </keep-alive>
       </div>
     </div>
@@ -36,7 +36,7 @@
 <script>
 import NewestInfo from './NewestInfo'
 import Handicap from './Handicap'
-import MinutesChart from './MinutesChart'
+import MinutesChart from '../../../components/chart/MinutesChart'
 import openTimer from '../../../mixins'
 
 export default {
@@ -77,7 +77,7 @@ export default {
     }
   },
   watch: {
-    marketCode (newVal, oldVal) {
+    marketCode () {
       this.refreshData()
     }
   },
@@ -113,7 +113,7 @@ export default {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {
             that.refreshData()
-          }, 2000)
+          }, 3000)
         }
       })
     }

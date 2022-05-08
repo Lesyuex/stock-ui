@@ -1,21 +1,21 @@
 <template>
   <div class="count-wrap">
     <div style="width: 250px;height: 100px;position: absolute;right: 0;z-index: 999">
-      <bar-pie-chart :pieData="pieData" ref="pie"/>
+      <pie-chart :pieData="pieData" ref="pie"/>
     </div>
     <bar-line-chart :custom-option="customOption" style="height: 100%"/>
   </div>
 </template>
 <script>
-import BarLineChart from '../components/BarLineChart'
-import openTimer from '../../../mixins'
-import BarPieChart from '../components/PieChart'
+import BarLineChart from '../../components/chart/BarLineChart'
+import openTimer from '../../mixins'
+import PieChart from '../../components/chart/PieChart'
 
 export default {
   mixins: [openTimer],
   components: {
     BarLineChart,
-    BarPieChart
+    PieChart
   },
   name: 'CountView',
   data () {
@@ -34,9 +34,10 @@ export default {
         hideLegend: true,
         xAxisData: [],
         seriesData: [],
-        seriLabelFS: 12,
+        seriLabelFS: 13,
         x1LabelFS: 12,
-        chartTitle: '市场总览',
+        title: '市场总览',
+        titleFS: 18,
         seriesNameArr: ['市场总览'],
         doubleYLine: false,
         seriLabelClr: ['#adb4c2'],
@@ -77,13 +78,12 @@ export default {
           {value: data.flatNum * 1, name: '平'},
           {value: data.allDownNum * 1, name: '跌'}
         ]
-
-        this.$refs.pie.initOptions()
       }).finally(() => {
         if (this.timer) {
-          setTimeout(function () {
-            that.getCount()
-          }, 3333)
+          window.clearTimeout(that.timer)
+          that.timer = setTimeout(function () {
+            that.refreshData()
+          }, 2000)
         }
       })
     }
@@ -94,7 +94,7 @@ export default {
 .count-wrap {
   position: relative;
   background-color: #161a23;
-  height: calc((100vh - 68px)/2);
+  height: calc((100vh - 68px) / 2);
   min-height: 420px;
   width: calc(100% - 8px);
   margin: 0 4px;

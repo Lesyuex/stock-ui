@@ -4,23 +4,55 @@
   </div>
 </template>
 <script>
-import Echarts from '../../../components/Echarts'
-import {timeXData} from '../js/xAxisData'
+import Echarts from './Echarts'
+import {timeHkXData, timeXData} from '../../view/stock/js/xAxisData'
 import moment from 'moment'
 
 export default {
   name: 'MinutesChart', // 上下两个grid(分时图和量图)
   props: {
+    marketCode: String,
     stockData: {
       type: Object,
       required: true
     }
   },
-  components: {Echarts},
+  components: {
+    Echarts
+  },
   data () {
     return {
       options: {},
-      currentDay: '2088-08-08'
+      currentDay: '2088-08-08',
+      marketOptions: [
+        {
+          prefix: 'sh,sz',
+          bottomX: [1, 2, 3, 4, 5],
+          max: 5,
+          xFormatter: function (value) {
+            if (value === 1) return '{right|09:30}'
+            if (value === 2) return '10:30'
+            if (value === 3) return '11:30/13:00'
+            if (value === 4) return '14:00'
+            if (value === 5) return '{left|15:00}'
+          },
+          timeXData: timeXData
+        },
+        {
+          prefix: 'hk',
+          bottomX: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          max: 12,
+          xFormatter: function (value) {
+            console.log(value)
+            if (value === 1) return '{right|09:30}'
+            if (value === 3) return '10:30'
+            if (value === 6) return '12:00/13:00'
+            if (value === 8) return '14:00'
+            if (value === 10) return '15:00'
+            if (value === 12) return '{left|16:00}'
+          },
+          timeXData: timeHkXData
+        }]
     }
   },
   watch: {
@@ -28,6 +60,54 @@ export default {
       deep: true,
       handler () {
         this.initOptions()
+      }
+    }
+  },
+  computed: {
+    marketIndex () {
+      const prefix = this.marketCode.substr(0, 2)
+      for (let i = 0; i < this.marketOptions.length; i++) {
+        if (this.marketOptions[i].prefix.indexOf(prefix) > -1) {
+          return i
+        }
+      }
+    },
+    upDownColor () {
+      const value = this.stockData.newestInfo.upDownValue
+      if (value > 0) return '#ee4957'
+      if (value < 0) return '#01d078'
+      return null
+    },
+    tooltipFormatter () {
+      return (params) => {
+        let html = '<div>' + moment(params[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
+        const dataIndex = params[0].dataIndex
+        const currentMinu = this.stockData.newestMinutes[dataIndex]
+        // 价格
+        const marker1 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
+        const currentPrice = currentMinu && currentMinu[1] ? currentMinu[1] : '-'
+        const priceText = `<div style="text-align: left">${marker1}价格：${currentPrice}</div>`
+        // 涨跌幅
+        const percent = currentMinu && currentMinu[6] ? currentMinu[6] : '-'
+        let color
+        if (percent > 0) {
+          color = '#ee4957'
+        } else if (percent < 0) {
+          color = '#01d078'
+        } else {
+          color = 'gray'
+        }
+        const marker2 = `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${color};"></span>`
+        const percentText = `<div style="text-align: left">${marker2}涨幅：${percent}%</div>`
+        // 均价
+        const marker3 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ff9e12;"></span>'
+        const average = currentMinu && currentMinu[5] ? currentMinu[5] : '-'
+        const averagePriceText = `<div style="text-align: left">${marker3}均价：${average}</div>`
+        // 成交量
+        const marker4 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#0091fc;"></span>'
+        const volume = currentMinu && currentMinu[4] ? currentMinu[4] : '-'
+        const volumeText = `<div style="text-align: left">${marker4}成交量：${volume}手</div>`
+        return html + priceText + percentText + averagePriceText + volumeText
       }
     }
   },
@@ -44,8 +124,9 @@ export default {
       const volumeArr = [] // 成交量（手）
       const date = moment().format('YYYY-MM-DD')
       const minutesDataArr = stockData.newestMinutes
-      for (let index = 0; index < timeXData.length; index++) {
-        const x = `${date} ${timeXData[index]}`
+      const xData = this.marketOptions[this.marketIndex].timeXData
+      for (let index = 0; index < xData.length; index++) {
+        const x = `${date} ${xData[index]}`
         xDataArr.push(x)
         const minutesData = minutesDataArr[index]
         // 当前价
@@ -61,7 +142,7 @@ export default {
         if (percent) {
           focusPoint[0][0] = index
           focusPoint[0][1] = percent
-          if (index === 120 || index === 240 || index === 241) {
+          if (index === xData.length - 1) {
             focusPoint[0][0] = null
             focusPoint[0][1] = null
           }
@@ -83,32 +164,7 @@ export default {
         tooltip: {
           show: true,
           trigger: 'axis',
-          formatter: (params) => {
-            let html = '<div>' + moment(params[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
-            const dataIndex = params[0].dataIndex
-            const currentMinu = this.stockData.newestMinutes[dataIndex]
-            // 价格
-            const marker1 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
-            const currentPrice = currentMinu && currentMinu[1] ? currentMinu[1] : '-'
-            const priceText = `<div style="text-align: left">${marker1}价格：${currentPrice}</div>`
-            // 涨跌幅
-            const percent = currentMinu && currentMinu[6] ? currentMinu[6] : '-'
-            let color
-            if (percent > 0) {
-              color = '#ee4957'
-            } else if (percent < 0) {
-              color = '#01d078'
-            } else {
-              color = 'gray'
-            }
-            const marker2 = `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${color};"></span>`
-            const percentText = `<div style="text-align: left">${marker2}涨幅：${percent}%</div>`
-            // 均价
-            const marker3 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ff9e12;"></span>'
-            const average = currentMinu && currentMinu[5] ? currentMinu[5] : '-'
-            const averagePriceText = `<div style="text-align: left">${marker3}均价：${average}</div>`
-            return html + priceText + percentText + averagePriceText
-          }
+          formatter: this.tooltipFormatter
         },
         axisPointer: {
           show: true,
@@ -158,12 +214,7 @@ export default {
               show: false
             },
             axisPointer: {
-              show: true,
-              label: {
-                formatter: series => {
-                  return moment(series.value).format('HH:mm')
-                }
-              }
+              show: true
             },
             data: xDataArr
           },
@@ -173,20 +224,14 @@ export default {
             z: 1,
             boundaryGap: false,
             position: 'bottom',
-            data: [1, 2, 3, 4, 5],
+            data: this.marketOptions[this.marketIndex].bottomX,
             min: 1,
-            max: 5,
+            max: this.marketOptions[this.marketIndex].max,
             interval: 1,
             axisLabel: {
               show: true,
               color: '#858585',
-              formatter: function (value) {
-                if (value === 1) return '{right|09:30}'
-                if (value === 2) return '10:30'
-                if (value === 3) return '11:30/13:00'
-                if (value === 4) return '14:00'
-                if (value === 5) return '{left|15:00}'
-              },
+              formatter: this.marketOptions[this.marketIndex].xFormatter,
               rich: {
                 right: {
                   padding: [0, 0, 0, 30]
@@ -208,7 +253,7 @@ export default {
             splitLine: {
               show: false,
               lineStyle: {
-                color: '#1e3139'
+                color: 'rgba(0,0,0,0.3)'
               }
             },
             axisPointer: {
@@ -227,13 +272,7 @@ export default {
               show: false
             },
             axisPointer: {
-              show: true,
-              label: {
-                backgroundColor: 'transparent',
-                formatter: series => {
-                  return ''
-                }
-              }
+              show: true
             }
           }
         ],
@@ -253,7 +292,7 @@ export default {
             splitLine: {
               show: false,
               lineStyle: {
-                color: '#1e3139'
+                color: 'rgba(0,0,0,0.3)'
               }
             },
             axisTick: {
@@ -262,6 +301,7 @@ export default {
             axisLabel: {
               color: 'rgba(255,255,255,0.4)',
               inside: true,
+              margin: -4,
               formatter: function (value) {
                 return value.toFixed(2)
               }
@@ -270,7 +310,7 @@ export default {
               show: true,
               label: {
                 formatter: series => {
-                  return series.value ? series.value.toFixed(2) : ''
+                  return series.value.toFixed(2)
                 }
               }
             }
@@ -295,6 +335,7 @@ export default {
             },
             axisLabel: {
               color: 'rgba(255,255,255,0.4)',
+              margin: -4,
               formatter: function (value) {
                 return `${value.toFixed(2)}%`
               },
@@ -304,7 +345,7 @@ export default {
               show: true,
               label: {
                 formatter: series => {
-                  return series.value ? series.value.toFixed(2) + '%' : ''
+                  return series.value.toFixed(2) + '%'
                 }
               }
             }
@@ -326,12 +367,7 @@ export default {
               show: false
             },
             axisPointer: {
-              show: false,
-              label: {
-                formatter: series => {
-                  return series.value ? series.value + '(手)' : ''
-                }
-              }
+              show: false
             }
           }
         ],
@@ -347,10 +383,10 @@ export default {
             smooth: 0.1,
             lineStyle: {
               width: 1.5,
-              color: this.stockData.newestInfo.upDownValue > 0 ? '#ee4957' : '#01d078'
+              color: this.upDownColor
             },
             areaStyle: {
-              color: this.stockData.newestInfo.upDownValue > 0 ? '#ee4957' : '#01d078',
+              color: this.upDownColor,
               origin: 'start',
               opacity: 0.1
             },

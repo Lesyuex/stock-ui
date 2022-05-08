@@ -25,7 +25,7 @@ export const openTimer = {
       const that = this
       that.timer = setTimeout(function () {
         that.refreshData()
-      }, 2000)
+      }, 3000)
     },
     stopRequestInterval () {
       this.timer = null

@@ -1,10 +1,12 @@
 <template>
-<div></div>
+  <div>
+    五日
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'RightLayout'
+  name: 'FiveDayChart'
 }
 </script>
 
