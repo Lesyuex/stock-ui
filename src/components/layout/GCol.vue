@@ -14,13 +14,13 @@ export default {
   },
   name: 'GCol',
   watch: {
-    span: function (){
+    span: function () {
       this.initClass()
     },
     sm: function () {
       this.initClass()
     },
-    md:  function () {
+    md: function () {
       this.initClass()
     },
     lg: function () {
@@ -29,7 +29,7 @@ export default {
   },
   data () {
     return {
-      classList: ['g-col']
+      classList: []
     }
   },
   created () {
@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     initClass () {
+      this.classList = ['g-col']
       if (this.$props.span) {
         const span = this.$props.span
         this.classList.push(`g-col-${span}`)
@@ -63,10 +64,13 @@ export default {
 @green: #21bf74;
 @red: red;
 @blue: skyblue;
-/*默认布局*/
 .g-col{
   width: (@unit-width)*24;
   min-height: 1px;
+}
+.g-col-0{
+  width: 0;
+  height: 0;
 }
 .g-col-1 {
   width: (@unit-width)*1;
@@ -146,7 +150,10 @@ export default {
    // background-color: pink;
     width: 1280px;
   }
-
+  .col-sm-0 {
+    width: 0;
+    height: 0;
+  }
   .col-sm-1 {
     width: (@unit-width)*1;
   }
@@ -248,6 +255,10 @@ export default {
 @media screen and (min-width: 1920px) {
   .g-col {
     //background-color: #21bf74;
+  }
+  .col-md-0 {
+    width: 0;
+    height: 0;
   }
   .col-md-1 {
     width: (@unit-width)*1;

@@ -2,7 +2,7 @@
   <el-dialog
     :visible.sync="dialogVisible"
     destroy-on-close
-    width="60%"
+    width="815px"
     height="500px"
     :modal-append-to-body="true"
     :append-to-body="true"

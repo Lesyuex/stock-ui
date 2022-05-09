@@ -132,10 +132,10 @@ export default {
       return this.newestInfo.upDownValue
     },
     valueChange () {
-      return this.updownValue ? (this.updownValue < 0 ? `-${this.updownValue}` : `+${this.updownValue}`) : ''
+      return this.updownValue ? (this.updownValue < 0 ? `${this.updownValue}` : `+${this.updownValue}`) : ''
     },
     percentChange () {
-      return this.updownValue ? (this.updownValue < 0 ? `-${this.newestInfo.upDownPercent}%` : `+${this.newestInfo.upDownPercent}%`) : ''
+      return this.updownValue ? (this.updownValue < 0 ? `${this.newestInfo.upDownPercent}%` : `+${this.newestInfo.upDownPercent}%`) : ''
     },
     color () {
       if (this.updownValue === 0) return ''

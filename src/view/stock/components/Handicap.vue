@@ -11,7 +11,7 @@
         <ul>
           <li class="li-box">{{ item.name }}</li>
           <li class="li-box" :style="{color:getPriceColor(item.price),fontWeight: 600,textAlign:'center'}">
-            {{ item.price.toFixed(2) }}
+            {{ item.price }}
           </li>
           <li class="li-box" style="color: whitesmoke;text-align:right">
             <span :style="{backgroundColor: index < 5 ? '#049155' : '#9b3038',width:getWidth(item.volume)}"></span>
@@ -74,7 +74,7 @@ export default {
   watch: {
     newestInfo: {
       deep: true,
-      handler: function (val) {
+      handler: function () {
         this.initPkList()
       }
     }
@@ -90,12 +90,9 @@ export default {
         }
       })
       return sell * 100 / num + '%'
-    },
-    disabled () {
-      return this.loading || this.noMore
     }
   },
-  created () {
+  mounted () {
     this.initPkList()
     this.refreshData()
   },
@@ -116,11 +113,11 @@ export default {
     initPkList () {
       const allVolume = []
       for (let i = 4; i >= 0; i--) {
-        this.pkList[i].price = this.newestInfo[`sellPrice${5 - i}`]
+        this.pkList[i].price = this.newestInfo[`sellPrice${5 - i}`] ? this.newestInfo[`sellPrice${5 - i}`].toFixed(2) : '-'
         const sellVolume = this.newestInfo[`sellVolume${5 - i}`]
         this.pkList[i].volume = sellVolume
 
-        this.pkList[i + 5].price = this.newestInfo[`buyPrice${i + 1}`]
+        this.pkList[i + 5].price = this.newestInfo[`buyPrice${i + 1}`] ? this.newestInfo[`buyPrice${i + 1}`].toFixed(2) : '-'
         const buyVolume = this.newestInfo[`buyVolume${i + 1}`]
         this.pkList[i + 5].volume = buyVolume
         allVolume.push(...[buyVolume, sellVolume])

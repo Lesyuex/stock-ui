@@ -6,6 +6,10 @@
 export default {
   name: 'Echarts',
   props: {
+    eventName: {
+      type: String,
+      default: null
+    },
     options: {
       type: Object,
       required: true
@@ -36,9 +40,19 @@ export default {
     },
     drawChart (options) {
       const that = this
-      if (!that.chart && this.$refs['chart']) that.chart = that.$echarts.init(this.$refs['chart'])
+      if (!that.chart && this.$refs['chart']) {
+        that.chart = that.$echarts.init(this.$refs['chart'], null, {
+          renderer: 'svg',
+          devicePixelRatio: 2.5
+        })
+      }
       if (that.chart) {
         that.chart.setOption(options)
+        if (this.eventName) {
+          that.chart.on(that.eventName, function () {
+            that.$emit('handleEvent')
+          })
+        }
         window.addEventListener('resize', () => {
           that.resize()
         })

@@ -15,14 +15,14 @@
       </ul>
     </div>
     <g-row style="height: 100%;">
-      <g-col :md="comInfo.code === 1 ? 20 :24" style="height: 100%;">
+      <g-col :md="comInfo.code === '1' ? 20 :24" style="height: 100%;">
         <div class="chart-wrap">
           <keep-alive>
-            <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode"></component>
+            <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode" :type="comInfo.type" :ref="comInfo.type"></component>
           </keep-alive>
         </div>
       </g-col>
-      <g-col :md="comInfo.code === 1 ? 4 :0"   style="height: 100%;">
+      <g-col :md="4" v-if="comInfo.code === '1'">
         <handicap :newest-info="stockData.newestInfo" :marketCode="marketCode"></handicap>
       </g-col>
     </g-row>
@@ -34,7 +34,9 @@ import NewestInfo from './NewestInfo'
 import Handicap from './Handicap'
 import MinutesChart from '../../../components/chart/MinutesChart'
 import openTimer from '../../../mixins'
-import KLineChart from '../../../components/chart/KLineChart'
+import DayKChart from '../../../components/chart/DayKChart'
+import WeekKChart from '../../../components/chart/WeekKChart'
+import MonthKChart from '../../../components/chart/MonthKChart'
 
 export default {
   mixins: [openTimer],
@@ -45,19 +47,20 @@ export default {
       required: true
     }
   },
-  components: {Handicap, NewestInfo, MinutesChart, KLineChart},
+  components: {Handicap, NewestInfo, MinutesChart, DayKChart, WeekKChart, MonthKChart},
   data () {
     return {
       choiceArr: [
-        {name: '分时', com: 'MinutesChart', code: 1},
-        {name: '五日', com: 'FiveDay', code: 2},
-        {name: '日K', com: 'KLineChart', code: 3},
-        {name: '周K', com: '', code: 4},
-        {name: '月K', com: '', code: 5}
+        {name: '分时', com: 'MinutesChart', code: '1', type: 'minu'},
+        {name: '五日', com: 'FiveDay', code: '2', type: 'fiveDay'},
+        {name: '日K', com: 'DayKChart', code: '3', type: 'day'},
+        {name: '周K', com: 'WeekKChart', code: '4', type: 'week'},
+        {name: '月K', com: 'MonthKChart', code: '5', type: 'month'}
       ],
       comInfo: {
         com: 'MinutesChart',
-        code: 1
+        code: '1',
+        type: 'minu'
       },
       stockData: {
         newestInfo: {},
@@ -71,28 +74,19 @@ export default {
     }
   },
   watch: {
-    marketCode (newVal, oldVal) {
+    marketCode () {
       this.refreshData()
     }
   },
   mounted () {
     this.refreshData()
-    const param = {
-      'code': '603138',
-      'endDate': '2022-04-29',
-      'ktype': 'day',
-      'startDate': '2022-04-20',
-      'type': 0
-    }
-    this.$axiosPost('/k/query', param).then(res => {
-      console.log(res)
-    })
   },
   methods: {
     choiceCom (choice) {
       this.comInfo = {
         com: choice.com,
-        code: choice.code
+        code: choice.code,
+        type: choice.type
       }
     },
     refreshData () {
@@ -103,6 +97,7 @@ export default {
       this.$axiosGet(`/stock/get/minutes/${this.marketCode}`).then(res => {
         that.stockData = res.data
       }).finally(() => {
+        this.$refs[this.comInfo.type].loadingData = false
         if (this.timer) {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {

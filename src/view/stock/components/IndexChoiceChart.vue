@@ -17,7 +17,7 @@
       </div>
       <div class="chart-wrap">
         <keep-alive>
-          <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode"></component>
+          <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode" :type="comInfo.type" :ref="comInfo.type"></component>
         </keep-alive>
       </div>
     </div>
@@ -35,11 +35,11 @@
 </template>
 <script>
 import NewestInfo from './NewestInfo'
-import Handicap from './Handicap'
 import MinutesChart from '../../../components/chart/MinutesChart'
 import openTimer from '../../../mixins'
-import KLineChart from '../../../components/chart/KLineChart'
-
+import DayKChart from '../../../components/chart/DayKChart'
+import WeekKChart from '../../../components/chart/WeekKChart'
+import MonthKChart from '../../../components/chart/MonthKChart'
 export default {
   mixins: [openTimer],
   name: 'ChoiceChart', // 上下两个grid(分时图和量图)
@@ -49,22 +49,23 @@ export default {
       required: true
     }
   },
-  components: {Handicap, NewestInfo, MinutesChart, KLineChart},
+  components: {NewestInfo, MinutesChart, DayKChart, WeekKChart, MonthKChart},
   data () {
     return {
       choiceArr: [
-        {name: '分时', com: 'MinutesChart', code: '1'},
-        {name: '五日', com: 'FiveDay', code: '2'},
-        {name: '日K', com: 'KLineChart', code: '3'},
-        {name: '周K', com: '', code: '4'},
-        {name: '月K', com: '', code: '5'}
+        {name: '分时', com: 'MinutesChart', code: '1', type: 'minu'},
+        {name: '五日', com: 'FiveDay', code: '2', type: 'fiveDay'},
+        {name: '日K', com: 'DayKChart', code: '3', type: 'day'},
+        {name: '周K', com: 'WeekKChart', code: '4', type: 'week'},
+        {name: '月K', com: 'MonthKChart', code: '5', type: 'month'}
       ],
       otherArr: [
         {name: '成分股', com: 'MinutesChart', code: '1'}
       ],
       comInfo: {
         com: 'MinutesChart',
-        code: '1'
+        code: '1',
+        type: 'minu'
       },
       stockData: {
         newestInfo: {},
@@ -89,7 +90,8 @@ export default {
     choiceCom (choice) {
       this.comInfo = {
         com: choice.com,
-        code: choice.code
+        code: choice.code,
+        type: choice.type
       }
     },
     refreshData () {
@@ -100,6 +102,7 @@ export default {
       this.$axiosGet(`/index/get/minutes/${this.marketCode}`).then(res => {
         that.stockData = res.data
       }).finally(() => {
+        this.$refs[this.comInfo.type].loadingData = false
         if (this.timer) {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {

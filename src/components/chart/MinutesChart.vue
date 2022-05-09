@@ -1,6 +1,7 @@
 <template>
-  <div style="width: 100%;height: 100%">
-      <echarts :options="options"/>
+  <div style="width: 100%;height: 100%;position: relative">
+    <echarts :options="options"/>
+    <el-icon class="el-icon-loading" style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px" v-if="loadingData"/>
   </div>
 </template>
 <script>
@@ -22,6 +23,7 @@ export default {
   },
   data () {
     return {
+      loadingData: true,
       options: {},
       currentDay: '2088-08-08',
       marketOptions: [
