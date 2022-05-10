@@ -45,7 +45,6 @@ export default {
           bottomX: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
           max: 12,
           xFormatter: function (value) {
-            console.log(value)
             if (value === 1) return '{right|09:30}'
             if (value === 3) return '10:30'
             if (value === 6) return '12:00/13:00'
