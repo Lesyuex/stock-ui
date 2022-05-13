@@ -30,6 +30,9 @@ export default {
   },
   mounted () {
     if (!this.chart) {
+      if (!Object.hasOwnProperty('animation')) {
+        // this.options.animation = false
+      }
       this.drawChart(this.options)
     }
   },

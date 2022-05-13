@@ -1,7 +1,5 @@
 <template>
   <vue-card>
-
-    <span style="background-color: #e45f47;font-size: 200px;font-weight: 800;color: white">涨</span>
     <div class="my-table">
       <el-table
         size="small"
@@ -39,7 +37,9 @@
 import moment from 'moment'
 import VueCard from '../../components/layout/VueCard'
 import VueDialogModal from '../../components/dialog/MinuChartDialog'
+import openTimer from '../../mixins'
 export default {
+  mixins: [openTimer],
   name: 'SelfCollect',
   components: {
     VueCard,
@@ -76,45 +76,24 @@ export default {
   },
   created () {
     this.getDetailsData()
-    console.log(this.$options.name + ' created')
-  },
-  mounted () {
-    this.$bus.$emit('mounted', 'selfCollect')
-    const that = this
-    this.$bus.$on('selfCollectStartRequest', () => {
-      console.log(this.$options.name + ' -> startRequest')
-      that.startRequestInterval()
-    })
-    this.$bus.$on('selfCollectStopRequest', () => {
-      console.log(this.$options.name + ' -> stopRequest')
-      that.stopRequestInterval()
-    })
-    console.log(that.$options.name + ' mounted')
-  },
-
-  beforeDestroy () {
-    this.$bus.$off('startRequestData')
-    this.$bus.$off('stopRequestData')
   },
   methods: {
     moment,
     getDetailsData () {
       const that = this
-      this.$axiosGet('/getShareDetailInfo?id=sh603138').then(res => {
-        that.tableData = [res.data, res.data]
+      this.$axiosGet('/stock/get/detail/sh603138,sh603881,sh603308,sh600295,sz002466,sz000158').then(res => {
+        res.data.filter(data => {
+          data.upDownPercent = data.upDownPercent ? data.upDownPercent.toFixed(2) : '-'
+        })
+        that.tableData = res.data
+      }).finally(() => {
+        if (this.timer) {
+          window.clearTimeout(that.timer)
+          that.timer = setTimeout(function () {
+            that.getDetailsData()
+          }, 3000)
+        }
       })
-    },
-    startRequestInterval () {
-      const that = this
-      that.timer = setInterval(function () {
-        setTimeout(function () {
-          that.getDetailsData()
-        }, 0)
-      }, 2000)
-    },
-    stopRequestInterval () {
-      const that = this
-      window.clearInterval(that.timer)
     }
   }
 }

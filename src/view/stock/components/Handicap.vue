@@ -100,13 +100,17 @@ export default {
     refreshData () {
       const that = this
       this.$axiosGet(`/clinch/get/${this.marketCode}/100`).then(res => {
+        const dataList = res.data
+        dataList.filter(data => {
+          data.price = data.price ? data.price.toFixed(2) : '-'
+        })
         this.mingxiArr = res.data
       }).finally(() => {
         if (this.timer) {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {
             that.refreshData()
-          }, 3000)
+          }, 2000)
         }
       })
     },

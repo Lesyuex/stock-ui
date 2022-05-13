@@ -5,7 +5,7 @@
         <div class="main-stocks-wrap">
           <div
             v-for="(item) in arr"
-            class="stock-single-info"
+            :class="{'stock-single-info':true,'green-class':item.upDownValue<0,'red-class':item.upDownValue>0,'default-class':item.upDownValue===0}"
             :key="item.code"
             @click="checkStock(item.marketCode)">
             <div class="title-wrap fs13">{{ item.name }}</div>
@@ -167,7 +167,7 @@ export default {
   }
 
   .default-color {
-    background-color: #161a23;
+    background-color: lightgray;
   }
 
   .green-class {
