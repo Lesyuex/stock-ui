@@ -20,9 +20,9 @@
           <!--  导航栏        -->
           <li class="row-li">
             <ul class="nav-wrap">
-              <li :class="{'li-active':type === 0}" @click="checkType(0)">全部</li>
-              <li :class="{'li-active':type === 1}" @click="checkType(1)">股票<span></span></li>
-              <li :class="{'li-active':type === 2}" @click="checkType(2)">板块<span></span></li>
+              <li :class="{'li-active':type === 0}" @click="checktype(0)">全部</li>
+              <li :class="{'li-active':type === 1}" @click="checktype(1)">股票<span></span></li>
+              <li :class="{'li-active':type === 2}" @click="checktype(2)">板块<span></span></li>
             </ul>
           </li>
           <!-- 股票选择  -->
@@ -106,7 +106,7 @@ export default {
     closeDialog () {
       this.dialogVisible = false
     },
-    checkType (type) {
+    checktype (type) {
       this.type = type
     },
     collectStock (stock) {

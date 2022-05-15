@@ -12,13 +12,27 @@
           v-for="(choice,index) in choiceArr">
           {{ choice.name }}
         </li>
+        <li>
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              更多<el-icon class="el-icon-caret-bottom"/>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-for="minu in moreChoice" :key="minu.code">{{ minu.name }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </li>
+        <li style="float: right">
+          <el-icon class="el-icon-setting"/>
+        </li>
       </ul>
     </div>
     <g-row style="height: 100%;">
       <g-col :md="comInfo.code === '1' ? 20 :24" style="height: 100%;">
         <div class="chart-wrap">
           <keep-alive>
-            <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode" :type="comInfo.type" :ref="comInfo.type"></component>
+            <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode" :comInfo="comInfo"
+                       :ref="comInfo.kname" :refName="comInfo.kname"/>
           </keep-alive>
         </div>
       </g-col>
@@ -34,9 +48,6 @@ import NewestInfo from './NewestInfo'
 import Handicap from './Handicap'
 import MinutesChart from '../../../components/chart/MinutesChart'
 import openTimer from '../../../mixins'
-import DayKChart from '../../../components/chart/DayKChart'
-import WeekKChart from '../../../components/chart/WeekKChart'
-import MonthKChart from '../../../components/chart/MonthKChart'
 
 export default {
   mixins: [openTimer],
@@ -47,20 +58,41 @@ export default {
       required: true
     }
   },
-  components: {Handicap, NewestInfo, MinutesChart, DayKChart, WeekKChart, MonthKChart},
+  components: {
+    Handicap,
+    NewestInfo,
+    MinutesChart,
+    DayKChart: () => import('../../../components/chart/KChart'),
+    WeekKChart: () => import('../../../components/chart/KChart'),
+    MonthKChart: () => import('../../../components/chart/KChart'),
+    SeasonChart: () => import('../../../components/chart/KChart'),
+    YearChart: () => import('../../../components/chart/KChart')
+  },
   data () {
     return {
       choiceArr: [
-        {name: '分时', com: 'MinutesChart', code: '1', type: 'minu'},
-        {name: '五日', com: 'FiveDay', code: '2', type: 'fiveDay'},
-        {name: '日K', com: 'DayKChart', code: '3', type: 'day'},
-        {name: '周K', com: 'WeekKChart', code: '4', type: 'week'},
-        {name: '月K', com: 'MonthKChart', code: '5', type: 'month'}
+        {name: '分时', com: 'MinutesChart', code: '1', kname: 'minu', ktype: 0},
+        {name: '五日', com: 'FiveDay', code: '2', kname: 'fiveDay', ktype: 0},
+        {name: '日K', com: 'DayKChart', code: '3', kname: 'day', ktype: 0},
+        {name: '周K', com: 'WeekKChart', code: '4', kname: 'week', ktype: 0},
+        {name: '月K', com: 'MonthKChart', code: '5', kname: 'month', ktype: 0},
+        {name: '季K', com: 'SeasonChart', code: '6', kname: 'season', ktype: 0},
+        {name: '年K', com: 'YearChart', code: '7', kname: 'year', ktype: 0}
+      ],
+      moreChoice: [
+        {name: '1分', com: 'MinutesChart', code: '1', kname: 'm1', ktype: 1},
+        {name: '5分', com: 'FiveDay', code: '2', kname: 'm5', ktype: 1},
+        {name: '15分', com: 'DayKChart', code: '3', kname: 'm15', ktype: 1},
+        {name: '30分', com: 'WeekKChart', code: '4', kname: 'm30', ktype: 1},
+        {name: '60分', com: 'MonthKChart', code: '5', kname: 'm60', ktype: 1},
+        {name: '120分', com: 'SeasonChart', code: '6', kname: 'm120', ktype: 1}
       ],
       comInfo: {
         com: 'MinutesChart',
         code: '1',
-        type: 'minu'
+        kname: 'minu',
+        ktype: 0,
+        stockType: 0
       },
       stockData: {
         newestInfo: {},
@@ -74,7 +106,7 @@ export default {
     }
   },
   watch: {
-    marketCode () {
+    marketCode: function () {
       this.refreshData()
     }
   },
@@ -86,7 +118,9 @@ export default {
       this.comInfo = {
         com: choice.com,
         code: choice.code,
-        type: choice.type
+        kname: choice.kname,
+        ktype: choice.ktype,
+        stockType: 0
       }
     },
     refreshData () {
@@ -97,7 +131,9 @@ export default {
       this.$axiosGet(`/stock/get/minutes/${this.marketCode}`).then(res => {
         that.stockData = res.data
       }).finally(() => {
-        this.$refs[this.comInfo.type].loadingData = false
+        this.$nextTick(function () {
+          this.$refs[this.comInfo.kname].loadingData = false
+        })
         if (this.timer) {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {
@@ -164,5 +200,14 @@ export default {
   .chart-wrap {
     height: calc(100% - 156px);
   }
+}
+</style>
+<style>
+.el-dropdown-menu {
+  padding: 2px 0;
+  background-color: #202633;
+  color: ghostwhite;
+  border-color: #202633;
+  left: 50px;
 }
 </style>

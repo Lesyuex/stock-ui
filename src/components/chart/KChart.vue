@@ -1,5 +1,5 @@
 <template>
-  <div class="k-chart">
+  <div class="k-chart" :id="refName" :key="refName">
     <div style="height: 20px;width:98%;background-color: #161922;position: absolute;left:12px;top:2px;z-index: 999" v-if="mouseOnChart">
       <div v-for="(ma,index) in chartData.maName" :key="index" style="display: inline-block;width: 110px;font-size: 13px;">
         <span :style="{color:chartData.maColor[index],display:'inline-block',fontWeight:500 }" >
@@ -24,7 +24,8 @@ export default {
   },
   props: {
     marketCode: String,
-    type: String
+    comInfo: Object,
+    refName: String
   },
   data () {
     return {
@@ -102,14 +103,28 @@ export default {
       }
     },
     showLength () {
-      const ktype = this.type
-      if (ktype === 'day') return 70
-      if (ktype === 'week') return 50
+      const length = this.chartData.xData.length
+      if (length <= 160) return 0
+      const kname = this.comInfo.kname
+      if (kname === 'season' || kname === 'year') {
+        return 0
+      } else {
+        if (length <= 320) {
+          if (kname === 'day') return 80
+          if (kname === 'week') return 60
+          if (kname === 'month') return 40
+        }
+      }
       return 0
     }
   },
   created () {
     this.refreshData()
+  },
+  watch: {
+    marketCode: function () {
+      this.refreshData()
+    }
   },
   methods: {
     handleEvent () {
@@ -137,12 +152,14 @@ export default {
     getKdata () {
       // const today = moment().add(1, 'days').format('YYYY-MM-DD')
       const param = {
-        'code': this.marketCode,
-        'endDate': '',
-        'type': this.type,
-        'startDate': ''
+        code: this.marketCode,
+        startDate: '',
+        endDate: '',
+        kname: this.comInfo.kname,
+        ktype: this.comInfo.ktype,
+        stockType: this.comInfo.stockType
       }
-      this.$axiosPost('/k/query', param).then(res => {
+      this.$axiosPost(`/k/get`, param).then(res => {
         const dataList = res.data
         const xData = []
         // [open, close, lowest, highest] （即：[开盘值, 收盘值, 最低值, 最高值]）
@@ -265,18 +282,18 @@ export default {
         },
         grid: [
           {
-            left: 'center',
+            left: '2%',
             top: 32,
             height: '50%',
-            width: '96%',
+            width: this.chartData.xData.length < 60 ? this.chartData.xData.length + '%' : '96%',
             backgroundColor: 'transparent',
             containLabel: false
           },
           {
-            left: 'center',
+            left: '2%',
             top: '70%',
             height: '15%',
-            width: '96%',
+            width: this.chartData.xData.length < 60 ? this.chartData.xData.length + '%' : '96%',
             backgroundColor: 'red',
             containLabel: false
           }
@@ -299,6 +316,7 @@ export default {
             data: this.chartData.xData,
             boundaryGap: false,
             axisLine: {onZero: false},
+            axisTick: {show: false},
             splitLine: {show: false},
             min: 'dataMin',
             max: 'dataMax',
@@ -319,6 +337,7 @@ export default {
             data: this.chartData.xData,
             boundaryGap: false,
             axisLabel: {show: false},
+            axisTick: {show: false},
             splitLine: {show: false},
             min: 'dataMin',
             max: 'dataMax',
@@ -331,10 +350,17 @@ export default {
         yAxis: [
           {
             gridIndex: 0,
+            min: function (value) {
+              return Math.ceil(value.min)
+            },
+            max: function (value) {
+              return Math.ceil(value.max)
+            },
+            splitNumber: 3,
             axisLabel: {
               inside: true,
               margin: -10,
-              formatter: function (value) {
+              formatter: function (value, index) {
                 return value.toFixed(2)
               }
             },
@@ -344,8 +370,7 @@ export default {
             },
             splitLine: {
               show: false
-            },
-            splitNumber: 5
+            }
           },
           {
             gridIndex: 1,
@@ -375,7 +400,8 @@ export default {
             type: 'slider',
             xAxisIndex: [0, 1],
             top: '90%',
-            width: '96%',
+            left: '1%',
+            width: this.chartData.xData.length < 60 ? this.chartData.xData.length + 1 + '%' : '96%',
             height: 20,
             start: this.showLength,
             end: 100,

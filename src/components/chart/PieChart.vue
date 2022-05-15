@@ -43,7 +43,7 @@ export default {
           {
             name: '',
             type: 'pie',
-            radius: '60%',
+            radius: '50%',
             startAngle: 270,
             center: ['55%', '50'],
             data: this.pieData,
