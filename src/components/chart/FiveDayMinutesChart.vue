@@ -71,7 +71,7 @@ export default {
         this.stockData = res.data
       }).finally(() => {
         this.initSeriesData()
-        this.initOptions()
+
       })
     },
     initSeriesData () {
@@ -304,12 +304,18 @@ export default {
             return {value, itemStyle}
           })
         }
-        //seriesArr.push(volume)
+        seriesArr.push(volume)
       }
+      console.log(xAxisArr)
+      console.log(helpXArr)
+      console.log(volumeXArr)
       const newXdata = [...xAxisArr, ...helpXArr, ...volumeXArr]
+      console.log(newXdata)
       const newYdata = [...yAxisArr, ...volumeYArr]
+      console.log(newYdata)
+      console.log(seriesArr)
       this.axis = {xAxisArr: newXdata, yAxisArr: newYdata, seriesArr}
-      console.log(this.axis)
+      this.initOptions()
     },
     initOptions () {
       this.options = {
