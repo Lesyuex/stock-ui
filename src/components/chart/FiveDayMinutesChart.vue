@@ -71,7 +71,6 @@ export default {
         this.stockData = res.data
       }).finally(() => {
         this.initSeriesData()
-
       })
     },
     initSeriesData () {
@@ -192,16 +191,16 @@ export default {
           position: 'bottom',
           boundaryGap: false,
           axisLabel: {
-            show: true
+            show: false
           },
           axisLine: {
-            show: true
+            show: false
           },
           axisTick: {
-            show: true
+            show: false
           },
           axisPointer: {
-            show: true
+            show: false
           },
           data: this.aStockAxisData
         }
@@ -226,17 +225,15 @@ export default {
         }
         volumeXArr.push(volumeX)
         volumeYArr.push(volumeY)
-
         const volumeArr = []
         const averageArr = []
-        const priceArr = day.minutesVoList.filter(minu => {
+        const priceArr = day.minutesVoList.map(minu => {
           minu.value = minu.price
           minu.date = `${date} ${minu.time}`
           averageArr.push(minu.averagePrice)
-          volumeArr.push(minu.volume)
-          return true
+          volumeArr.push(minu.minuVolume)
+          return minu
         })
-        // console.log(minutesData)
         const price = {
           name: '价格',
           type: 'line',
@@ -275,13 +272,13 @@ export default {
         seriesArr.push(price)
         seriesArr.push(averagePrice)
         // 成交量
-        // x坐标2 5 8 11 14
-        // y坐标1 3 5 7 9
+        // x坐标10 11 12 13 14
+        // y坐标5 6 7 8 9
         const volume = {
           name: '成交量',
           type: 'bar',
           // 以哪个y轴为参考线
-          xAxisIndex: 2 * i + 4,
+          xAxisIndex: i + 10,
           yAxisIndex: i + 5,
           // 关掉y轴小圆圈
           showSymbol: false,
@@ -290,30 +287,23 @@ export default {
             color: '#ffe459',
             width: 2
           },
-          // data:[ [xValue,yValue]]
           data: volumeArr.map((volume, index) => {
             const value = volume
             const itemStyle = {
               color: ''
             }
             if (index === 0) {
-              itemStyle.color = priceArr[index] > 0 ? '#ee4957' : '#01d078'
+              itemStyle.color = priceArr[index].value > 0 ? '#ee4957' : '#01d078'
             } else {
-              itemStyle.color = priceArr[index] > priceArr[index - 1] ? '#ee4957' : '#01d078'
+              itemStyle.color = priceArr[index].value > priceArr[index - 1].value ? '#ee4957' : '#01d078'
             }
             return {value, itemStyle}
           })
         }
         seriesArr.push(volume)
       }
-      console.log(xAxisArr)
-      console.log(helpXArr)
-      console.log(volumeXArr)
-      const newXdata = [...xAxisArr, ...helpXArr, ...volumeXArr]
-      console.log(newXdata)
-      const newYdata = [...yAxisArr, ...volumeYArr]
-      console.log(newYdata)
-      console.log(seriesArr)
+      const newXdata = xAxisArr.concat(helpXArr).concat(volumeXArr)
+      const newYdata = yAxisArr.concat(volumeYArr)
       this.axis = {xAxisArr: newXdata, yAxisArr: newYdata, seriesArr}
       this.initOptions()
     },
@@ -329,12 +319,8 @@ export default {
           show: true,
           triggerTooltip: false,
           link: [
-            {
-              // xAxisIndex: [0, 2]
-            },
-            {
-              yAxisIndex: [0, 1, 2, 3, 4]
-            }
+            {xAxisIndex: [0, 10]}, {xAxisIndex: [1, 11]}, {xAxisIndex: [2, 12]}, {xAxisIndex: [3, 13]}, {xAxisIndex: [4, 14]},
+            {yAxisIndex: [0, 1, 2, 3, 4]}
           ]
         },
         grid: [
@@ -381,35 +367,35 @@ export default {
             left: '2%',
             bottom: 8,
             width: '19%',
-            height: '80%'
+            height: '20%'
           },
           {
             containLabel: false,
             left: '21%',
             bottom: 8,
             width: '19%',
-            height: '80%'
+            height: '20%'
           },
           {
             containLabel: false,
             left: '40%',
             bottom: 8,
             width: '19%',
-            height: '80%'
+            height: '20%'
           },
           {
             containLabel: false,
             left: '59%',
             bottom: 8,
             width: '19%',
-            height: '80%'
+            height: '20%'
           },
           {
             containLabel: false,
             left: '78%',
             bottom: 8,
             width: '19%',
-            height: '80%'
+            height: '20%'
           }
         ],
         xAxis: this.axis.xAxisArr,
