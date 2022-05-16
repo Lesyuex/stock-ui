@@ -143,7 +143,7 @@ export default {
         if (percent) {
           focusPoint[0][0] = index
           focusPoint[0][1] = percent
-          if (index === xData.length - 1) {
+          if (!stockData.marketOpen) {
             focusPoint[0][0] = null
             focusPoint[0][1] = null
           }
@@ -281,9 +281,9 @@ export default {
           {
             type: 'value',
             gridIndex: 0,
-            min: this.stockData.y1MinValue,
-            max: this.stockData.y1MaxValue,
-            interval: (this.stockData.y1MaxValue - this.stockData.y1MinValue) / 4,
+            min: this.stockData.minValue,
+            max: this.stockData.maxValue,
+            interval: (this.stockData.maxValue - this.stockData.minValue) / 4,
             axisLine: {
               show: false,
               lineStyle: {
@@ -319,9 +319,9 @@ export default {
           {
             type: 'value',
             gridIndex: 0,
-            max: this.stockData.y2MaxValue,
-            min: -this.stockData.y2MaxValue,
-            interval: this.stockData.y2MaxValue / 2,
+            max: this.stockData.maxPercent,
+            min: -this.stockData.maxPercent,
+            interval: this.stockData.maxPercent / 2,
             axisTick: {
               show: false
             },

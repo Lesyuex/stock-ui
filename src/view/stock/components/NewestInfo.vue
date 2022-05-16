@@ -200,6 +200,7 @@ export default {
       width: 20%;
       font-size: 15px;
       box-sizing: border-box;
+      padding: 1px 0;
       padding-right: 20px;
 
       &:nth-child(5), &:nth-child(10), &:nth-child(15) {

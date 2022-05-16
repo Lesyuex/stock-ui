@@ -109,7 +109,7 @@ export default {
       if (kname === 'season' || kname === 'year') {
         return 0
       } else {
-        if (length <= 320) {
+        if (length <= 321) {
           if (kname === 'day') return 80
           if (kname === 'week') return 60
           if (kname === 'month') return 40
@@ -159,7 +159,7 @@ export default {
         ktype: this.comInfo.ktype,
         stockType: this.comInfo.stockType
       }
-      this.$axiosPost(`/k/get`, param).then(res => {
+      this.$axiosPost('/k/get', param).then(res => {
         const dataList = res.data
         const xData = []
         // [open, close, lowest, highest] （即：[开盘值, 收盘值, 最低值, 最高值]）

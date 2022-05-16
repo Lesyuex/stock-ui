@@ -64,6 +64,7 @@ export default {
   components: {
     NewestInfo,
     MinutesChart,
+    FiveDayMinutesChart: () => import('../../../components/chart/FiveDayMinutesChart'),
     DayKChart: () => import('../../../components/chart/KChart'),
     WeekKChart: () => import('../../../components/chart/KChart'),
     MonthKChart: () => import('../../../components/chart/KChart'),
@@ -74,7 +75,7 @@ export default {
     return {
       choiceArr: [
         {name: '分时', com: 'MinutesChart', code: '1', kname: 'minu', ktype: 0},
-        {name: '五日', com: 'FiveDay', code: '2', kname: 'fiveDay', ktype: 0},
+        {name: '五日', com: 'FiveDayMinutesChart', code: '2', kname: 'fiveDay', ktype: 0},
         {name: '日K', com: 'DayKChart', code: '3', kname: 'day', ktype: 0},
         {name: '周K', com: 'WeekKChart', code: '4', kname: 'week', ktype: 0},
         {name: '月K', com: 'MonthKChart', code: '5', kname: 'month', ktype: 0},
