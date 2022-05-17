@@ -1,19 +1,21 @@
 <template>
   <div style="width: 100%;height: 100%;position: relative">
     <echarts :options="options"/>
-    <el-icon class="el-icon-loading" style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px" v-if="loadingData"/>
+    <el-icon class="el-icon-loading" style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"
+             v-if="loadingData"/>
   </div>
 </template>
 <script>
 import Echarts from './Echarts'
-import {timeHkXData, timeXData} from '../../view/stock/js/xAxisData'
+import {cnXData, hkXData} from '../../view/stock/js/xAxisData'
 import moment from 'moment'
+import {tooltipFormatter} from '../../static/js/echartsOption'
 
 export default {
   name: 'MinutesChart', // 上下两个grid(分时图和量图)
   props: {
     marketCode: String,
-    stockData: {
+    stock: {
       type: Object,
       required: true
     }
@@ -24,12 +26,11 @@ export default {
   data () {
     return {
       loadingData: true,
+      today: moment().format('YYYY-MM-DD'),
       options: {},
-      currentDay: '2088-08-08',
-      marketOptions: [
-        {
-          prefix: 'sh,sz',
-          bottomX: [1, 2, 3, 4, 5],
+      marketOptions: {
+        cn: {
+          helpXData: [1, 2, 3, 4, 5],
           max: 5,
           xFormatter: function (value) {
             if (value === 1) return '{right|09:30}'
@@ -38,11 +39,10 @@ export default {
             if (value === 4) return '14:00'
             if (value === 5) return '{left|15:00}'
           },
-          timeXData: timeXData
+          xData: cnXData
         },
-        {
-          prefix: 'hk',
-          bottomX: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        hk: {
+          helpXData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
           max: 12,
           xFormatter: function (value) {
             if (value === 1) return '{right|09:30}'
@@ -52,12 +52,13 @@ export default {
             if (value === 10) return '15:00'
             if (value === 12) return '{left|16:00}'
           },
-          timeXData: timeHkXData
-        }]
+          xData: hkXData
+        }
+      }
     }
   },
   watch: {
-    stockData: {
+    stock: {
       deep: true,
       handler () {
         this.initOptions()
@@ -65,111 +66,81 @@ export default {
     }
   },
   computed: {
-    marketIndex () {
+    defaultOption () {
       const prefix = this.marketCode.substr(0, 2)
-      for (let i = 0; i < this.marketOptions.length; i++) {
-        if (this.marketOptions[i].prefix.indexOf(prefix) > -1) {
-          return i
-        }
+      let market
+      if ('sh,sz'.indexOf(prefix) > -1) {
+        market = 'cn'
+      } else if ('hk'.indexOf(prefix) > -1) {
+        market = 'hk'
       }
+      return market ? this.marketOptions[market] : null
     },
     upDownColor () {
-      const value = this.stockData.newestInfo.upDownValue
-      if (value > 0) return '#ee4957'
-      if (value < 0) return '#01d078'
-      return null
-    },
-    tooltipFormatter () {
-      return (params) => {
-        let html = '<div>' + moment(params[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
-        const dataIndex = params[0].dataIndex
-        const currentMinu = this.stockData.newestMinutes[dataIndex]
-        // 价格
-        const marker1 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
-        const currentPrice = currentMinu && currentMinu[1] ? currentMinu[1] : '-'
-        const priceText = `<div style="text-align: left">${marker1}价格：${currentPrice}</div>`
-        // 涨跌幅
-        const percent = currentMinu && currentMinu[6] ? currentMinu[6] : '-'
-        let color
-        if (percent > 0) {
-          color = '#ee4957'
-        } else if (percent < 0) {
-          color = '#01d078'
-        } else {
-          color = 'gray'
-        }
-        const marker2 = `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${color};"></span>`
-        const percentText = `<div style="text-align: left">${marker2}涨幅：${percent}%</div>`
-        // 均价
-        const marker3 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ff9e12;"></span>'
-        const average = currentMinu && currentMinu[5] ? currentMinu[5] : '-'
-        const averagePriceText = `<div style="text-align: left">${marker3}均价：${average}</div>`
-        // 成交量
-        const marker4 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#0091fc;"></span>'
-        const volume = currentMinu && currentMinu[4] ? currentMinu[4] : '-'
-        const volumeText = `<div style="text-align: left">${marker4}成交量：${volume}手</div>`
-        return html + priceText + percentText + averagePriceText + volumeText
-      }
+      const value = this.stock.upDownValue
+      return value > 0 ? '#ee4957' : '#01d078'
     }
   },
   mounted () {
     this.initOptions()
   },
   methods: {
-    getSeriesData (stockData) {
-      const xDataArr = [] // 时间轴
+    getSeriesData (stock) {
       const priceArr = []
       const averagePriceArr = [] // 均价 数据
       const percentArr = [] // 涨跌幅 数据
       const focusPoint = [[null, null]] // 最新涨跌幅位置
       const volumeArr = [] // 成交量（手）
-      const date = moment().format('YYYY-MM-DD')
-      const minutesDataArr = stockData.newestMinutes
-      const xData = this.marketOptions[this.marketIndex].timeXData
+      // 根据当前股票代码获取初始化信息
+      const xData = this.defaultOption.xData
+      const minutesDataArr = stock.minutesList
       for (let index = 0; index < xData.length; index++) {
-        const x = `${date} ${xData[index]}`
-        xDataArr.push(x)
-        const minutesData = minutesDataArr[index]
+        const minutesData = minutesDataArr[index] || {}
         // 当前价
-        priceArr.push(minutesData ? minutesData[1] : null)
+        minutesData.value = minutesData.price
+        minutesData.date = `${this.today} ${xData[index]}`
+        priceArr.push(minutesData)
         // 均价,成交量和涨跌幅
-        const averagePrice = minutesData ? minutesData[5] : null
-        averagePriceArr.push(averagePrice)
-        const volume = minutesData ? minutesData[4] : null
-        volumeArr.push(volume)
-        const percent = minutesData ? minutesData[6] : null
-        percentArr.push(percent)
+        averagePriceArr.push(minutesData.averagePrice || null)
+        volumeArr.push(minutesData.minuVolume || null)
+        // 用于判断能量柱颜色
+        percentArr.push(minutesData.percent || null)
         // 光圈处于最新涨跌幅位置
-        if (percent) {
-          focusPoint[0][0] = index
-          focusPoint[0][1] = percent
-          if (!stockData.marketOpen) {
-            focusPoint[0][0] = null
-            focusPoint[0][1] = null
+        if (stock.status === 'is_close') {
+          focusPoint[0][0] = null
+          focusPoint[0][1] = null
+        } else {
+          if (minutesData.price) {
+            focusPoint[0][0] = index
+            focusPoint[0][1] = minutesData.price
           }
         }
       }
-      return {xDataArr, priceArr, averagePriceArr, percentArr, focusPoint, volumeArr}
+      return {priceArr, averagePriceArr, percentArr, focusPoint, volumeArr}
     },
     initOptions () {
-      const stockData = this.stockData
+      if (!this.defaultOption) return
+      const stock = this.stock
       const {
-        xDataArr,
         priceArr,
         averagePriceArr,
         percentArr,
         focusPoint,
         volumeArr
-      } = this.getSeriesData(stockData)
+      } = this.getSeriesData(stock)
       this.options = {
         tooltip: {
           show: true,
           trigger: 'axis',
-          formatter: this.tooltipFormatter
+          formatter: tooltipFormatter
         },
         axisPointer: {
           show: true,
           triggerTooltip: false,
+          lineStyle: {
+            type: 'solid'
+          },
+          // x轴或者y轴联动
           link: [
             {
               xAxisIndex: [0, 2]
@@ -181,26 +152,26 @@ export default {
         },
         grid: [
           {
-            containLabel: false,
+            // show: true,
+            containLabel: true,
+            top: '2%',
             left: 'center',
-            top: 20,
             width: '98%',
-            height: '56%'
+            height: '68%'
           },
           {
-            containLabel: false,
+            // show: true,
+            containLabel: true,
             left: 'center',
-
             width: '98%',
-            height: '20%',
-            bottom: 8
+            height: '30%',
+            top: '70%'
           }
         ],
         xAxis: [
           {
             type: 'category',
             gridIndex: 0,
-            z: 2,
             boundaryGap: false,
             axisLabel: {
               show: false
@@ -217,39 +188,42 @@ export default {
             axisPointer: {
               show: true
             },
-            data: xDataArr
+            data: this.defaultOption.xData
           },
           {
             type: 'value',
             gridIndex: 0,
-            z: 1,
             boundaryGap: false,
             position: 'bottom',
-            data: this.marketOptions[this.marketIndex].bottomX,
+            data: this.defaultOption.helpXData,
             min: 1,
-            max: this.marketOptions[this.marketIndex].max,
+            max: this.defaultOption.max,
             interval: 1,
             axisLabel: {
               show: true,
+              // inside: true,
               color: '#858585',
-              formatter: this.marketOptions[this.marketIndex].xFormatter,
+              margin: 4,
+              height: 24,
+              lineHeight: 24,
+              formatter: this.defaultOption.xFormatter,
               rich: {
                 right: {
-                  padding: [0, 0, 0, 30]
+                  padding: [0, 0, 4, 25]
                 },
                 left: {
-                  padding: [0, 45, 0, 0]
+                  padding: [0, 25, 4, 0]
                 }
               }
             },
             axisLine: {
-              show: false,
+              show: true,
               lineStyle: {
-                color: '#1e3139'
+                color: 'rgba(0,0,0,.1)'
               }
             },
             axisTick: {
-              show: true
+              show: false
             },
             splitLine: {
               show: false,
@@ -265,7 +239,7 @@ export default {
             type: 'category',
             gridIndex: 1,
             boundaryGap: false,
-            data: xDataArr,
+            data: this.defaultOption.xData,
             axisLabel: {
               show: false
             },
@@ -281,9 +255,9 @@ export default {
           {
             type: 'value',
             gridIndex: 0,
-            min: this.stockData.minValue,
-            max: this.stockData.maxValue,
-            interval: (this.stockData.maxValue - this.stockData.minValue) / 4,
+            min: this.stock.minYaxisPrice,
+            max: this.stock.maxYaxisPrice,
+            interval: (this.stock.maxYaxisPrice - this.stock.minYaxisPrice) / 4,
             axisLine: {
               show: false,
               lineStyle: {
@@ -300,7 +274,7 @@ export default {
               show: false
             },
             axisLabel: {
-              color: 'rgba(255,255,255,0.4)',
+              color: '#858585',
               inside: true,
               margin: -4,
               formatter: function (value) {
@@ -319,9 +293,9 @@ export default {
           {
             type: 'value',
             gridIndex: 0,
-            max: this.stockData.maxPercent,
-            min: -this.stockData.maxPercent,
-            interval: this.stockData.maxPercent / 2,
+            max: this.stock.maxYaxisPercent,
+            min: -this.stock.maxYaxisPercent,
+            interval: this.stock.maxYaxisPercent / 2,
             axisTick: {
               show: false
             },
@@ -335,7 +309,7 @@ export default {
               }
             },
             axisLabel: {
-              color: 'rgba(255,255,255,0.4)',
+              color: '#858585',
               margin: -4,
               formatter: function (value) {
                 return `${value.toFixed(2)}%`
@@ -368,7 +342,7 @@ export default {
               show: false
             },
             axisPointer: {
-              show: false
+              show: true
             }
           }
         ],
@@ -384,10 +358,23 @@ export default {
             smooth: 0.1,
             lineStyle: {
               width: 1.5,
-              color: this.upDownColor
+              color: this.$store.getters.lineColor
             },
             areaStyle: {
-              color: this.upDownColor,
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0,
+                  color: this.$store.getters.lineColor // 0% 处的颜色
+                }, {
+                  offset: 1, color: '#161a23' // 100% 处的颜色
+                }],
+                global: false // 缺省为 false
+              },
               origin: 'start',
               opacity: 0.1
             },
@@ -443,7 +430,7 @@ export default {
             type: 'effectScatter',
             effectType: 'ripple',
             xAxisIndex: 0,
-            yAxisIndex: 1,
+            yAxisIndex: 0,
             symbolSize: 3,
             rippleEffect: {
               color: '#24e5ee', // 涟漪的颜色

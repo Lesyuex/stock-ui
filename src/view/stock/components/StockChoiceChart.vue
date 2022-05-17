@@ -1,7 +1,7 @@
 <template>
   <div class="minutes-wrap">
     <div class="info-wrap">
-      <newest-info :newestInfo="stockData.newestInfo" :marketCode="marketCode"/>
+      <newest-info :stock="stock" :marketCode="marketCode"/>
     </div>
     <div class="choice-wrap">
       <ul>
@@ -31,13 +31,13 @@
       <g-col :md="comInfo.code === '1' ? 20 :24" style="height: 100%;">
         <div class="chart-wrap">
           <keep-alive>
-            <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode" :comInfo="comInfo"
+            <component :is="comInfo.com" :stock="stock" :marketCode="marketCode" :comInfo="comInfo"
                        :ref="comInfo.kname" :refName="comInfo.kname"/>
           </keep-alive>
         </div>
       </g-col>
       <g-col :md="4" v-if="comInfo.code === '1'">
-        <handicap :newest-info="stockData.newestInfo" :marketCode="marketCode"></handicap>
+        <handicap :stock="stock" :marketCode="marketCode"/>
       </g-col>
     </g-row>
 
@@ -95,8 +95,8 @@ export default {
         ktype: 0,
         stockType: 0
       },
-      stockData: {
-        newestInfo: {},
+      stock: {
+        stockDetail: {},
         newestMinutes: []
       }
     }
@@ -129,8 +129,8 @@ export default {
     },
     getMinutesData () {
       const that = this
-      this.$axiosGet(`/stock/get/minutes/${this.marketCode}`).then(res => {
-        that.stockData = res.data
+      this.$axiosGet(`/stock/get/minutes/1/${this.marketCode}`).then(res => {
+        that.stock = res.data
       }).finally(() => {
         this.$nextTick(function () {
           this.$refs[this.comInfo.kname].loadingData = false

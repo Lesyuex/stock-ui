@@ -44,7 +44,7 @@ export default {
   mixins: [openTimer],
   name: 'Handicap',
   props: {
-    newestInfo: {
+    stock: {
       type: Object,
       required: true
     },
@@ -72,7 +72,7 @@ export default {
     }
   },
   watch: {
-    newestInfo: {
+    stock: {
       deep: true,
       handler: function () {
         this.initPkList()
@@ -117,12 +117,12 @@ export default {
     initPkList () {
       const allVolume = []
       for (let i = 4; i >= 0; i--) {
-        this.pkList[i].price = this.newestInfo[`sellPrice${5 - i}`] ? this.newestInfo[`sellPrice${5 - i}`].toFixed(2) : '-'
-        const sellVolume = this.newestInfo[`sellVolume${5 - i}`]
+        this.pkList[i].price = this.stock[`sellPrice${5 - i}`] ? this.stock[`sellPrice${5 - i}`].toFixed(2) : '-'
+        const sellVolume = this.stock[`sellVolume${5 - i}`]
         this.pkList[i].volume = sellVolume
 
-        this.pkList[i + 5].price = this.newestInfo[`buyPrice${i + 1}`] ? this.newestInfo[`buyPrice${i + 1}`].toFixed(2) : '-'
-        const buyVolume = this.newestInfo[`buyVolume${i + 1}`]
+        this.pkList[i + 5].price = this.stock[`buyPrice${i + 1}`] ? this.stock[`buyPrice${i + 1}`].toFixed(2) : '-'
+        const buyVolume = this.stock[`buyVolume${i + 1}`]
         this.pkList[i + 5].volume = buyVolume
         allVolume.push(...[buyVolume, sellVolume])
       }
@@ -135,7 +135,7 @@ export default {
       return mark === 'M' ? 'gray' : (mark === 'B' ? '#ee4957' : '#01d078')
     },
     getPriceColor (price) {
-      return this.newestInfo.upDownValue === 0 ? 'gray' : (this.newestInfo.upDownValue > 0 ? '#9b3038' : '#049155')
+      return this.stock.upDownValue === 0 ? 'gray' : (this.stock.upDownValue > 0 ? '#9b3038' : '#049155')
     }
   }
 }

@@ -52,6 +52,9 @@ export default {
     this.getCount()
   },
   methods: {
+    refreshData () {
+      this.getCount()
+    },
     getCount () {
       const that = this
       this.$axiosGet('/count/get/detail').then(res => {

@@ -8,7 +8,7 @@
 
 <script>
 import Echarts from './Echarts'
-import {timeXData} from '../../view/stock/js/xAxisData'
+import {cnXData} from '../../view/stock/js/xAxisData'
 import moment from 'moment'
 export default {
   name: 'SingleMinutesLineChart',
@@ -67,8 +67,8 @@ export default {
       const percentArr = [] // 涨跌幅 数据
       const date = moment(stockData.date).format('YYYY-MM-DD')
       const minutesDataArr = stockData.data
-      for (let index = 0; index < timeXData.length; index++) {
-        const x = `${date} ${timeXData[index]}`
+      for (let index = 0; index < cnXData.length; index++) {
+        const x = `${date} ${cnXData[index]}`
         xDataArr.push(x)
         const minutesData = minutesDataArr[index]
         const percent = minutesData ? minutesData[4] : null

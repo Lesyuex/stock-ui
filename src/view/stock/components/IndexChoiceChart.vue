@@ -2,7 +2,7 @@
   <div class="minutes-wrap">
     <div class="stock-wrap">
       <div class="info-wrap">
-        <newest-info :newestInfo="stockData.newestInfo" :marketCode="marketCode"/>
+        <newest-info :stock="stock" :marketCode="marketCode"/>
       </div>
       <div class="choice-wrap">
         <ul>
@@ -30,7 +30,7 @@
       </div>
       <div class="chart-wrap">
         <keep-alive>
-          <component :is="comInfo.com" :stockData="stockData" :marketCode="marketCode" :comInfo="comInfo"
+          <component :is="comInfo.com" :stock="stock" :marketCode="marketCode" :comInfo="comInfo"
                      :ref="comInfo.kname" :refName="comInfo.kname"/>
         </keep-alive>
       </div>
@@ -100,8 +100,8 @@ export default {
         ktype: 0,
         stockType: 1
       },
-      stockData: {
-        newestInfo: {},
+      stock: {
+        stockDetail: {},
         newestMinutes: []
       }
     }
@@ -134,8 +134,8 @@ export default {
     },
     getMinutesData () {
       const that = this
-      this.$axiosGet(`/index/get/minutes/${this.marketCode}`).then(res => {
-        that.stockData = res.data
+      this.$axiosGet(`/stock/get/minutes/2/${this.marketCode}`).then(res => {
+        that.stock = res.data
       }).finally(() => {
         this.$refs[this.comInfo.kname].loadingData = false
         if (this.timer) {

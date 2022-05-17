@@ -43,7 +43,7 @@ export default {
       const that = this
       // 获取当前时间
       const currentTime = moment()
-      const am0900 = moment().hours(9).minutes(0).seconds(0).milliseconds(0) // 当天9.00
+      const am0900 = moment().hours(9).minutes(30).seconds(0).milliseconds(0) // 当天9.30
       const am1130 = moment().hours(11).minutes(30).seconds(0).milliseconds(0) // 当天11.30
       const pm1300 = moment().hours(13).minutes(0).seconds(0).milliseconds(0) // 当天13.00
       const pm1500 = moment().hours(15).minutes(0).seconds(0).milliseconds(0) // 当天15.00
