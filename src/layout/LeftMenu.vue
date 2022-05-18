@@ -1,79 +1,98 @@
 <template>
-  <ul class="menu">
-    <li class="menu-item">
-      <i class="el-icon-s-platform"></i>
-      <span slot="title">癌股</span>
-    </li>
-    <li class="menu-item">
-      <i class="el-icon-coin"></i>
-      <span slot="title">资金</span>
-    </li>
-    <li class="submenu">
-      <div class="menu-item submenu_title">
+  <div>
+    <ul class="menu">
+      <li v-for="(menu,index) in menuArr" :key="index" :class="{'menu-item':!menu.children,'submenu':menu.children}" @click="routeTo(menu)">
+        <i :class="menu.icon" v-if="!menu.children"></i>
+        <span v-if="!menu.children">{{menu.name}}</span>
+
+        <div class="menu-item submenu_title" v-if="menu.children">
+          <i :class="menu.icon"></i>
+          <span>{{menu.name}}</span>
+        </div>
+        <ul v-if="menu.children">
+          <li v-for="(chil,index) in menu.children" :key="index" class="menu-item">
+            <i :class="chil.icon"></i>
+            <span>{{chil.name}}</span>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <submenu>
+      <template slot="title">
         <i class="el-icon-s-grid"></i>
         <span>板块</span>
-      </div>
-      <ul>
-        <li class="menu-item">
-          <i class="el-icon-place"></i>
-          <span>地域</span>
-        </li>
-        <li class="menu-item">
-          <i class="el-icon-office-building"></i>
-          <span>行业</span>
-        </li>
-        <li class="menu-item">
-          <i class="el-icon-s-opportunity"></i>
-          <span>概念</span>
-        </li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <i class="el-icon-star-on"></i>
-      <span slot="title">自选</span>
-    </li>
-  </ul>
+      </template>
+    </submenu>
+    <sub-menu2>
+      <template>
+        板块
+      </template>
+    </sub-menu2>
+  </div>
 </template>
 
 <script>
+import Submenu from '../components/menu/Submenu'
+import SubMenu2 from '../components/menu/SubMenu2'
 export default {
   name: 'LeftMenu',
+  components: {
+    Submenu,
+    SubMenu2
+  },
+  data () {
+    return {
+      menuArr: [
+        {name: '癌股', path: '/stock-home', icon: 'el-icon-s-platform'},
+        {name: '资金', path: '', icon: 'el-icon-coin'},
+        {
+          name: '板块',
+          icon: 'el-icon-s-grid',
+          children: [
+            {name: '行业', path: '', icon: 'el-icon-office-building'},
+            {name: '概念', path: '', icon: 'el-icon-s-opportunity'},
+            {name: '地域', path: '', icon: 'el-icon-place'}
+          ]
+        },
+        {name: '自选', path: '', icon: 'el-icon-star-on'},
+        {name: '测试', path: '', icon: 'el-icon-toilet-paper'}
+      ]
+    }
+  },
   mounted () {
-    const submenuTitleList = document.getElementsByClassName('submenu_title')
-    Array.from(submenuTitleList).forEach(title => {
-      title.addEventListener('click', function () {
-        const parentNode = title.parentNode
-        const ul = parentNode.getElementsByTagName('ul')
-        const display = ul[0].style.display === '' ? 'none' : ul[0].style.display
-        ul[0].style.display = display === 'none' ? 'block' : 'none'
+    this.$nextTick(function () {
+      const submenuTitleList = document.getElementsByClassName('submenu_title')
+      Array.from(submenuTitleList).forEach(title => {
+        title.addEventListener('click', function () {
+          const parentNode = title.parentNode
+          const ul = parentNode.getElementsByTagName('ul')
+          const display = ul[0].style.display === '' ? 'none' : ul[0].style.display
+          ul[0].style.display = display === 'none' ? 'block' : 'none'
+        })
       })
-    })
 
-    const menuItemList = document.getElementsByClassName('menu-item')
-    const elements = Array.from(menuItemList)
-    elements.forEach((item, index) => {
-      item.addEventListener('click', function () {
-        if (!item.classList.contains('is-active')) {
-          item.classList.add('is-active')
-        }
-        elements.forEach((el, elIndex) => {
-          if (elIndex !== index) {
-            const active = el.classList.contains('is-active')
-            if (active) {
-              el.classList.remove('is-active')
-            }
+      const menuItemList = document.getElementsByClassName('menu-item')
+      const elements = Array.from(menuItemList)
+      elements.forEach((item, index) => {
+        item.addEventListener('click', function () {
+          if (!item.classList.contains('is-active')) {
+            item.classList.add('is-active')
           }
+          elements.forEach((el, elIndex) => {
+            if (elIndex !== index) {
+              const active = el.classList.contains('is-active')
+              if (active) {
+                el.classList.remove('is-active')
+              }
+            }
+          })
         })
       })
     })
   },
   methods: {
-    openSubMenu (e) {
-      console.log(e)
-      e.target.parentNode.childNodes[3].style.display = 'block'
-    },
-    activeMenu (e) {
-      e.target.classList.add('is-active')
+    routeTo (menu) {
+      if (menu.path) this.$router.push({path: menu.path})
     }
   }
 }
