@@ -5,7 +5,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     timerCount: 0,
-    lineColor: '#2eacb2'
+    lineColor: '#708bf5'
   },
   mutations: {
     addTimerCount: (state) => {

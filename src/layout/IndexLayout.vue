@@ -1,6 +1,6 @@
 <template>
-  <el-container class="container">
-    <el-aside :width="visibleMenu ? '64px' : '140px' " style="background-color: #161a23;" id="el-aside">
+  <el-container class="container" id="stock-container">
+    <el-aside :width="visibleMenu ? '64px' : '140px' " style="background-color: #142033;" id="el-aside">
       <left-layout @routeTo="routeTo" @hideHeaderEventMenu="hideHeaderEventMenu" ref="asideMenu"/>
     </el-aside>
     <el-container>
@@ -58,34 +58,35 @@ export default {
   }
 }
 </script>
-<style>
-.el-header {
-  padding: 10px 12px 2px 12px;
+<style lang="less">
+#stock-container{
+  width: 100vw;
+  height: 100vh;
+  .el-header {
+    padding: 10px 12px 2px 12px;
+  }
+  .el-aside {
+    color: #333;
+    width: unset;
+    position: relative;
+  }
+  .el-submenu__title,.el-menu-item  {
+    font-size: 18px !important;
+  }
+  .container #el-main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .el-menu {
+    border-right: 0;
+  }
+  .el-menu-item:hover {
+    background-color: #000000 !important;
+    color: dodgerblue !important;
+  }
+  .el-container{
+    transition: 5s;
+  }
 }
-.el-aside {
-  color: #333;
-  width: unset;
-  position: relative;
-}
-.container {
-  width: 100%;
-  height: 100%;
-}
-.el-submenu__title,.el-menu-item  {
-  font-size: 18px !important;
-}
-.container #el-main {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.el-menu {
-  border-right: 0;
-}
-.el-menu-item:hover {
-  background-color: #000000 !important;
-  color: dodgerblue !important;
-}
-.el-container{
-  transition: 5s;
-}
+
 </style>

@@ -445,17 +445,10 @@ export default {
             type: 'candlestick',
             data: this.chartData.yData,
             itemStyle: {
-              color: '#ee4957',
-              color0: '#01d078'
+              color: '#ff6666',
+              color0: '#0aab62'
             },
-            /*        itemStyle: {
-              color: upColor,
-              color0: downColor,
-              borderColor: upBorderColor,
-              borderColor0: downBorderColor
-            }, */
             markPoint: {
-
               data: [
                 {
                   name: '可视区域最高点',

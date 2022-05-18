@@ -1,5 +1,4 @@
 <template>
-  <div>
     <el-menu
       :collapse="visibleMenu"
       :default-openeds="['3']"
@@ -21,19 +20,19 @@
           <span>板块</span>
         </template>
         <el-menu-item-group style="background-color: #121420">
-          <el-menu-item index="3-1" style="padding:0 0 0 20px;background-color: #121420;min-width: unset">
+          <el-menu-item index="3-1" style="padding:0 0 0 20px;min-width: unset">
             <template slot="title">
               <i class="el-icon-place"></i>
               <span>地域</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="3-2"  style="padding:0 0 0 20px;background-color: #121420;min-width: unset">
+          <el-menu-item index="3-2"  style="padding:0 0 0 20px;min-width: unset">
             <template slot="title">
               <i class="el-icon-office-building"></i>
               <span>行业</span>
             </template>
           </el-menu-item>
-          <el-menu-item index="3-3"  style="padding:0 0 0 20px;background-color: #121420;min-width: unset">
+          <el-menu-item index="3-3"  style="padding:0 0 0 20px;min-width: unset">
             <template slot="title">
               <i class="el-icon-s-opportunity"></i>
               <span>概念</span>
@@ -50,8 +49,7 @@
         <span slot="title">测试</span>
       </el-menu-item>
     </el-menu>
-    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>
-  </div>
+<!--    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>-->
 </template>
 
 <script>
