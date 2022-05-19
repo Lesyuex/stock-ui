@@ -1,4 +1,5 @@
 <template>
+  <div>
     <el-menu
       :collapse="visibleMenu"
       :default-openeds="['3']"
@@ -49,12 +50,20 @@
         <span slot="title">测试</span>
       </el-menu-item>
     </el-menu>
-<!--    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>-->
+    <div style="background-color: white;height: 20px"></div>
+    <!--    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>-->
+    <left-menu></left-menu>
+  </div>
+
 </template>
 
 <script>
+import LeftMenu from './LeftMenu'
 export default {
   name: 'LeftLayout',
+  components: {
+    LeftMenu
+  },
   data () {
     return {
       visibleMenu: false

@@ -94,6 +94,7 @@ export default {
       // 根据当前股票代码获取初始化信息
       const xData = this.defaultOption.xData
       const minutesDataArr = stock.minutesList
+
       for (let index = 0; index < xData.length; index++) {
         const minutesData = minutesDataArr[index] || {}
         // 当前价
@@ -121,6 +122,7 @@ export default {
     initOptions () {
       if (!this.defaultOption) return
       const stock = this.stock
+      if (!stock.minutesList || stock.minutesList.length < 1) return
       const {
         priceArr,
         averagePriceArr,
@@ -157,6 +159,7 @@ export default {
             top: '2%',
             left: 'center',
             width: '98%',
+            z: 0,
             height: '68%'
           },
           {
@@ -165,6 +168,7 @@ export default {
             left: 'center',
             width: '98%',
             height: '30%',
+            z: 0,
             top: '70%'
           }
         ],

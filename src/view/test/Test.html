@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<style>
+  div{
+    width: 140px;
+    background-color: cornflowerblue;
+  }
+  div {
+    overflow: hidden;
+    animation: show 3s linear forwards,none 2s linear 5 forwards ;
+  }
+  @keyframes show {
+    from{
+      height: 0;
+    }
+    to{
+      height: 500px;
+    }
+  }
+  @keyframes none {
+    from{
+
+    }
+    to{
+      background-color: red;
+     //display: none;
+    }
+  }
+</style>
+<body>
+<div>
+
+</div>
+</body>
+</html>
