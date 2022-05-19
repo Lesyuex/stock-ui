@@ -89,9 +89,7 @@ ul {
     line-height: 56px;
     color: #adb4c2;
     cursor: pointer;
-    // transition: .3s;
-    transition: all .2s;
-
+    transition: .3s;
     i {
       width: 24px;
       text-align: center;
@@ -114,25 +112,12 @@ ul {
       position: relative;
 
       .tip {
-        position: relative;
-        font-size: 5px;
-        margin-right: 0;
+        position: absolute;
+        top: 20px;
+        right: 6px;
+        font-size: 6px;
         transition: .5s;
-        top: -4px;
       }
-
-      /*
-            &::after {
-              content: "";
-              position: absolute;
-              right: 20px;
-              top: 26px;
-              width: 6px;
-              height: 5px;
-              transform: rotate(135deg);
-              border-top: 1px solid white;
-              border-right: 1px solid white;
-            }*/
     }
 
     .menu {
@@ -141,30 +126,8 @@ ul {
         background-color: #121420;
       }
     }
-
-    .menu-hide {
-      animation-duration: .3s, 0s;
-      animation-timing-function: linear, linear;
-      animation-delay: 0s, .3s;
-      animation-fill-mode: forwards, forwards;
-    }
-
-    .menu-visible {
-      display: block;
-      // animation: showMenu .3s ease-in-out;
-    }
-
   }
 }
-
-/*@keyframes show {
-  from{
-    height: 164px;
-  }
-  to{
-    height: 0;
-  }
-}*/
 @keyframes none {
   from {
   }

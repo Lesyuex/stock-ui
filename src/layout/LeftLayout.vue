@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <left-menu></left-menu>
+<!--  <div>
     <el-menu
       :collapse="visibleMenu"
       :default-openeds="['3']"
@@ -10,10 +11,6 @@
       <el-menu-item index="1" @click="routeTo('/stock-home')">
         <i class="el-icon-s-platform"></i>
         <span slot="title">癌股</span>
-      </el-menu-item>
-      <el-menu-item index="2" @click="routeTo('/china-share')">
-        <i class="el-icon-coin"></i>
-        <span slot="title">资金</span>
       </el-menu-item>
       <el-submenu index="3">
         <template slot="title">
@@ -41,19 +38,14 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="4" @click="routeTo('/self-collect')">
-        <i class="el-icon-star-on"></i>
-        <span slot="title">自选</span>
-      </el-menu-item>
       <el-menu-item index="5" @click="routeTo('/test-page')">
         <i class="el-icon-toilet-paper"></i>
         <span slot="title">测试</span>
       </el-menu-item>
     </el-menu>
     <div style="background-color: white;height: 20px"></div>
-    <!--    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>-->
-    <left-menu></left-menu>
-  </div>
+    &lt;!&ndash;    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>&ndash;&gt;
+  </div>-->
 
 </template>
 

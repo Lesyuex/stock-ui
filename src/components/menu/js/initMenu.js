@@ -1,30 +1,36 @@
+
 export default function () {
   const styleSheet = document.styleSheets
+  // 查询到所有父菜单
   const submenuTitleList = document.getElementsByClassName('submenu_title')
   const menuKeyframes = {}
-  const height = 56
   Array.from(submenuTitleList).forEach(title => {
+    // 父元素submenu
     const parentNode = title.parentNode
     const open = title.getAttribute('aria-expanded')
     const menu = parentNode.querySelector('ul.menu')
     const li = menu.querySelectorAll(':scope > li')
+    const height = li[0].offsetHeight
     const chilLength = li.length
-    const s = `s${chilLength}ChilMenu`
-    const h = `h${chilLength}ChilMenu`
-    if (!menuKeyframes[s]) {
+    // 展开过度动画
+    const show = `smenu${chilLength}`
+    // 关闭动画
+    const hide = `hmenu${chilLength}`
+    // 查询有没有定义动画 没定义则定义动画（每个menu的高度不确定，不能写死height）
+    if (!menuKeyframes[show]) {
+      // 总高度
       const maxHeight = height * chilLength
-      console.log(maxHeight)
-      menuKeyframes[s] = `@keyframes ${s}{from{height: 0;display:block}to{height: ${maxHeight + 8}px;}}`
-      menuKeyframes[h] = `@keyframes ${h}{from{height: ${maxHeight}px;}to{height: 0;}}`
-      styleSheet[0].insertRule(menuKeyframes[s])
-      styleSheet[0].insertRule(menuKeyframes[h])
+      menuKeyframes[show] = `@keyframes ${show}{from{height: 0;display:block}to{height: ${maxHeight + 4}px;}}`
+      menuKeyframes[hide] = `@keyframes ${hide}{from{height: ${maxHeight}px;}to{height: 0;}}`
+      styleSheet[0].insertRule(menuKeyframes[show])
+      styleSheet[0].insertRule(menuKeyframes[hide])
     }
-    const show = function (menu) {
-      menu.style.animation = `${s} .3s ease-in-out`
+    const showMenu = function (menu) {
+      menu.style.animation = `${show} .3s ease-in-out`
       menu.setAttribute('aria-expanded', 'true')
     }
-    const hide = function (menu) {
-      menu.style.animation = `${h} .3s ease-out forwards`
+    const hideMenu = function (menu) {
+      menu.style.animation = `${hide} .3s ease-out forwards`
       menu.setAttribute('aria-expanded', 'false')
     }
     const showTip = function (isOpen) {
@@ -32,7 +38,7 @@ export default function () {
       tip.style.transform = isOpen === 'true' ? 'rotate(-180deg)' : null
     }
     const handle = function (menu, open) {
-      open === 'true' ? show(menu) : hide(menu)
+      open === 'true' ? showMenu(menu) : hideMenu(menu)
       showTip(open)
     }
     handle(menu, open)

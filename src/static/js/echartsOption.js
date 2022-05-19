@@ -1,4 +1,5 @@
 import moment from 'moment'
+import store from '../../store'
 
 const tooltipFormatter = (params) => {
   params.sort((a, b) => a.seriesIndex - b.seriesIndex)
@@ -7,7 +8,8 @@ const tooltipFormatter = (params) => {
   const date = data.date || '2088-08-08 08:08'
   let html = '<div style="font-size: 13px">' + moment(date).format('YYYY-MM-DD HH:mm') + '</div>'
   // 价格
-  const marker1 = '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:gold;"></span>'
+  const priceColor = store.state.lineColor
+  const marker1 = `<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${priceColor};"></span>`
   const currentPrice = data.price || '-'
   const priceText = `<div style="display: flex;justify-content: space-between;font-size: 13px"><span>${marker1}价格</span><span>${currentPrice}</span></div>`
   // 涨跌幅
