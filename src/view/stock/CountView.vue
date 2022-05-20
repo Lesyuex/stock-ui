@@ -1,6 +1,6 @@
 <template>
   <div class="count-wrap">
-    <div style="width: 330px;height: 100px;position: absolute;right: 0;z-index: 999">
+    <div style="width: 330px;height: 130px;position: absolute;right: 0;z-index: 999">
       <pie-chart :pieData="pieData" ref="pie"/>
     </div>
     <bar-line-chart :custom-option="customOption" style="height: 100%"/>
