@@ -67,6 +67,7 @@ export default {
 .g-col{
   width: (@unit-width)*24;
   min-height: 1px;
+  box-sizing: border-box;
 }
 .g-col-0{
   width: 0;

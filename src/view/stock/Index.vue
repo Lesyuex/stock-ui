@@ -1,35 +1,60 @@
 <template>
   <v-card>
     <g-row>
-      <g-col sm="24" md="16" lg="12">
-        <choice-chart :market-code="marketCode"/>
+      <g-col sm="24" md="10" class="marginT8" style="padding: 0 6px">
+        <index-choice-chart :marketCode="marketCode"/>
       </g-col>
-      <g-col :sm="24" :md="16" :lg="12">
+      <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
         <count-view/>
       </g-col>
-      <g-col :sm="24" :md="8" :lg="8">
-        <OverView></OverView>
+      <g-col sm="24" md="6" class="marginT8" style="padding: 0 6px">
+       <market/>
       </g-col>
-
-      <g-col :sm="24" :md="24" :lg="10">
+      <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
         <funding-detail/>
       </g-col>
+      <g-col sm="24" md="6" class="marginT8" style="padding: 0 6px">
+        <plate-single></plate-single>
+      </g-col>
+      <g-col sm="24" md="8" class="marginT8">
+        <plate-single></plate-single>
+      </g-col>
+
+      <g-col sm="24" md="14" class="marginT8">
+        <g-row style="width: calc(100% - 8px);margin: 0 0 0 8px">
+          <g-col :sm="12" :md="12">
+            <plate-single></plate-single>
+          </g-col>
+          <g-col sm="12" md="12">
+            <plate-single></plate-single>
+          </g-col>
+        </g-row>
+
+      </g-col>
+
     </g-row>
   </v-card>
 </template>
 
 <script>
+import IndexChoiceChart from './components/IndexChoiceChart'
 import OverView from './OverView'
-import CountView from './CountView'
 import FundingDetail from '../fundingDetail/FundingDetail'
-import ChoiceChart from './components/StockChoiceChart'
+import CountView from './CountView'
+import PlateSingle from '../components/PlateSingle'
+import BarPieChart from '../../components/chart/PieChart'
+import Market from './Market'
+
 export default {
-  name: 'MainTest',
+  name: 'Home',
   components: {
+    IndexChoiceChart,
     OverView,
-    CountView,
     FundingDetail,
-    ChoiceChart
+    CountView,
+    BarPieChart,
+    PlateSingle,
+    Market
   },
   data () {
     return {
@@ -46,15 +71,13 @@ export default {
   }
 }
 </script>
+<style scoped lang="less">
+/*.marginT8 {
+  margin-left: 8px;
 
-<style scoped>
-.box-wrap {
-  float: left;
-  /*    background-color: indianred;*/
-  width: 540px;
-}
+  &:nth-child(n+1) {
+    margin-right: 8px;
+  }
+}*/
 
-.g-col {
-  height: 420px;
-}
 </style>

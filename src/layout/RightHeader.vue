@@ -1,7 +1,7 @@
 <template>
   <div class="header-wrap">
     <div class="left-wrap tal">
-      <i class="el-icon-s-unfold" @click="menuVisible" v-if="visibleMenu"></i>
+      <i class="el-icon-s-unfold" @click="menuVisible" v-if="!collapse"></i>
       <i class="el-icon-s-fold" @click="menuVisible" v-else></i>
     </div>
     <div class="right-wrap">
@@ -15,7 +15,6 @@
           @blur="inputBlur"
           @focus="inputFocus"/>
         <!--小三角形-->
-        <div class="nav-tip" v-if="choiceVisible"></div>
         <ul class="nav-stock-wrap" v-if="choiceVisible">
           <!--  导航栏        -->
           <li class="row-li">
@@ -73,6 +72,9 @@ export default {
     VueCard,
     VueDialogModal
   },
+  props: {
+    collapse: Boolean
+  },
   data () {
     return {
       userMenuVisible: false,
@@ -80,7 +82,6 @@ export default {
       marketCode: 'sh000001',
       choiceVisible: false,
       inputTextValue: undefined,
-      visibleMenu: false,
       stockList: [],
       filterList: [],
       showList: [],
@@ -117,8 +118,7 @@ export default {
       this.$refs.modal.dialogVisible = true
     },
     menuVisible () {
-      this.visibleMenu = !this.visibleMenu
-      this.$emit('menuVisible', this.visibleMenu)
+      this.$emit('menuVisible', !this.collapse)
     },
     inputText () {
       const value = this.inputTextValue
@@ -142,9 +142,8 @@ export default {
 
 .header-wrap {
   height: 40px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  background-color: #161a23;
+  border-radius: 5px;
+  background-color: #1e2d44;
   /*清楚浮动导致父元素高度为0*/
   &::before, &::after {
     display: block;
@@ -187,9 +186,9 @@ export default {
 
       input {
         position: relative;
-        top: 4px;
+        top: 6px;
         width: 338px;
-        height: 32px;
+        height: 30px;
         padding-left: 25px;
         color: #adb4c2;
         font-size: 16px;
@@ -204,16 +203,6 @@ export default {
           background-color: #c9c7c7;
         }
       }
-
-      .nav-tip {
-        position: absolute;
-        left: 5px;
-        border: 10px solid rgba(0, 0, 0, 0);
-        border-bottom-color: #161a23;
-        transition: 0.5s;
-        z-index: 999;
-      }
-
       .nav-stock-wrap {
         position: absolute;
         top: 50px;
@@ -222,7 +211,16 @@ export default {
         border-radius: 5px;
         transition: 0.5s;
         z-index: 999;
-
+        &::before{
+          content: "";
+          position: absolute;
+          left: 5px;
+          top: -20px;
+          border: 10px solid rgba(0, 0, 0, 0);
+          border-bottom-color: #161a23;
+          transition: 0.5s;
+          z-index: 999;
+        }
         li {
           list-style: none;
         }

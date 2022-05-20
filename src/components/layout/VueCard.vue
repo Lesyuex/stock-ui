@@ -12,8 +12,9 @@ export default {
 .card-wrap{
   height: calc(100vh - 52px);
   background-color: transparent;
-  padding:0 8px;
+  padding:0 6px;
   overflow: auto;
+  overflow-y: overlay;
   box-sizing: border-box;
 }
 .card-wrap::before,.card-wrap::after{
@@ -22,17 +23,17 @@ export default {
   clear: both;
 }
 .card-wrap::-webkit-scrollbar{
-  width:5px;
+  width:4px;
 }
 /*定义滚动条*/
 .card-wrap::-webkit-scrollbar-thumb {
-   border-radius: 2px;
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+   border-radius:4px;
+  -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
    background: white;
  }
 /*定义滚动条轨道*/
 .card-wrap::-webkit-scrollbar-track {
-   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+   -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
    border-radius: 0;
    background: rgba(0, 0, 0, 0.2);
  }

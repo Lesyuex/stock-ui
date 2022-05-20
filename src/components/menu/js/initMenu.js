@@ -19,8 +19,8 @@ export default function () {
     // 查询有没有定义动画 没定义则定义动画（每个menu的高度不确定，不能写死height）
     if (!menuKeyframes[show]) {
       // 总高度
-      const maxHeight = height * chilLength
-      menuKeyframes[show] = `@keyframes ${show}{from{height: 0;display:block}to{height: ${maxHeight + 4}px;}}`
+      const maxHeight = height * chilLength + 4
+      menuKeyframes[show] = `@keyframes ${show}{from{height: 0;display:block}to{height: ${maxHeight}px;}}`
       menuKeyframes[hide] = `@keyframes ${hide}{from{height: ${maxHeight}px;}to{height: 0;}}`
       styleSheet[0].insertRule(menuKeyframes[show])
       styleSheet[0].insertRule(menuKeyframes[hide])

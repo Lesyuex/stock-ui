@@ -74,6 +74,6 @@ export default {
   div{
   width:100%;
   height: 100%;
-  background-color: #161a23;
+  background-color: transparent;
 }
 </style>

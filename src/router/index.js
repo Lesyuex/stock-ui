@@ -8,7 +8,7 @@ export default new Router({
       path: '/',
       name: 'IndexLayout',
       redirect: '/stock-home',
-      component: () => import('../layout/IndexLayout'),
+      component: () => import('../layout/Index'),
       children: [
         {
           path: '/stock-home',
@@ -23,7 +23,7 @@ export default new Router({
         {
           path: '/test-page',
           name: 'TestPage',
-          component: () => import('../layout/LeftMenu')
+          component: () => import('../view/stock/Index')
         }
       ]
     }

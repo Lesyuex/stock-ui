@@ -151,12 +151,12 @@ export default {
 </script>
 <style scoped lang="less">
 .minutes-wrap {
-  background-color: #161a23;
-  border-radius: 5px;
-  height: calc(100vh - 68px);
+  height: calc(100vh - 64px);
   min-height: 840px;
-  width: calc(100% - 8px);
-  margin: 0 4px;
+  background: linear-gradient(top, #1e2d44, #172131);
+  box-shadow: 0 0 5px #181818;
+  box-sizing: border-box;
+  border-radius: 5px;
 
   &:before, &:after {
     content: '';

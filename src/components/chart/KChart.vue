@@ -1,7 +1,7 @@
 <template>
   <div class="k-chart" :id="refName" :key="refName">
-    <div style="height: 20px;width:98%;background-color: #161922;position: absolute;left:12px;top:2px;z-index: 999" v-if="mouseOnChart">
-      <div v-for="(ma,index) in chartData.maName" :key="index" style="display: inline-block;width: 110px;font-size: 13px;">
+    <div style="height: 20px;width:98%;background-color: #161922;position: absolute;left:12px;top:9px;z-index: 999" v-if="mouseOnChart">
+      <div v-for="(ma,index) in chartData.maName" :key="index" style="display: inline-block;width: 113px;font-size: 13px;">
         <span :style="{color:chartData.maColor[index],display:'inline-block',fontWeight:500 }" >
           {{ma}}
           <span style="color: #cccccc;display:inline-block">: {{getCurrentMa[ma]}}</span>

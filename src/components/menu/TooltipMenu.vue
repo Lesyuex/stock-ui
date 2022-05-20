@@ -1,14 +1,14 @@
 <template>
-  <div style="width:140px;height: 100%" id="aside">
+  <div style="width: 60px;height: 100vh">
     <ul class="menu">
       <li v-for="(menu,index) in menuArr" :key="index" :class="{'menu-item':!menu.children,'submenu':menu.children}"
           @click="routeTo(menu)">
         <i :class="menu.icon" v-if="!menu.children"></i>
-        <span v-if="!menu.children">{{ menu.name }}</span>
+        <span class="tool-tip" v-if="!menu.children" style>
+        {{menu.name}}
+      </span>
         <div class="menu-item submenu_title" v-if="menu.children" aria-expanded="true">
           <i :class="menu.icon"></i>
-          <span>{{ menu.name }}</span>
-          <i class="el-icon-arrow-up tip"></i>
         </div>
         <ul v-if="menu.children" class="menu" style="overflow:hidden">
           <li v-for="(chil,index) in menu.children" :key="index" class="menu-item">
@@ -18,30 +18,14 @@
         </ul>
       </li>
     </ul>
-<!--    <submenu>
-      <template slot="title">
-        <i class="el-icon-s-grid"></i>
-        <span>板块</span>
-      </template>
-    </submenu>
-    <sub-menu2>
-      <template>
-        板块
-      </template>
-    </sub-menu2>-->
   </div>
 </template>
 
 <script>
-import Submenu from '../components/menu/Submenu'
-import SubMenu2 from '../components/menu/SubMenu2'
-import initMenu from '../components/menu/js/initMenu'
+import initMenu from './js/initMenu'
+
 export default {
   name: 'LeftMenu',
-  components: {
-    Submenu,
-    SubMenu2
-  },
   data () {
     return {
       menuArr: [
@@ -82,21 +66,51 @@ ul {
 }
 
 .menu {
+  position: absolute;
+  width:60px;
+  z-index: 99999;
   .menu-item {
+    position: relative;
     padding: 0 20px;
     line-height: 56px;
     color: #adb4c2;
     cursor: pointer;
     transition: .3s;
+
     i {
       width: 24px;
       text-align: center;
       margin-right: 6px;
     }
-
+    .tool-tip{
+      display: none;
+      position: absolute;
+      left: 70px;
+      top: 10px;
+      padding: 0 10px;
+      line-height: 40px;
+      font-size: 12px;
+      color: #adb4c2;
+      background-color: #303133;
+      border-radius: 5px;
+      white-space: nowrap;
+      &:before {
+        content: "";
+        position: absolute;
+        left: -4px;
+        top: 16px;
+        width: 8px;
+        height: 8px;
+        background-color: #303133;
+        transform: rotate(45deg);
+      }
+    }
     &:hover {
       background-color: #000000 !important;
       color: cornflowerblue;
+      .tool-tip{
+        display: block;
+      }
     }
   }
 
@@ -105,7 +119,12 @@ ul {
   }
 
   .submenu {
-
+    position: relative;
+    &:hover{
+      .menu {
+        display: block;
+      }
+    }
     > .menu-item {
       position: relative;
 
@@ -117,8 +136,12 @@ ul {
         transition: .5s;
       }
     }
-
     .menu {
+      display: none;
+      position: absolute;
+      left: 60px;
+      top: 0;
+      width: 140px;
       .menu-item {
         padding-left: 30px;
         background-color: #121420;
@@ -126,6 +149,7 @@ ul {
     }
   }
 }
+
 @keyframes none {
   from {
   }

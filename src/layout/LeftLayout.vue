@@ -1,7 +1,6 @@
 <template>
-  <left-menu></left-menu>
-<!--  <div>
-    <el-menu
+  <div>
+<!--    <el-menu
       :collapse="visibleMenu"
       :default-openeds="['3']"
       :collapse-transition="false"
@@ -43,18 +42,22 @@
         <span slot="title">测试</span>
       </el-menu-item>
     </el-menu>
-    <div style="background-color: white;height: 20px"></div>
-    &lt;!&ndash;    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>&ndash;&gt;
-  </div>-->
+    <div style="background-color: white;height: 20px"></div>-->
+    <tooltip-menu v-if="visibleMenu"></tooltip-menu>
+    <left-menu v-else></left-menu>
+    <!--    <img src="../assets/img.png" style="position: absolute;bottom: 20px;left: calc(50% - 25px);height: 60px;cursor: pointer"/>-->
+  </div>
 
 </template>
 
 <script>
 import LeftMenu from './LeftMenu'
+import TooltipMenu from '../components/menu/TooltipMenu'
 export default {
   name: 'LeftLayout',
   components: {
-    LeftMenu
+    LeftMenu,
+    TooltipMenu
   },
   data () {
     return {

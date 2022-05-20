@@ -1,6 +1,7 @@
 <template>
   <div class="funding-wrap">
-    <bar-line-chart :custom-option="s2n"/>
+    <div style="line-height: 40px;font-size: 18px;font-weight: 400;">资金</div>
+    <bar-line-chart :custom-option="s2n" style="height: 350px"/>
   </div>
 </template>
 <script>
@@ -140,8 +141,8 @@ export default {
 </script>
 <style scoped lang="less">
 .funding-wrap {
-  background-color: #161a23;
-  height: 100%;
+  background-color: #1e2d44;
+  height: calc((100vh - 68px) / 2);
 
   .el-tabs {
     height: 100%;

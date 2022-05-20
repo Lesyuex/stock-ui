@@ -36,9 +36,9 @@ export default {
         seriesData: [],
         seriLabelFS: 13,
         x1LabelFS: 12,
-        title: '市场总览',
+        title: '总览',
         titleFS: 18,
-        seriesNameArr: ['市场总览'],
+        seriesNameArr: ['总览'],
         doubleYLine: false,
         seriLabelClr: ['#adb4c2'],
         showX1AllLabel: true,
@@ -97,11 +97,11 @@ export default {
 <style scoped lang="less">
 .count-wrap {
   position: relative;
-  background-color: #161a23;
+
   height: calc((100vh - 68px) / 2);
   min-height: 420px;
-  width: calc(100% - 8px);
-  margin: 0 4px;
+
   border-radius: 5px;
+  background-color: #1e2d44;
 }
 </style>
