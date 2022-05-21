@@ -1,25 +1,30 @@
 <template>
-<div class="market-wrap">
-  <h3>指数</h3>
-  <ul>
-    <li class="row-li" style="display: flex;justify-content: space-between;line-height:40px">
-     <span>上证指数</span> <span>3146</span> <span>+1.60%</span> <span>+自选</span>
-    </li>
-    <li class="row-li" style="display: flex;justify-content: space-between;line-height:40px">
-      <span>上证指数</span> <span>3146</span> <span>+1.60%</span> <span>+自选</span>
-    </li>
-    <li class="row-li" style="display: flex;justify-content: space-between;line-height:40px">
-      <span>上证指数</span> <span>3146</span> <span>+1.60%</span> <span>+自选</span>
-    </li>
-    <li class="row-li" style="display: flex;justify-content: space-between;line-height:40px">
-      <span>上证指数</span> <span>3146</span> <span>+1.60%</span> <span>+自选</span>
-    </li>
-    <li class="row-li" style="display: flex;justify-content: space-between;line-height:40px">
-      <span>上证指数</span> <span>3146</span> <span>+1.60%</span> <span>+自选</span>
-    </li>
-  </ul>
-<div></div>
-</div>
+  <div class="market-wrap">
+    <h3 style="padding: 8px">指数</h3>
+    <ul id="index-wrap">
+      <li v-for="(stock, index) in indexList" :key="index">
+        <div class="content-wrap">
+          <div>
+            <span style="font-size: 16px;line-height: 20px">
+           {{stock.name}}
+            <img src="../../assets/nation/china.png"
+                 style="height: 11px;vertical-align: middle;margin-left: 6px">
+            </span>
+            <span style="display:block;font-size: 14px;line-height: 18px">{{stock.marketCode}}</span>
+          </div>
+          <div >
+            <span style="float: left">{{ stock.currentPrice }}</span>
+          </div>
+          <div >
+            <span style="float: right">{{ stock.upDownPercent }}%</span>
+          </div>
+        </div>
+        <div class="collect-wrap">
+          <i class="el-icon-circle-plus-outline"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -46,14 +51,45 @@ export default {
         {name: '恒生指数', marketCode: 'hkHSI', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
         {name: '恒生科技指数', marketCode: 'hkHSTECH', currentPrice: '-', upDownValue: '-', upDownPercent: '-'}
       ],
-      singleList: [],
-      marketCode: 'sh000001'
+      marketCode: 'sh000001',
+      breathTimer: null,
+      breathLiIndexArr: [],
+      liArr: []
     }
   },
   created () {
     this.getSingleInfo()
   },
+  mounted () {
+    const dom = document.getElementById('index-wrap')
+    this.liArr = dom.getElementsByTagName('li')
+  },
   methods: {
+    breath () {
+      const that = this
+      setInterval(function () {
+        const breathLiIndexArr = []
+        for (let i = 0; i < that.indexList.length; i++) {
+          // 把需要呼吸的股票找出来
+          const change = Math.round(Math.random())
+          if (change === 1) breathLiIndexArr.push(i)
+        }
+        that.breathLiIndexArr = breathLiIndexArr
+        console.log(breathLiIndexArr.join(','))
+        console.log(that.liArr)
+        for (let i = 0; i < breathLiIndexArr.length; i++) {
+          const index = breathLiIndexArr[i]
+          const dom = that.liArr[index]
+          setTimeout(function (){
+            dom.classList.add('breath-li')
+          },i*100)
+
+          setTimeout(function () {
+            dom.classList.remove('breath-li')
+          }, 2000 + i*100)
+        }
+      }, 5000)
+    },
     refreshData () {
       this.getSingleInfo()
     },
@@ -67,22 +103,21 @@ export default {
         return item.marketCode
       })
       const codes = filter.join(',')
-      const singleList = []
       this.$axiosGet(`/stock/get/single/${codes}`).then(res => {
-        let arr = []
         const data = res.data
+        const breathLiIndexArr = []
         for (let i = 0; i < this.indexList.length; i++) {
           const source = this.indexList[i]
-          const target = Object.assign(source, data[i])
-          const count = i + 1
-          arr.push(target)
-          if (count % 8 === 0) {
-            singleList.push(arr)
-            arr = []
-          }
+          Object.assign(source, data[i])
+          // 把需要呼吸的股票找出来
+          const change = Math.round(Math.random())
+          if (change === 1) breathLiIndexArr.push(i)
         }
+        this.breathLiIndexArr = breathLiIndexArr
       }).finally(() => {
-        this.singleList = singleList.length === 0 ? [this.indexList] : singleList
+        this.$nextTick(function () {
+          this.breath()
+        })
         if (this.timer) {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {
@@ -96,7 +131,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-.market-wrap{
+.market-wrap {
   position: relative;
 
   height: calc((100vh - 68px) / 2);
@@ -104,11 +139,60 @@ export default {
 
   border-radius: 5px;
   background-color: #1e2d44;
-  ul{
+
+  ul {
     list-style: none;
-    li{
-      line-height: 40px;
+
+    li {
+      position: relative;
+      padding: 4px 8px;
+      height: 40px;
+      transition: .3s;
+      &::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,.3);
+        opacity: 0;
+        // animation: breath 3s ease-in-out;
+      }
+      .content-wrap {
+        display: flex;
+        justify-content: space-between;
+        line-height: 40px;
+        width: 80%;
+        box-sizing: border-box;
+        cursor: pointer;
+        >div{
+          line-height: 40px;
+          &:nth-child(1){
+            line-height: 20px;
+          }
+        }
+      }
+      .collect-wrap{
+        position: absolute;
+        right: 5%;
+        top: 12px;
+        i{
+          font-size: 20px;
+          cursor: pointer;
+        }
+      }
+    }
+    .breath-li{
+      animation: breath 2s ease-in-out;
     }
   }
+}
+@keyframes breath {
+  from{
+
+  }to{
+       background-color: rgba(0,0,0,.3);
+ }
 }
 </style>

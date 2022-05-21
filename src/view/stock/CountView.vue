@@ -1,5 +1,6 @@
 <template>
   <div class="count-wrap">
+    <h3 style="padding: 8px;position: absolute">总览</h3>
     <div style="width: 330px;height: 130px;position: absolute;right: 0;z-index: 999">
       <pie-chart :pieData="pieData" ref="pie"/>
     </div>
@@ -28,6 +29,7 @@ export default {
       },
       pieData: [],
       customOption: {
+        hideTooltip: true,
         hideY1Split: true,
         hideY1Line: true,
         hideY1Label: true,
@@ -36,7 +38,7 @@ export default {
         seriesData: [],
         seriLabelFS: 13,
         x1LabelFS: 12,
-        title: '总览',
+        title: '',
         titleFS: 18,
         seriesNameArr: ['总览'],
         doubleYLine: false,

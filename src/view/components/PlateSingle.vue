@@ -3,7 +3,7 @@
     <h4>
       领跌
     </h4>
-    <div style="height: 50%;display: flex;justify-content: space-between;flex-wrap: wrap;align-content: space-around">
+    <div style="height: 40%;display: flex;justify-content: space-between;flex-wrap: wrap;align-content: space-around">
       <div style="height: 45%;float: left;width: 33%;background-color: red">
 
       </div>
@@ -26,7 +26,7 @@
     <h4>
       领跌
     </h4>
-    <div style="height: 50%;display: flex;justify-content: space-between;flex-wrap: wrap;align-content: space-around">
+    <div style="height: 40%;display: flex;justify-content: space-between;flex-wrap: wrap;align-content: space-around">
       <div style="height: 45%;float: left;width: 33%;background-color: red">
 
       </div>

@@ -153,7 +153,8 @@ export default {
 .minutes-wrap {
   height: calc(100vh - 64px);
   min-height: 840px;
-  background: linear-gradient(top, #1e2d44, #172131);
+  //background: linear-gradient(top, #1e2d44, #172131);
+  background-color: #1e2d44;
   box-shadow: 0 0 5px #181818;
   box-sizing: border-box;
   border-radius: 5px;
