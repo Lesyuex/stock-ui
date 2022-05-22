@@ -1,49 +1,37 @@
 <template>
   <div class="minutes-wrap">
-    <div class="stock-wrap">
-      <div class="info-wrap">
-        <newest-info :stock="stock" :marketCode="marketCode"/>
-      </div>
-      <div class="choice-wrap">
-        <ul>
-          <li
-            :key="index"
-            :class="{'li-active':choice.code === comInfo.code}"
-            @click="choiceCom(choice)"
-            v-for="(choice,index) in choiceArr">
-            {{ choice.name }}
-          </li>
-          <li>
-            <el-dropdown>
-            <span class="el-dropdown-link">
-              更多<el-icon class="el-icon-caret-bottom"/>
-            </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item v-for="minu in moreChoice" :key="minu.code">{{ minu.name }}</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </li>
-          <li style="float: right">
-            <el-icon class="el-icon-setting"/>
-          </li>
-        </ul>
-      </div>
-      <div class="chart-wrap">
-        <keep-alive>
-          <component :is="comInfo.com" :stock="stock" :marketCode="marketCode" :comInfo="comInfo"
-                     :ref="comInfo.kname" :refName="comInfo.kname"/>
-        </keep-alive>
-      </div>
+    <div class="info-wrap">
+      <newest-info :stock="stock" :marketCode="marketCode"/>
     </div>
-    <div class="other-wrap">
+    <div class="nav-wrap">
       <ul>
         <li
           :key="index"
-          :class="{'li-active':other.code === comInfo.code}"
-          v-for="(other,index)  in otherArr">
-          {{ other.name }}
+          :class="{'li-active':choice.code === comInfo.code}"
+          @click="choiceCom(choice)"
+          v-for="(choice,index) in choiceArr">
+          {{ choice.name }}
+        </li>
+        <li>
+          <el-dropdown>
+            <span class="el-dropdown-link">
+              更多<el-icon class="el-icon-caret-bottom"/>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-for="minu in moreChoice" :key="minu.code">{{ minu.name }}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </li>
+        <li style="float: right">
+          <el-icon class="el-icon-setting"/>
         </li>
       </ul>
+    </div>
+    <div class="chart-wrap">
+      <keep-alive>
+        <component :is="comInfo.com" :stock="stock" :marketCode="marketCode" :comInfo="comInfo"
+                   :ref="comInfo.kname" :refName="comInfo.kname"/>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -151,14 +139,12 @@ export default {
 </script>
 <style scoped lang="less">
 .minutes-wrap {
-  height: calc(100vh - 64px);
-  min-height: 840px;
-  //background: linear-gradient(top, #1e2d44, #172131);
+  padding: 10px 12px;
+  height: 510px;
   background-color: #1e2d44;
+  border-radius: 5px;
   box-shadow: 0 0 5px #181818;
   box-sizing: border-box;
-  border-radius: 5px;
-
   &:before, &:after {
     content: '';
     display: block;
@@ -168,56 +154,53 @@ export default {
   > div {
     float: left;
     width: 100%;
-    height: calc(100% / 2);
     box-sizing: border-box;
   }
 
-  .stock-wrap {
-    .info-wrap {
-      height: 112px;
-    }
-
-    .chart-wrap {
-      height: calc(100% - 156px);
-    }
+  .info-wrap {
+    height: 110px;
   }
-
-  ul {
-    height: 44px;
-
-    li {
-      float: left;
-      position: relative;
-      list-style: none;
-      padding: 8px 12px;
-      line-height: 28px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .li-active {
-      color: lightskyblue;
-
-      &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        width: 12px;
-        bottom: 8px;
-        height: 2px;
-        left: calc(50% - 6px);
-        background-color: skyblue;
-      }
-    }
-
-    .el-dropdown {
-      .el-dropdown-link {
+  .nav-wrap{
+    height: 40px;
+    ul {
+      height: 40px;
+      li {
+        float: left;
+        position: relative;
+        list-style: none;
+        padding: 0 20px 0 0;
+        line-height: 40px;
+        cursor: pointer;
         font-size: 15px;
-        line-height: 28px;
-        color: #ccc;
+      }
+
+      .li-active {
+        color: lightskyblue;
+
+        &::after {
+          content: '';
+          position: absolute;
+          left: calc(50% - 16px);
+          bottom: 7px;
+          width: 12px;
+          height: 2px;
+          background-color: skyblue;
+        }
+      }
+
+      .el-dropdown {
+        .el-dropdown-link {
+          font-size: 15px;
+          line-height: 28px;
+          color: #ccc;
+        }
       }
     }
   }
+  .chart-wrap {
+    height: 340px;
+  }
+
 }
 </style>
 <style>

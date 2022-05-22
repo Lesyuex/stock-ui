@@ -10,7 +10,7 @@ export default {
 </script>
 <style scoped>
 .card-wrap{
-  height: calc(100vh - 52px);
+  height: calc(100vh - 58px);
   background-color: transparent;
   padding:0 6px;
   overflow: auto;

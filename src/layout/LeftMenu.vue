@@ -57,7 +57,8 @@ export default {
           ]
         },
         {name: '自选', path: '/self-collect', icon: 'el-icon-star-on'},
-        {name: '测试', path: '/test-page', icon: 'el-icon-toilet-paper'}
+        {name: '测试', path: '/test-page', icon: 'el-icon-toilet-paper'},
+        {name: '测试2', path: '/test-page-flex', icon: 'el-icon-toilet-paper'}
       ]
     }
   },
@@ -121,7 +122,7 @@ ul {
     .menu {
       .menu-item {
         padding-left: 30px;
-        background-color: #121420;
+        background-color: #1a1d2b;
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
-  <div id="market-wrap">
-    <div class="title-wrap">市场</div>
-    <ul>
+  <div id="contain-wrap">
+    <div class="title-wrap">成分股</div>
+    <ul id="index-wrap">
       <li>
         <div class="content-wrap">
           <!--股票名称-->
@@ -62,7 +62,7 @@ import Chart from '../test/Chart'
 
 export default {
   mixins: [openTimer],
-  name: 'Market',
+  name: 'ContainStock',
   components: {
     SingleMinutesLineChart,
     Chart
@@ -89,13 +89,12 @@ export default {
     this.getSingleInfo()
   },
   mounted () {
-    const dom = document.getElementById('market-wrap')
+    const dom = document.getElementById('contain-wrap')
     this.liArr = dom.getElementsByClassName('stock-li')
   },
   methods: {
     breath () {
       const that = this
-
       const breathLiIndexArr = []
       for (let i = 0; i < that.indexList.length; i++) {
         // 把需要呼吸的股票找出来
@@ -142,7 +141,7 @@ export default {
         this.$nextTick(function () {
           this.breath()
         })
-        if (this.timer) {
+        if (this.timerIsOpen) {
           setTimeout(function () {
             that.refreshData()
           }, 3000)
@@ -154,7 +153,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-#market-wrap {
+#contain-wrap {
   position: relative;
   height: 510px;
   padding: 10px 0;
@@ -223,16 +222,16 @@ export default {
         }
       }
 
-      /*  .collect-wrap {
-          position: absolute;
-          right: 5%;
-          top: 12px;
+    /*  .collect-wrap {
+        position: absolute;
+        right: 5%;
+        top: 12px;
 
-          i {
-            font-size: 20px;
-            cursor: pointer;
-          }
-        }*/
+        i {
+          font-size: 20px;
+          cursor: pointer;
+        }
+      }*/
     }
 
     .breath-li {

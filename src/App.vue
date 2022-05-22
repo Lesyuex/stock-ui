@@ -9,67 +9,68 @@ import moment from 'moment'
 
 export default {
   name: 'App',
-  created () {
-    const that = this
-    console.log('App created')
-    this.$bus.$on('chilCreated', componentName => {
-      console.log(`${componentName}需要开启定时任务`)
-      that.setScheduledTask(componentName)
-    })
+  data () {
+    return {
+      marketTime: {
+        am0900: moment().hours(9).minutes(30).seconds(0).milliseconds(0), // 当天9.30
+        am1130: moment().hours(11).minutes(30).seconds(0).milliseconds(0), // 当天11.30
+        pm1300: moment().hours(13).minutes(0).seconds(0).milliseconds(0), // 当天13.00
+        pm1500: moment().hours(15).minutes(0).seconds(0).milliseconds(0), // 当天15.00
+        pm2400: moment().hours(24).minutes(0).seconds(0).milliseconds(0) // 当天24:00
+      }
+    }
   },
   mounted () {
-    console.log('AppMounted')
+    const that = this
+    // 监听需要开启定时任务的子组件的timerCreated事件
+    this.$bus.$on('timerCreated', componentKey => {
+      console.log(`${componentKey}需要开启定时任务`)
+      that.setScheduledTask(componentKey)
+    })
   },
   methods: {
     moment,
-    timeoutTask (currentTime, startTime, endTime, componentName) {
+    timeoutTask (currentTime, startTime, endTime, componentKey) {
       const that = this
-      console.log(componentName + '开始请求数据时间：' + startTime.format('YYYY-MM-DD HH:mm:ss'))
       const diffSeconds = startTime.diff(currentTime, 'seconds')
       setTimeout(() => {
         // 告知所有组件可以开始请求数据
-        console.log(`通知[${componentName}]-> 开启定时任务`)
-        that.$bus.$emit(`${componentName}StartRequest`)
+        console.log(`通知[${componentKey}]-> 开启定时任务`)
+        that.$bus.$emit(`${componentKey}StartRequest`)
       }, diffSeconds * 1000)
-      console.log(componentName + '停止请求数据时间：' + endTime.format('YYYY-MM-DD HH:mm:ss'))
       const validSeconds = endTime.diff(currentTime, 'seconds')
       setTimeout(function () {
         // 告知所有组件可以停止请求数据
-        console.log(`通知[${componentName}] -> 关闭定时任务`)
-        that.$bus.$emit(`${componentName}StopRequest`)
+        console.log(`通知[${componentKey}] -> 关闭定时任务`)
+        that.$bus.$emit(`${componentKey}StopRequest`)
       }, validSeconds * 1000)
     },
-    setScheduledTask (componentName) {
+    setScheduledTask (componentKey) {
       const that = this
       // 获取当前时间
       const currentTime = moment()
-      const am0900 = moment().hours(9).minutes(30).seconds(0).milliseconds(0) // 当天9.30
-      const am1130 = moment().hours(11).minutes(30).seconds(0).milliseconds(0) // 当天11.30
-      const pm1300 = moment().hours(13).minutes(0).seconds(0).milliseconds(0) // 当天13.00
-      const pm1500 = moment().hours(15).minutes(0).seconds(0).milliseconds(0) // 当天15.00
-      // const pm1530 = moment().hours(15).minutes(30).seconds(0).milliseconds(0) // 当天15.30
-      const pm2400 = moment().hours(24).minutes(0).seconds(0).milliseconds(0) // 当天24:00
+      const marketTime = this.marketTime
       // 小于9点
-      if (currentTime.isBefore(am0900)) {
-        this.timeoutTask(currentTime, am0900, am1130, componentName)
-        this.timeoutTask(currentTime, pm1300, pm1500, componentName)
+      if (currentTime.isBefore(marketTime.am0900)) {
+        this.timeoutTask(currentTime, marketTime.am0900, marketTime.am1130, componentKey)
+        this.timeoutTask(currentTime, marketTime.pm1300, marketTime.pm1500, componentKey)
       }
-      if (currentTime.isAfter(am0900) && currentTime.isBefore(am1130)) {
-        this.timeoutTask(currentTime, currentTime, am1130, componentName)
-        this.timeoutTask(currentTime, pm1300, pm1500, componentName)
+      if (currentTime.isAfter(marketTime.am0900) && currentTime.isBefore(marketTime.am1130)) {
+        this.timeoutTask(currentTime, currentTime, marketTime.am1130, componentKey)
+        this.timeoutTask(currentTime, marketTime.pm1300, marketTime.pm1500, componentKey)
       }
-      if (currentTime.isAfter(am1130) && currentTime.isBefore(pm1300)) {
-        this.timeoutTask(currentTime, pm1300, pm1500, componentName)
+      if (currentTime.isAfter(marketTime.am1130) && currentTime.isBefore(marketTime.pm1300)) {
+        this.timeoutTask(currentTime, marketTime.pm1300, marketTime.pm1500, componentKey)
       }
-      if (currentTime.isAfter(pm1300) && currentTime.isBefore(pm1500)) {
-        this.timeoutTask(currentTime, currentTime, pm1500, componentName)
+      if (currentTime.isAfter(marketTime.pm1300) && currentTime.isBefore(marketTime.pm1500)) {
+        this.timeoutTask(currentTime, currentTime, marketTime.pm1500, componentKey)
       }
-      if (currentTime.isSameOrAfter(pm1500)) {
+      if (currentTime.isSameOrAfter(marketTime.pm1500)) {
         console.log(currentTime.format('YYYY-MM-DD HH:mm:ss'))
         console.log('第二天重新开启定时任务')
-        const diffTime = pm2400.diff(currentTime, 'seconds')
+        const diffTime = marketTime.pm2400.diff(currentTime, 'seconds')
         setTimeout(function () {
-          that.setScheduledTask(componentName)
+          that.setScheduledTask(componentKey)
         }, diffTime * 1000)
       }
     }

@@ -1,8 +1,10 @@
 <template>
   <div style="width: 100%;height: 100%;position: relative">
     <echarts :options="options"/>
-    <el-icon class="el-icon-loading" style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"
-             v-if="loadingData"/>
+    <el-icon
+      v-if="loadingData"
+      class="el-icon-loading"
+      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
   </div>
 </template>
 <script>
@@ -156,20 +158,18 @@ export default {
           {
             // show: true,
             containLabel: true,
-            top: '2%',
             left: 'center',
-            width: '98%',
-            z: 0,
+            bottom: '30%',
+            width: '100%',
             height: '68%'
           },
           {
             // show: true,
             containLabel: true,
             left: 'center',
-            width: '98%',
-            height: '30%',
-            z: 0,
-            top: '70%'
+            bottom: 0,
+            width: '100%',
+            height: '30%'
           }
         ],
         xAxis: [
@@ -213,10 +213,10 @@ export default {
               formatter: this.defaultOption.xFormatter,
               rich: {
                 right: {
-                  padding: [0, 0, 4, 25]
+                  padding: [0, 0, 4, 31]
                 },
                 left: {
-                  padding: [0, 25, 4, 0]
+                  padding: [0, 31, 4, 0]
                 }
               }
             },
@@ -227,7 +227,7 @@ export default {
               }
             },
             axisTick: {
-              show: false
+              show: true
             },
             splitLine: {
               show: false,
@@ -280,7 +280,7 @@ export default {
             axisLabel: {
               color: '#858585',
               inside: true,
-              margin: -4,
+              margin: 0,
               formatter: function (value) {
                 return value.toFixed(2)
               }
@@ -314,7 +314,7 @@ export default {
             },
             axisLabel: {
               color: '#858585',
-              margin: -4,
+              margin: 0,
               formatter: function (value) {
                 return `${value.toFixed(2)}%`
               },
@@ -346,7 +346,7 @@ export default {
               show: false
             },
             axisPointer: {
-              show: true
+              show: false
             }
           }
         ],

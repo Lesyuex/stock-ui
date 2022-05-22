@@ -107,7 +107,7 @@ export default {
             show: i === 0,
             color: 'rgba(255,255,255,0.4)',
             inside: true,
-            margin: -4,
+            margin: 0,
             formatter: function (value) {
               return value.toFixed(2)
             }
@@ -202,7 +202,8 @@ export default {
             show: false
           },
           axisLabel: {
-            show: false
+            show: false,
+            margin: 0
           },
           axisPointer: {
             show: true,
@@ -355,7 +356,7 @@ export default {
         },
         axisLabel: {
           color: 'rgba(255,255,255,0.4)',
-          margin: -4,
+          margin: 0,
           formatter: function (value) {
             return `${value.toFixed(2)}%`
           },
@@ -422,35 +423,35 @@ export default {
           // 上
           {
             containLabel: true,
-            left: '2%',
+            left: '0%',
             top: 20,
-            width: '19%',
+            width: '20%',
             height: '68%'
           },
           {
             containLabel: true,
-            left: '21%',
+            left: '20%',
             top: 20,
-            width: '19%',
+            width: '20%',
             height: '68%'
           },
           {
             containLabel: true,
             left: '40%',
             top: 20,
-            width: '19%',
+            width: '20%',
             height: '68%'
           },
           {
             containLabel: true,
-            left: '59%',
+            left: '60%',
             top: 20,
-            width: '19%',
+            width: '20%',
             height: '68%'
           },
           {
             containLabel: true,
-            left: '78%',
+            left: '80%',
             top: 20,
             width: '20%',
             height: '68%'
@@ -459,35 +460,35 @@ export default {
           // 下
           {
             containLabel: true,
-            left: '2%',
+            left: '0%',
             top: '70%',
-            width: '19%',
+            width: '20%',
             height: '30%'
           },
           {
             containLabel: true,
-            left: '21%',
+            left: '20%',
             top: '70%',
-            width: '19%',
+            width: '20%',
             height: '30%'
           },
           {
             containLabel: true,
             left: '40%',
             top: '70%',
-            width: '19%',
+            width: '20%',
             height: '30%'
           },
           {
             containLabel: true,
-            left: '59%',
+            left: '60%',
             top: '70%',
-            width: '19%',
+            width: '20%',
             height: '30%'
           },
           {
             containLabel: true,
-            left: '78%',
+            left: '80%',
             top: '70%',
             width: '20%',
             height: '30%'

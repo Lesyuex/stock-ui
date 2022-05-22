@@ -1,7 +1,15 @@
 <template>
-      <div class="rainy">
-
-      </div>
+  <div class="stock">
+    <div>
+      今开 3107.09
+    </div>
+    <div>
+      今开 3107.09
+    </div>
+    <div>
+      今开 3107.09
+    </div>
+  </div>
 </template>
 
 <script>
@@ -15,159 +23,47 @@ export default {
 </script>
 
 <style scoped>
-.rainy {
-  position: absolute;
-  top: 30%;
-  left: 50%;
+html{
+  font-size: calc(100% / 34 + 0px);
 }
-.rainy:before {
-  content: "";
-  color: #333;
-  position: absolute;
-  height: 50px;
-  width: 50px;
-  top: 30px;
-  left: -40px;
-  background: #CCC;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  box-shadow: #CCC 65px -15px 0 -5px,
-  #CCC 25px -25px,
-  #CCC 30px 10px,
-  #CCC 60px 15px 0 -10px,
-  #CCC 85px 5px 0 -5px;
-  animation: cloudy 5s ease-in-out infinite;
+*{
+  margin: 0;
 }
-@keyframes cloudy {
-  50% {
-    transform: translate(-50%, -70%);
-  }
-  100% {
-    transform: translate(-50%, -50%);
-  }
+.stock{
+  width: 50%;
+  height: 100vh;
+  background-color: #a17f7f;
+  display: flex;
+  flex-wrap: wrap;
+
 }
-.rainy {
-  position: absolute;
-  width: 3px;
-  height: 6px;
-  top: 30%;
-  left: 50%;
-  animation: rainy_rain .7s infinite linear;
+.stock div{
+  height: 40px;
+  font-size: 1rem;
+  flex: 1;
+  min-width: 160px;
 }
-.rainy:before {
-}
-@keyframes cloudy {
-}
-@keyframes rainy_rain {
-  0% {
-    box-shadow:
-      rgba(0, 0, 0, 0) -10px 30px,
-      rgba(0, 0, 0, 0) 40px 40px,
-      rgba(0, 0, 0, .3) -50px 75px,
-      rgba(0, 0, 0, .3) 55px 50px,
-      rgba(0, 0, 0, .3) -18px 100px,
-      rgba(0, 0, 0, .3) 12px 95px,
-      rgba(0, 0, 0, .3) -31px 45px,
-      rgba(0, 0, 0, .3) 30px 35px;
+
+/*
+@media screen and (max-width: 1000px){
+  html{
+    font-size: 14px;
   }
-  25% {
-    box-shadow:
-      rgba(0, 0, 0, .3) -10px 45px,
-      rgba(0, 0, 0, .3) 40px 60px,
-      rgba(0, 0, 0, .3) -50px 90px,
-      rgba(0, 0, 0, .3) 55px 65px,
-      rgba(0, 0, 0, 0) -18px 120px,
-      rgba(0, 0, 0, 0) 12px 120px,
-      rgba(0, 0, 0, .3) -31px 70px,
-      rgba(0, 0, 0, .3) 30px 60px;
-  }
-  26% {
-    box-shadow:
-      rgba(0, 0, 0, .3) -10px 45px,
-      rgba(0, 0, 0, .3) 40px 60px,
-      rgba(0, 0, 0, .3) -50px 90px,
-      rgba(0, 0, 0, .3) 55px 65px,
-      rgba(0, 0, 0, 0) -18px 40px,
-      rgba(0, 0, 0, 0) 12px 20px,
-      rgba(0, 0, 0, .3) -31px 70px,
-      rgba(0, 0, 0, .3) 30px 60px;
-  }
-  50% {
-    box-shadow:
-      rgba(0, 0, 0, .3) -10px 70px,
-      rgba(0, 0, 0, .3) 40px 80px,
-      rgba(0, 0, 0, 0) -50px 100px,
-      rgba(0, 0, 0, .3) 55px 80px,
-      rgba(0, 0, 0, .3) -18px 60px,
-      rgba(0, 0, 0, .3) 12px 45px,
-      rgba(0, 0, 0, .3) -31px 95px,
-      rgba(0, 0, 0, .3) 30px 85px;
-  }
-  51% {
-    box-shadow:
-      rgba(0, 0, 0, .3) -10px 70px,
-      rgba(0, 0, 0, .3) 40px 80px,
-      rgba(0, 0, 0, 0) -50px 45px,
-      rgba(0, 0, 0, .3) 55px 80px,
-      rgba(0, 0, 0, .3) -18px 60px,
-      rgba(0, 0, 0, .3) 12px 45px,
-      rgba(0, 0, 0, .3) -31px 95px,
-      rgba(0, 0, 0, .3) 30px 85px;
-  }
-  75% {
-    box-shadow:
-      rgba(0, 0, 0, .3) -10px 95px,
-      rgba(0, 0, 0, .3) 40px 100px,
-      rgba(0, 0, 0, .3) -50px 60px,
-      rgba(0, 0, 0, 0) 55px 95px,
-      rgba(0, 0, 0, .3) -18px 80px,
-      rgba(0, 0, 0, .3) 12px 70px,
-      rgba(0, 0, 0, 0) -31px 120px,
-      rgba(0, 0, 0, 0) 30px 110px;
-  }
-  76% {
-    box-shadow:
-      rgba(0, 0, 0, .3) -10px 95px,
-      rgba(0, 0, 0, .3) 40px 100px,
-      rgba(0, 0, 0, .3) -50px 60px,
-      rgba(0, 0, 0, 0) 55px 35px,
-      rgba(0, 0, 0, .3) -18px 80px,
-      rgba(0, 0, 0, .3) 12px 70px,
-      rgba(0, 0, 0, 0) -31px 25px,
-      rgba(0, 0, 0, 0) 30px 15px;
-  }
-  100% {
-    box-shadow:
-      rgba(0, 0, 0, 0) -10px 120px,
-      rgba(0, 0, 0, 0) 40px 120px,
-      rgba(0, 0, 0, .3) -50px 75px,
-      rgba(0, 0, 0, .3) 55px 50px,
-      rgba(0, 0, 0, .3) -18px 100px,
-      rgba(0, 0, 0, .3) 12px 95px,
-      rgba(0, 0, 0, .3) -31px 45px,
-      rgba(0, 0, 0, .3) 30px 35px;
+  .stock{
+    background-color: #01d078;
   }
 }
-.rainy:after {
-  content: "";
-  position: absolute;
-  top: 120px;
-  left: 50%;
-  height: 15px;
-  width: 120px;
-  background: rgba(0, 0, 0, .5);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: cloudy_shadow 5s ease-in-out infinite;
-}
-@keyframes cloudy_shadow {
-  50% {
-    transform: translate(-50%, -50%) scale(0.8);
-    background: rgba(0, 0, 0, .2);
+@media screen and (min-width:1001px) and (max-width: 1980px){
+  html{
+    font-size: 28px;
   }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    background: rgba(0, 0, 0, .5);
+  .stock{
+    background-color: darkgray;
   }
 }
+@media screen and (min-width: 1981px) {
+
+}
+*/
+
 </style>

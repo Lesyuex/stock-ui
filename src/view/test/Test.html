@@ -5,35 +5,92 @@
   <title>Title</title>
 </head>
 <style>
-  div{
-    width: 140px;
-    background-color: cornflowerblue;
+  html{
+    font-size: 14px;
   }
-  div {
-    overflow: hidden;
-    animation: show 3s linear forwards,none 2s linear 5 forwards ;
+  *{
+    margin: 0;
   }
-  @keyframes show {
-    from{
-      height: 0;
-    }
-    to{
-      height: 500px;
-    }
+  .main-view{
+    display: flex;
+    flex-wrap: wrap;
   }
-  @keyframes none {
-    from{
+  .stock{
+    flex:10;
+    height: 100vh;
+    background-color: yellowgreen;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 480px;
 
+  }
+  .stock div{
+    height: 40px;
+    font-size: 1rem;
+    flex: 1;
+    min-width: 140px;
+  }
+  .count-view{
+    flex:7;
+    height: 500px;
+    min-width: 480px;
+    background: #a17f7f;
+  }
+  .market-view{
+    flex:7;
+    height: 500px;
+    min-width: 480px;
+    background: cornflowerblue;
+  }
+/*  @media screen and (max-width: 700px){
+    html{
+      font-size: 18px;
     }
-    to{
-      background-color: red;
-     //display: none;
+    .stock{
+      background-color: #01d078;
+    }
+    .stock::after{
+      content: "";
+      flex: 1;
     }
   }
+  @media screen and (min-width:700px) and (max-width: 1400px){
+    html{
+      font-size: 18px;
+    }
+    .stock{
+      background-color: darkgray;
+    }
+  }
+  @media screen and (min-width: 1401px) {
+    html{
+      font-size: 22px;
+    }
+  }*/
+
 </style>
 <body>
-<div>
-
+<div class="main-view">
+  <div class="stock">
+    <div>
+      今开 3107.09
+    </div>
+    <div>
+      今开 3107.09
+    </div>
+    <div>
+      今开 3107.09
+    </div>
+    <div>
+      今开 3107.09
+    </div>
+    <div>
+      今开 3107.09
+    </div>
+  </div>
+  <div class="count-view"></div>
+  <div class="market-view"></div>
 </div>
+
 </body>
 </html>

@@ -148,21 +148,17 @@ export default {
 
 <style scoped lang="less">
 .main-wrap {
-  padding: 0 12px;
   height: 100%;
-  box-sizing: border-box;
   color: #ccc;
-
   .title-wrap {
     position: relative;
     height: 40px;
-
+    box-sizing: border-box;
+    padding: 0 0 4px 0;
     .single-wrap {
       float: left;
       position: relative;
       line-height: 40px;
-      padding: 5px 0;
-
       img {
         position: relative;
         left: 3px;
@@ -189,15 +185,14 @@ export default {
       clear: both;
     }
 
-    div {
+    >div {
       float: left;
       display: flex;
       justify-content: space-between;
       width: 20%;
       font-size: 15px;
       box-sizing: border-box;
-      padding: 1px 0;
-      padding-right: 20px;
+      padding: 1px 20px 1px 0;
 
       &:nth-child(5), &:nth-child(10), &:nth-child(15) {
         padding-right: 0;
