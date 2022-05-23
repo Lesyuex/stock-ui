@@ -32,12 +32,12 @@
                  src="../../assets/nation/china.png"
                  style="height: 16px;vertical-align: middle;">
               {{ stock.name }}
- {{ stock.marketCode }}
-            </span>
 
-            <span style="font-size: 15px">
-              <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
             </span>
+            <span>{{ stock.marketCode }}</span>
+            <div style="position: absolute;right: 0;top: 18px;font-size: 12px">
+              <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
+            </div>
           </div>
           <!--股价涨跌幅-->
           <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
@@ -257,8 +257,8 @@ export default {
   }
 }
 .icon {
-  width: 15px;
-  height: 15px;
-  font-size: 15px
+  width: 14px;
+  height: 14px;
+  font-size: 14px
 }
 </style>
