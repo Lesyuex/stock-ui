@@ -139,7 +139,7 @@ export default {
 </script>
 <style scoped lang="less">
 .minutes-wrap {
-  height: 540px;
+  height: 524px;
   background-color: #1e2d44;
   border-radius: 5px;
   box-shadow: 0 0 5px #181818;
@@ -198,7 +198,7 @@ export default {
   }
   .chart-wrap {
     padding: 0 12px;
-    height: 382px;
+    height: 366px;
   }
 
 }

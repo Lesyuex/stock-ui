@@ -172,7 +172,7 @@ export default {
             left: 'center',
             bottom: '30%',
             width: '100%',
-            height: '68%'
+            height: '74%'
           },
           {
             // show: true,
@@ -180,7 +180,7 @@ export default {
             left: 'center',
             bottom: 0,
             width: '100%',
-            height: '30%'
+            height: '24%'
           }
         ],
         xAxis: [
