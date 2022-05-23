@@ -34,6 +34,10 @@
                style="height: 16px;vertical-align: middle;margin-left: 6px">
             </span>
             <span>{{ stock.marketCode }}</span>
+            <div v-show="stock.fast" style="position: absolute;right: 0;top: 18px;font-size: 15px">
+              <svg-icon iconClass='fast' className='icon'></svg-icon>
+              快速下跌
+            </div>
           </div>
           <!--股价涨跌幅-->
           <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
@@ -44,11 +48,6 @@
           </div>
           <div class="change-wrap">
             <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownPercent }}%</span>
-            <span v-show="stock.fast">
-              <svg-icon iconClass='fast' className='icon'></svg-icon>
-              <span style="font-size: 12px">快速下跌</span>
-            </span>
-
           </div>
           <!--收藏 -->
           <div class="collect-wrap">
@@ -188,10 +187,11 @@ export default {
         padding-left: 12px;
         box-sizing: border-box;
         .name-wrap{
-          flex: 4;
+          position: relative;
+          flex: 5;
         }
         .change-wrap {
-          flex: 4;
+          flex: 3;
           line-height: 56px;
           text-align: center;
         }
@@ -257,8 +257,7 @@ export default {
   }
 }
 .icon {
-  width: 20px;
-  height: 20px;
-  color: red;
+  width: 30px;
+  height: 30px;
 }
 </style>
