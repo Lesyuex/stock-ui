@@ -30,7 +30,7 @@ function addStyleResource(rule) {
     .loader('style-resources-loader')
     .options({
       patterns: [
-        path.resolve(__dirname, 'src/static/css/default.less'), // 需要全局导入的less
+        path.resolve(__dirname, './src/static/css/default.less'), // 需要全局导入的less
       ]
     })
 }

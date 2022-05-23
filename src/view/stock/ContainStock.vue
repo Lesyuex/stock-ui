@@ -28,15 +28,15 @@
           <!--股票名称-->
           <div class="name-wrap">
             <span>
+               <img
+                 src="../../assets/nation/china.png"
+                 style="height: 16px;vertical-align: middle;">
               {{ stock.name }}
-             <img
-               src="../../assets/nation/china.png"
-               style="height: 16px;vertical-align: middle;margin-left: 6px">
+
             </span>
             <span>{{ stock.marketCode }}</span>
             <div v-show="stock.fast" style="position: absolute;right: 0;top: 18px;font-size: 15px">
-              <svg-icon iconClass='fast' className='icon'></svg-icon>
-              快速下跌
+              <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
             </div>
           </div>
           <!--股价涨跌幅-->
@@ -176,10 +176,10 @@ export default {
       transition: .3s;
       cursor: pointer;
       border-bottom: 1px solid rgba(0,0,0,.1);
-      &:nth-child(1){
+  /*    &:nth-child(1){
         border-top: 1px solid rgba(0,0,0,.05);
         font-size: 18px;
-      }
+      }*/
       .content-wrap {
         display: flex;
         justify-content: space-between;
@@ -257,7 +257,8 @@ export default {
   }
 }
 .icon {
-  width: 30px;
-  height: 30px;
+  width: 15px;
+  height: 15px;
+  font-size: 15px
 }
 </style>

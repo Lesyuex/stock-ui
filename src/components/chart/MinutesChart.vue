@@ -470,7 +470,7 @@ export default {
 <style scoped lang="less">
 .select-wrap{
   position: absolute;
-  bottom: 30%;
+  bottom: calc(30% + 4px);
   width: 56px;
   height: 18px;
   text-align: center;
