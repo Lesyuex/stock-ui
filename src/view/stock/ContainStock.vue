@@ -35,7 +35,7 @@
 
             </span>
             <span>{{ stock.marketCode }}</span>
-            <div v-show="stock.fast" style="position: absolute;right: 0;top: 18px;font-size: 15px">
+            <div style="position: absolute;right: 0;top: 18px;font-size: 15px">
               <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
             </div>
           </div>

@@ -20,8 +20,12 @@
     "less": "^4.1.2",
     "moment": "^2.29.2",
     "pinyin-match": "^1.2.2",
+    "prettier": "^2.6.2",
+    "sass-resources-loader": "^2.2.5",
+    "style-resources-loader": "^1.5.0",
     "svg-sprite-loader": "^6.0.11",
     "vue": "^2.5.2",
+    "vue-cli-plugin-style-resources-loader": "^0.1.5",
     "vue-router": "^3.0.1",
     "vuex": "^3.6.2"
   },
