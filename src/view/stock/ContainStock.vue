@@ -2,42 +2,44 @@
   <div id="contain-wrap">
     <div class="title-wrap">成分股</div>
     <ul id="index-wrap">
-<!--      <li>
-        <div class="content-wrap">
-          &lt;!&ndash;股票名称&ndash;&gt;
-          <div class="name-wrap" style="line-height: 56px">
-            股票名称
-          </div>
-          &lt;!&ndash;股价涨跌幅&ndash;&gt;
-          <div class="change-wrap">
-            <span>最新价</span>
-          </div>
-          <div class="change-wrap">
-            <span>涨跌幅</span>
-          </div>
-          <div class="change-wrap">
-            <span>换手率</span>
-          </div>
-          &lt;!&ndash;收藏 &ndash;&gt;
-          <div class="collect-wrap">
-          </div>
-        </div>
-      </li>-->
+      <!--      <li>
+              <div class="content-wrap">
+                &lt;!&ndash;股票名称&ndash;&gt;
+                <div class="name-wrap" style="line-height: 56px">
+                  股票名称
+                </div>
+                &lt;!&ndash;股价涨跌幅&ndash;&gt;
+                <div class="change-wrap">
+                  <span>最新价</span>
+                </div>
+                <div class="change-wrap">
+                  <span>涨跌幅</span>
+                </div>
+                <div class="change-wrap">
+                  <span>换手率</span>
+                </div>
+                &lt;!&ndash;收藏 &ndash;&gt;
+                <div class="collect-wrap">
+                </div>
+              </div>
+            </li>-->
       <li v-for="(stock, index) in indexList" :key="index" class="stock-li">
         <div class="content-wrap">
           <!--股票名称-->
           <div class="name-wrap">
-            <span>
-               <img
-                 src="../../assets/nation/china.png"
-                 style="height: 16px;vertical-align: middle;">
+            <div>
+              <img
+                src="../../assets/nation/china.png"
+                style="height: 16px;vertical-align: middle;">
               {{ stock.name }}
-
-            </span>
-            <span>{{ stock.marketCode }}</span>
-            <div style="position: absolute;right: 0;top: 18px;font-size: 12px">
-              <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
             </div>
+            <div>
+              {{ stock.marketCode }}
+              <span style="position: relative;left: 4px;bottom: 2px;font-size: 12px">
+              <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
+            </span>
+            </div>
+
           </div>
           <!--股价涨跌幅-->
           <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
@@ -63,6 +65,7 @@
 import openTimer from '../../mixins'
 import SingleMinutesLineChart from '../../components/chart/SingleMinutesLineChart'
 import Chart from '../test/Chart'
+
 export default {
   mixins: [openTimer],
   name: 'ContainStock',
@@ -175,60 +178,56 @@ export default {
       height: 56px;
       transition: .3s;
       cursor: pointer;
-      border-bottom: 1px solid rgba(0,0,0,.1);
-  /*    &:nth-child(1){
-        border-top: 1px solid rgba(0,0,0,.05);
-        font-size: 18px;
-      }*/
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+      /*    &:nth-child(1){
+            border-top: 1px solid rgba(0,0,0,.05);
+            font-size: 18px;
+          }*/
+
       .content-wrap {
         display: flex;
         justify-content: space-between;
         cursor: pointer;
         padding-left: 12px;
         box-sizing: border-box;
-        .name-wrap{
+
+        .name-wrap {
           position: relative;
-          flex: 7;
+          flex: 6;
         }
+
         .change-wrap {
           flex: 3;
           line-height: 56px;
           text-align: center;
         }
-        .name-wrap{
-          span{
-            display: block;
-            &:nth-child(1){
+
+        .name-wrap {
+          > div {
+            &:nth-child(1) {
               font-size: 15px;
               line-height: 36px;
             }
-            &:nth-child(2){
+
+            &:nth-child(2) {
               font-size: 14px;
               line-height: 20px;
             }
           }
+
         }
-        .collect-wrap{
+
+        .collect-wrap {
           flex: 2;
           display: flex;
           justify-content: center;
           align-items: center;
-          i{
+
+          i {
             font-size: 20px;
           }
         }
       }
-
-    /*  .collect-wrap {
-        position: absolute;
-        right: 5%;
-        top: 12px;
-
-        i {
-          font-size: 20px;
-          cursor: pointer;
-        }
-      }*/
     }
 
     .breath-li {
@@ -256,6 +255,7 @@ export default {
   100% {
   }
 }
+
 .icon {
   width: 14px;
   height: 14px;
