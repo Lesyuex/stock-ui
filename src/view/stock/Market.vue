@@ -2,13 +2,13 @@
   <div id="market-wrap">
     <div class="title-wrap">市场</div>
     <ul>
-      <li>
+<!--      <li>
         <div class="content-wrap">
-          <!--股票名称-->
+          &lt;!&ndash;股票名称&ndash;&gt;
           <div class="name-wrap" style="line-height: 56px">
             股票名称
           </div>
-          <!--股价涨跌幅-->
+          &lt;!&ndash;股价涨跌幅&ndash;&gt;
           <div class="change-wrap">
             <span>最新价</span>
           </div>
@@ -18,11 +18,11 @@
           <div class="change-wrap">
             <span>换手率</span>
           </div>
-          <!--收藏 -->
+          &lt;!&ndash;收藏 &ndash;&gt;
           <div class="collect-wrap">
           </div>
         </div>
-      </li>
+      </li>-->
       <li v-for="(stock, index) in indexList" :key="index" class="stock-li">
         <div class="content-wrap">
           <!--股票名称-->
@@ -203,11 +203,11 @@ export default {
           span{
             display: block;
             &:nth-child(1){
-              font-size: 18px;
+              font-size: 15px;
               line-height: 36px;
             }
             &:nth-child(2){
-              font-size: 16px;
+              font-size: 14px;
               line-height: 20px;
             }
           }
