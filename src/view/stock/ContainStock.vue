@@ -36,14 +36,19 @@
             <span>{{ stock.marketCode }}</span>
           </div>
           <!--股价涨跌幅-->
-          <div class="change-wrap">
+          <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
             <span>{{ stock.currentPrice }}</span>
           </div>
           <div class="change-wrap">
-            <span>{{ stock.upDownPercent }}%</span>
+            <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownValue }}</span>
           </div>
           <div class="change-wrap">
-            <span>{{ stock.upDownPercent }}%</span>
+            <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownPercent }}%</span>
+            <span v-show="stock.fast">
+              <svg-icon iconClass='fast' className='icon'></svg-icon>
+              <span style="font-size: 12px">快速下跌</span>
+            </span>
+
           </div>
           <!--收藏 -->
           <div class="collect-wrap">
@@ -59,7 +64,6 @@
 import openTimer from '../../mixins'
 import SingleMinutesLineChart from '../../components/chart/SingleMinutesLineChart'
 import Chart from '../test/Chart'
-
 export default {
   mixins: [openTimer],
   name: 'ContainStock',
@@ -70,14 +74,14 @@ export default {
   data () {
     return {
       indexList: [
-        {name: '上证指数', marketCode: 'sh000001', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
-        {name: '深证成指', marketCode: 'sz399001', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
-        {name: '创业板指', marketCode: 'sz399006', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
-        {name: '上证50', marketCode: 'sh000016', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
-        {name: '沪深300', marketCode: 'sh000300', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
-        {name: '科创50', marketCode: 'sh000688', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
-        {name: '恒生指数', marketCode: 'hkHSI', currentPrice: '-', upDownValue: '-', upDownPercent: '-'},
-        {name: '恒生科技指数', marketCode: 'hkHSTECH', currentPrice: '-', upDownValue: '-', upDownPercent: '-'}
+        {name: '上证指数', marketCode: 'sh000001', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false},
+        {name: '深证成指', marketCode: 'sz399001', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false},
+        {name: '创业板指', marketCode: 'sz399006', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false},
+        {name: '上证50', marketCode: 'sh000016', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false},
+        {name: '沪深300', marketCode: 'sh000300', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false},
+        {name: '科创50', marketCode: 'sh000688', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false},
+        {name: '恒生指数', marketCode: 'hkHSI', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false},
+        {name: '恒生科技指数', marketCode: 'hkHSTECH', currentPrice: '-', upDownValue: '-', upDownPercent: '-',fast:false}
       ],
       marketCode: 'sh000001',
       breathTimer: null,
@@ -95,22 +99,13 @@ export default {
   methods: {
     breath () {
       const that = this
-      const breathLiIndexArr = []
-      for (let i = 0; i < that.indexList.length; i++) {
-        // 把需要呼吸的股票找出来
-        const change = Math.round(Math.random())
-        const change2 = Math.round(Math.random())
-        if (change === 1 && change2 === 1) breathLiIndexArr.push(i)
-      }
-      that.breathLiIndexArr = breathLiIndexArr
-      console.log(breathLiIndexArr.join(','))
-      for (let i = 0; i < breathLiIndexArr.length; i++) {
-        const index = breathLiIndexArr[i]
+      for (let i = 0; i < that.breathLiIndexArr.length; i++) {
+        const index = that.breathLiIndexArr[i]
         const dom = that.liArr[index]
         dom.classList.add('breath-li')
         setTimeout(function () {
           dom.classList.remove('breath-li')
-        }, 2000)
+        }, 1500)
       }
     },
     refreshData () {
@@ -131,10 +126,12 @@ export default {
         const breathLiIndexArr = []
         for (let i = 0; i < this.indexList.length; i++) {
           const source = this.indexList[i]
-          Object.assign(source, data[i])
           // 把需要呼吸的股票找出来
-          const change = Math.round(Math.random())
-          if (change === 1) breathLiIndexArr.push(i)
+          const number = Math.abs(source.upDownPercent - data[i].upDownPercent)
+          if (number >= 0.2) breathLiIndexArr.push(i)
+          // 判断是否快速上涨或下跌
+          if (number >= 0.02) source.fast = true
+          Object.assign(source, data[i])
         }
         this.breathLiIndexArr = breathLiIndexArr
       }).finally(() => {
@@ -191,10 +188,10 @@ export default {
         padding-left: 12px;
         box-sizing: border-box;
         .name-wrap{
-          flex: 6;
+          flex: 4;
         }
         .change-wrap {
-          flex: 3;
+          flex: 4;
           line-height: 56px;
           text-align: center;
         }
@@ -244,7 +241,7 @@ export default {
         height: 100%;
         opacity: 0;
         background-color: rgba(0, 0, 0, .2);
-        animation: breath 2s linear;
+        animation: breath 1.5s linear;
       }
     }
   }
@@ -258,5 +255,10 @@ export default {
   }
   100% {
   }
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  color: red;
 }
 </style>

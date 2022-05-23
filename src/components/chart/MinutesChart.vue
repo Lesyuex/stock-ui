@@ -5,6 +5,12 @@
       v-if="loadingData"
       class="el-icon-loading"
       style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
+    <div class="select-wrap">
+      {{value}}&nbsp;<i class="el-icon-caret-bottom"></i>
+      <ul >
+        <li v-for="(item,index) in selectArr" @click="selectFn(item)" :style="{color:item === value ? '#708bf5': '#ccc'}" :key="index">{{item}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
@@ -27,6 +33,8 @@ export default {
   },
   data () {
     return {
+      selectArr: ['成交量', 'MACD'],
+      value: '成交量',
       loadingData: true,
       today: moment().format('YYYY-MM-DD'),
       options: {},
@@ -87,6 +95,9 @@ export default {
     this.initOptions()
   },
   methods: {
+    selectFn (item) {
+      this.value = item
+    },
     getSeriesData (stock) {
       const priceArr = []
       const averagePriceArr = [] // 均价 数据
@@ -207,16 +218,17 @@ export default {
               show: true,
               // inside: true,
               color: '#858585',
-              margin: 4,
-              height: 24,
-              lineHeight: 24,
+              margin: 8,
+              height: 20,
+              lineHeight: 20,
+              padding: [0, 0, 20, 0],
               formatter: this.defaultOption.xFormatter,
               rich: {
                 right: {
-                  padding: [0, 0, 4, 31]
+                  padding: [0, 0, 0, 31]
                 },
                 left: {
-                  padding: [0, 31, 4, 0]
+                  padding: [0, 31, 0, 0]
                 }
               }
             },
@@ -455,3 +467,36 @@ export default {
   }
 }
 </script>
+<style scoped lang="less">
+.select-wrap{
+  position: absolute;
+  bottom: 30%;
+  width: 56px;
+  height: 18px;
+  text-align: center;
+  padding: 1px 2px;
+  box-sizing: border-box;
+  line-height: 18px;
+  color: #ccc;
+  font-size: 12px;
+  background-color: #39425b;
+  cursor: pointer;
+  border-radius: 2px;
+  z-index: 999;
+  ul{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    display: none;
+    background-color: #1b212c;
+
+    li{
+      padding: 6px 2px;
+      text-align: center;
+    }
+  }
+  &:hover ul{
+    display: block;
+  }
+}
+</style>
