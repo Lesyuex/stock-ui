@@ -15,49 +15,66 @@
       <el-link :underline="false" class="collect-btn fs12" @click="collectStock">+自选</el-link>
     </div>
     <div class="detail-wrap">
-      <div>
-        <span>今<span class="ti1em">开</span></span><span>{{ stock.todayOpenPrice }}</span>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>今开</span><span>{{ stock.todayOpenPrice }}</span>
+        </div>
+        <div class="box-wrap">
+          <span>昨收</span><span>{{ stock.yesterdayPrice }}</span>
+        </div>
       </div>
-      <div>
-        <span>最<span class="ti1em">高</span></span><span>{{ stock.highest }}</span>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>最高</span><span>{{ stock.highest }}</span>
+        </div>
+        <div class="box-wrap">
+          <span>最低</span><span>{{ stock.lowest.toFixed(2) }}</span>
+        </div>
       </div>
-      <div>
-        <span>涨停价</span><span>{{ stock.dailyLimitPrice === -1 ? '0' : stock.dailyLimitPrice }}</span>
-      </div>
-
-      <div>
-        <span>成交量</span><span>{{ volume }}手</span>
-      </div>
-      <div>
-        <span>内<span class="ti1em">盘</span></span><span>{{ inner }}手</span>
-      </div>
-      <div>
-        <span>昨<span class="ti1em">收</span></span><span>{{ stock.yesterdayPrice }}</span>
-      </div>
-      <div>
-        <span>最<span class="ti1em">低</span></span><span>{{ stock.lowest }}</span>
-      </div>
-      <div>
-        <span>跌停价</span><span>{{ stock.limitDownPrice === -1 ? '0' : stock.limitDownPrice }}</span>
-      </div>
-      <div>
-        <span>成交额</span><span>{{ turnOver }}亿</span>
-      </div>
-      <div>
-        <span>外<span class="ti1em">盘</span></span><span>{{ out }}手</span>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>涨停价</span><span>{{ stock.dailyLimitPrice === -1 ? '0' : stock.dailyLimitPrice }}</span>
+        </div>
+        <div class="box-wrap">
+          <span>跌停价</span><span>{{ stock.limitDownPrice === -1 ? '0' : stock.limitDownPrice }}</span>
+        </div>
       </div>
 
-      <div>
-        <span>换手率</span><span>{{ stock.turnoverRate }}%</span>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>成交量</span><span>{{ volume }}</span>
+        </div>
+        <div class="box-wrap">
+          <span>成交额</span><span>{{ turnOver }}亿</span>
+        </div>
       </div>
-      <div>
-        <span>振<span class="ti1em">幅</span></span><span>{{ stock.amplitude }}%</span>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>内盘</span><span>{{ inner }}手</span>
+        </div>
+        <div class="box-wrap">
+          <span>外盘</span><span>{{ out }}手</span>
+        </div>
       </div>
-      <div>
-        <span>均<span class="ti1em">价</span></span><span>{{ stock.averagePrice }}</span>
+
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>换手率</span><span>{{ stock.turnoverRate }}%</span>
+        </div>
       </div>
-      <div>
-        <span>市盈
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>振幅</span><span>{{ stock.amplitude }}%</span>
+        </div>
+      </div>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>均价</span><span>{{ stock.averagePrice }}</span>
+        </div>
+      </div>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>市盈
               <el-popover
                 placement="right"
                 popper-class="peClass"
@@ -76,16 +93,17 @@
                 <span slot="reference"><i class="el-icon-info" style="cursor: pointer"/></span>
               </el-popover>
         </span>
-        <span>
-          {{ pe.peRate }}
-        </span>
+          <span>{{ pe.peRate }}</span>
+        </div>
       </div>
-
-      <div>
-        <span>总市值</span><span>{{ (stock.marketValue * 1).toFixed(2) }}亿</span>
+      <div class="stock-info">
+        <div class="box-wrap">
+          <span>总市值</span>
+          <span>{{ (stock.marketValue * 1).toFixed(2) }}亿</span>
+        </div>
       </div>
-
     </div>
+
   </div>
 </template>
 
@@ -150,15 +168,17 @@ export default {
 .main-wrap {
   height: 100%;
   color: #ccc;
+
   .title-wrap {
     position: relative;
     height: 40px;
-    box-sizing: border-box;
-    padding: 0 0 4px 0;
+    padding: 4px 12px;
+    //box-sizing: border-box;
     .single-wrap {
       float: left;
       position: relative;
       line-height: 40px;
+
       img {
         position: relative;
         left: 3px;
@@ -179,28 +199,31 @@ export default {
   }
 
   .detail-wrap {
-    &::before, &::after {
-      content: '';
-      display: block;
-      clear: both;
-    }
-
-    >div {
-      float: left;
-      display: flex;
-      justify-content: space-between;
-      width: 20%;
-      font-size: 15px;
+    float: left;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    max-height: 60px;
+    overflow: hidden;
+    .stock-info {
+      flex: 1;
+      min-width: 140px;
       box-sizing: border-box;
-      padding: 1px 20px 1px 0;
+      font-size: 12px;
 
       &:nth-child(5), &:nth-child(10), &:nth-child(15) {
         padding-right: 0;
       }
 
-      span {
-        display: inline-block;
-        line-height: 20px;
+      .box-wrap {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 12px;
+        box-sizing: border-box;
+
+        > span {
+          line-height: 20px;
+        }
       }
     }
   }

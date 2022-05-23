@@ -9,6 +9,7 @@ ul{
 @cardColor: #161a23;
 @upColor: #ee4957;
 @downColor: #01d078;
+@unitWidth: 100%/24;
 .fs10 {
   font-size: 10px;
 }.fs12 {
@@ -71,4 +72,379 @@ ul{
   margin-top: 8px;
 }.marginT12{
   margin-top: 12px;
+}
+/*栅格布局*/
+.c-col {
+  width: (@unitWidth) * 24;
+  min-height: 1px;
+  box-sizing: border-box;
+}
+.c-col-1 {
+  width: (@unitWidth)*1;
+}
+.c-col-2 {
+  width: (@unitWidth)*2;
+}
+.c-col-3 {
+  width: (@unitWidth)*3;
+}
+.c-col-4 {
+  width: (@unitWidth)*4;
+}
+.c-col-5 {
+  width: (@unitWidth)*5;
+}
+.c-col-6 {
+  width: (@unitWidth)*6;
+}
+.c-col-7 {
+  width: (@unitWidth)*7;
+}
+.c-col-8 {
+  width: (@unitWidth)*8;
+}
+.c-col-9 {
+  width: (@unitWidth)*9;
+}
+.c-col-10 {
+  width: (@unitWidth)*10;
+}
+.c-col-11 {
+  width: (@unitWidth)*11;
+}
+.c-col-12 {
+  width: (@unitWidth)*12;
+}
+.c-col-13 {
+  width: (@unitWidth)*13;
+}
+.c-col-14 {
+  width: (@unitWidth)*14;
+}
+.c-col-15 {
+  width: (@unitWidth)*15;
+}
+.c-col-16 {
+  width: (@unitWidth)*16;
+}
+.c-col-17 {
+  width: (@unitWidth)*17;
+}
+.c-col-18 {
+  width: (@unitWidth)*18;
+}
+.c-col-19 {
+  width: (@unitWidth)*19;
+}
+.c-col-20 {
+  width: (@unitWidth)*20;
+}
+.c-col-21 {
+  width: (@unitWidth)*21;
+}
+.c-col-22 {
+  width: (@unitWidth)*22;
+}
+.c-col-23 {
+  width: (@unitWidth)*23;
+}
+.c-col-24 {
+  width: (@unitWidth)*24;
+}
+/*小于1028只能放一个*/
+/*1028可以放下两个*/
+/*1456可以放下三个*/
+/*宽度小于等于700px*/
+@media screen and (max-width: 1028px) {
+  .c-col-sm-1 {
+    width: (@unitWidth) * 1;
+  }
+
+  .c-col-sm-2 {
+    width: (@unitWidth) * 2;
+  }
+
+  .c-col-sm-3 {
+    width: (@unitWidth) * 3;
+  }
+
+  .c-col-sm-4 {
+    width: (@unitWidth) * 4;
+  }
+
+  .c-col-sm-5 {
+    width: (@unitWidth) * 5;
+  }
+
+  .c-col-sm-6 {
+    width: (@unitWidth) * 6;
+  }
+
+  .c-col-sm-7 {
+    width: (@unitWidth) * 7;
+  }
+
+  .c-col-sm-8 {
+    width: (@unitWidth) * 8;
+  }
+
+  .c-col-sm-9 {
+    width: (@unitWidth) * 9;
+  }
+
+  .c-col-sm-10 {
+    width: (@unitWidth) * 10;
+  }
+
+  .c-col-sm-11 {
+    width: (@unitWidth) * 11;
+  }
+
+  .c-col-sm-12 {
+    width: (@unitWidth) * 12;
+  }
+
+  .c-col-sm-13 {
+    width: (@unitWidth) * 13;
+  }
+
+  .c-col-sm-14 {
+    width: (@unitWidth) * 14;
+  }
+
+  .c-col-sm-15 {
+    width: (@unitWidth) * 15;
+  }
+
+  .c-col-sm-16 {
+    width: (@unitWidth) * 16;
+  }
+
+  .c-col-sm-17 {
+    width: (@unitWidth) * 17;
+  }
+
+  .c-col-sm-18 {
+    width: (@unitWidth) * 18;
+  }
+
+  .c-col-sm-19 {
+    width: (@unitWidth) * 19;
+  }
+
+  .c-col-sm-20 {
+    width: (@unitWidth) * 20;
+  }
+
+  .c-col-sm-21 {
+    width: (@unitWidth) * 21;
+  }
+
+  .c-col-sm-22 {
+    width: (@unitWidth) * 22;
+  }
+
+  .c-col-sm-23 {
+    width: (@unitWidth) * 23;
+  }
+
+  .c-col-sm-24 {
+    width: (@unitWidth) * 24;
+  }
+}
+@media screen and (min-width: 1029px) and (max-width: 1456px){
+  .c-col-md-1 {
+    width: (@unitWidth)*1;
+  }
+
+  .c-col-md-2 {
+    width: (@unitWidth)*2;
+  }
+
+  .c-col-md-3 {
+    width: (@unitWidth)*3;
+  }
+
+  .c-col-md-4 {
+    width: (@unitWidth)*4;
+  }
+
+  .c-col-md-5 {
+    width: (@unitWidth)*5;
+  }
+
+  .c-col-md-6 {
+    width: (@unitWidth)*6;
+  }
+
+  .c-col-md-7 {
+    width: (@unitWidth)*7;
+  }
+
+  .c-col-md-8 {
+    width: (@unitWidth)*8;
+  }
+
+  .c-col-md-9 {
+    width: (@unitWidth)*9;
+  }
+
+  .c-col-md-10 {
+    width: (@unitWidth)*10;
+  }
+
+  .c-col-md-11 {
+    width: (@unitWidth)*11;
+  }
+
+  .c-col-md-12 {
+    width: (@unitWidth)*12;
+  }
+
+  .c-col-md-13 {
+    width: (@unitWidth)*13;
+  }
+
+  .c-col-md-14 {
+    width: (@unitWidth)*14;
+  }
+
+  .c-col-md-15 {
+    width: (@unitWidth)*15;
+  }
+
+  .c-col-md-16 {
+    width: (@unitWidth)*16;
+  }
+
+  .c-col-md-17 {
+    width: (@unitWidth)*17;
+  }
+
+  .c-col-md-18 {
+    width: (@unitWidth)*18;
+  }
+
+  .c-col-md-19 {
+    width: (@unitWidth)*19;
+  }
+
+  .c-col-md-20 {
+    width: (@unitWidth)*20;
+  }
+
+  .c-col-md-21 {
+    width: (@unitWidth)*21;
+  }
+
+  .c-col-md-22 {
+    width: (@unitWidth)*22;
+  }
+
+  .c-col-md-23 {
+    width: (@unitWidth)*23;
+  }
+
+  .c-col-md-24 {
+    width: (@unitWidth)*24;
+  }
+}
+
+/*大屏*/
+@media screen and (min-width: 1456px) {
+  .c-col-lg-1 {
+    width: (@unitWidth)*1;
+  }
+
+  .c-col-lg-2 {
+    width: (@unitWidth)*2;
+  }
+
+  .c-col-lg-3 {
+    width: (@unitWidth)*3;
+  }
+
+  .c-col-lg-4 {
+    width: (@unitWidth)*4;
+  }
+
+  .c-col-lg-5 {
+    width: (@unitWidth)*5;
+  }
+
+  .c-col-lg-6 {
+    width: (@unitWidth)*6;
+  }
+
+  .c-col-lg-7 {
+    width: (@unitWidth)*7;
+  }
+
+  .c-col-lg-8 {
+    width: (@unitWidth)*8;
+  }
+
+  .c-col-lg-9 {
+    width: (@unitWidth)*9;
+  }
+
+  .c-col-lg-10 {
+    width: (@unitWidth)*10;
+  }
+
+  .c-col-lg-11 {
+    width: (@unitWidth)*11;
+  }
+
+  .c-col-lg-12 {
+    width: (@unitWidth)*12;
+  }
+
+  .c-col-lg-13 {
+    width: (@unitWidth)*13;
+  }
+
+  .c-col-lg-14 {
+    width: (@unitWidth)*14;
+  }
+
+  .c-col-lg-15 {
+    width: (@unitWidth)*15;
+  }
+
+  .c-col-lg-16 {
+    width: (@unitWidth)*16;
+  }
+
+  .c-col-lg-17 {
+    width: (@unitWidth)*17;
+  }
+
+  .c-col-lg-18 {
+    width: (@unitWidth)*18;
+  }
+
+  .c-col-lg-19 {
+    width: (@unitWidth)*19;
+  }
+
+  .c-col-lg-20 {
+    width: (@unitWidth)*20;
+  }
+
+  .c-col-lg-21 {
+    width: (@unitWidth)*21;
+  }
+
+  .c-col-lg-22 {
+    width: (@unitWidth)*22;
+  }
+
+  .c-col-lg-23 {
+    width: (@unitWidth)*23;
+  }
+
+  .c-col-lg-24 {
+    width: (@unitWidth)*24;
+  }
 }

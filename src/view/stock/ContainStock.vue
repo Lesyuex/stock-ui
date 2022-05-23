@@ -32,12 +32,12 @@
                  src="../../assets/nation/china.png"
                  style="height: 16px;vertical-align: middle;">
               {{ stock.name }}
-
+ {{ stock.marketCode }}
             </span>
-            <span>{{ stock.marketCode }}</span>
-            <div style="position: absolute;right: 0;top: 18px;font-size: 15px">
+
+            <span style="font-size: 15px">
               <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
-            </div>
+            </span>
           </div>
           <!--股价涨跌幅-->
           <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
@@ -151,7 +151,7 @@ export default {
 <style scoped lang="less">
 #contain-wrap {
   position: relative;
-  height: 510px;
+  height: 540px;
   padding: 10px 0;
   box-sizing: border-box;
   border-radius: 5px;
@@ -188,7 +188,7 @@ export default {
         box-sizing: border-box;
         .name-wrap{
           position: relative;
-          flex: 5;
+          flex: 7;
         }
         .change-wrap {
           flex: 3;

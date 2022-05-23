@@ -1,15 +1,17 @@
 <template>
   <v-card>
-    <g-row>
-      <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
+    <c-row>
+      <c-col :span="12" :sm="24" md="12" :lg="8" class="marginT8" style="padding: 0 6px">
         <index-choice-chart :marketCode="marketCode"/>
-      </g-col>
-      <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8" class="marginT8" style="padding: 0 6px">
         <contain-stock/>
-      </g-col>
-      <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8" class="marginT8" style="padding: 0 6px">
         <market/>
-      </g-col>
+      </c-col>
+    </c-row>
+    <g-row>
       <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
         <count-view/>
       </g-col>
@@ -49,10 +51,14 @@ import PlateSingle from '../components/PlateSingle'
 import BarPieChart from '../../components/chart/PieChart'
 import Market from './Market'
 import ContainStock from './ContainStock'
+import CRow from '../../components/layout/c-row'
+import CCol from '../../components/layout/c-col'
 
 export default {
   name: 'Home',
   components: {
+    CCol,
+    CRow,
     ContainStock,
     IndexChoiceChart,
     OverView,

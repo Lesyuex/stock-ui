@@ -1,28 +1,46 @@
 <template>
-  <div class="stock">
-    <div>
+  <v-card>
+    <c-row>
+      <c-col :span="12" :sm="24" md="12" :lg="8">
+        1
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8">
+  2
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8">
+      3
+      </c-col>
+    </c-row>
+  </v-card>
+
+<!--  <div class="stock">
+    <div class="minu">
+      今开 3107.09
+    </div >
+    <div class="cont">
       今开 3107.09
     </div>
-    <div>
+    <div class="market">
       今开 3107.09
     </div>
-    <div>
-      今开 3107.09
-    </div>
-  </div>
+  </div>-->
 </template>
 
 <script>
 import VueCard from '../../components/layout/VueCard'
+import CRow from '../../components/layout/c-row'
+import CCol from '../../components/layout/c-col'
 export default {
   name: 'Test2',
   components: {
-    VueCard
+    CCol,
+    VueCard,
+    CRow
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 html{
   font-size: calc(100% / 34 + 0px);
 }
@@ -30,20 +48,29 @@ html{
   margin: 0;
 }
 .stock{
-  width: 50%;
+  width: 100%;
   height: 100vh;
-  background-color: #a17f7f;
+  background-color: white;
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
 
-}
-.stock div{
-  height: 40px;
-  font-size: 1rem;
-  flex: 1;
-  min-width: 160px;
-}
+  >div{
+    flex: 1;
+    height: 400px;
 
+    min-width: 510px;
+  }
+  .minu{
+    background: #a17f7f;
+  }
+  .cont{
+    background: #1d9a63;
+  }
+  .market{
+    background: #b63744;
+  }
+}
 /*
 @media screen and (max-width: 1000px){
   html{

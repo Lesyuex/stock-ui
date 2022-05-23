@@ -4,7 +4,7 @@
       <tooltip-menu v-if="collapse" ref="asideMenu"/>
       <left-menu v-else ref="asideMenu"/>
     </gz-aside>
-    <gz-container style="background-color: #142033" class="content-wrap">
+    <gz-container style="background-color: #142033" id="content-wrap">
       <gz-header>
         <right-header ref="header" @menuVisible="menuVisible" :collapse="collapse"></right-header>
       </gz-header>
@@ -13,14 +13,7 @@
       </gz-main>
     </gz-container>
   </gz-container>
-<!--<section id="container">
-  <left-container ref="asideMenu"></left-container>
-  <right-container>
-      <right-header v-slot:header ref="header" @menuVisible="menuVisible"></right-header>
-  </right-container>
-</section>-->
 </template>
-
 <script>
 import RightContainer from './RightContainer'
 import RightHeader from './RightHeader'
@@ -68,3 +61,8 @@ export default {
   }
 }
 </script>
+<style>
+#content-wrap{
+  min-width: 584px;
+}
+</style>
