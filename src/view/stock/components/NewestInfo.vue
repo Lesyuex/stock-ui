@@ -203,8 +203,6 @@ export default {
     display: flex;
     flex: 1;
     flex-wrap: wrap;
-    max-height: 60px;
-    overflow: hidden;
     .stock-info {
       flex: 1;
       min-width: 140px;
