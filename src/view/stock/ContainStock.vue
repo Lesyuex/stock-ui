@@ -1,64 +1,46 @@
 <template>
   <div id="contain-wrap">
-    <div class="title-wrap">成分股</div>
-    <ul id="index-wrap">
-      <!--      <li>
-              <div class="content-wrap">
-                &lt;!&ndash;股票名称&ndash;&gt;
-                <div class="name-wrap" style="line-height: 56px">
-                  股票名称
-                </div>
-                &lt;!&ndash;股价涨跌幅&ndash;&gt;
-                <div class="change-wrap">
-                  <span>最新价</span>
-                </div>
-                <div class="change-wrap">
-                  <span>涨跌幅</span>
-                </div>
-                <div class="change-wrap">
-                  <span>换手率</span>
-                </div>
-                &lt;!&ndash;收藏 &ndash;&gt;
-                <div class="collect-wrap">
-                </div>
+    <h3 class="title-wrap">成分股</h3>
+    <div class="scroll-wrap">
+      <ul id="index-wrap">
+        <li v-for="(stock, index) in indexList" :key="index" class="stock-li">
+          <div class="content-wrap">
+            <!--股票名称-->
+            <div class="name-wrap">
+              <div>
+                <img
+                  src="../../assets/nation/china.png"
+                  alt="股票"
+                  style="height: 16px;vertical-align: middle;">
+                {{ stock.name }}
               </div>
-            </li>-->
-      <li v-for="(stock, index) in indexList" :key="index" class="stock-li">
-        <div class="content-wrap">
-          <!--股票名称-->
-          <div class="name-wrap">
-            <div>
-              <img
-                src="../../assets/nation/china.png"
-                style="height: 16px;vertical-align: middle;">
-              {{ stock.name }}
-            </div>
-            <div>
-              {{ stock.marketCode }}
+              <div>
+                {{ stock.marketCode }}
 
-            </div>
-            <span style="position: absolute;left: 88px;bottom: 2px;font-size: 12px">
+              </div>
+              <span style="position: absolute;left: 88px;bottom: 2px;font-size: 12px">
               <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
             </span>
 
+            </div>
+            <!--股价涨跌幅-->
+            <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
+              <span>{{ stock.currentPrice }}</span>
+            </div>
+            <div class="change-wrap">
+              <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownValue }}</span>
+            </div>
+            <div class="change-wrap">
+              <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownPercent }}%</span>
+            </div>
+            <!--收藏 -->
+            <div class="collect-wrap">
+              <i class="el-icon-circle-plus-outline"></i>
+            </div>
           </div>
-          <!--股价涨跌幅-->
-          <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
-            <span>{{ stock.currentPrice }}</span>
-          </div>
-          <div class="change-wrap">
-            <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownValue }}</span>
-          </div>
-          <div class="change-wrap">
-            <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownPercent }}%</span>
-          </div>
-          <!--收藏 -->
-          <div class="collect-wrap">
-            <i class="el-icon-circle-plus-outline"></i>
-          </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -84,7 +66,14 @@ export default {
         {name: '沪深300', marketCode: 'sh000300', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
         {name: '科创50', marketCode: 'sh000688', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
         {name: '恒生指数', marketCode: 'hkHSI', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
-        {name: '恒生科技指数', marketCode: 'hkHSTECH', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false}
+        {name: '恒生科技指数', marketCode: 'hkHSTECH', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
+        {name: '上证指数', marketCode: 'sh000001', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
+        {name: '深证成指', marketCode: 'sz399001', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
+        {name: '创业板指', marketCode: 'sz399006', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
+        {name: '上证50', marketCode: 'sh000016', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
+        {name: '沪深300', marketCode: 'sh000300', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
+        {name: '科创50', marketCode: 'sh000688', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false},
+        {name: '恒生指数', marketCode: 'hkHSI', currentPrice: '-', upDownValue: '-', upDownPercent: '-', fast: false}
       ],
       marketCode: 'sh000001',
       breathTimer: null,
@@ -155,21 +144,35 @@ export default {
 <style scoped lang="less">
 #contain-wrap {
   position: relative;
-  height: 540px;
-  padding: 10px 0;
+  height: 486px;
   box-sizing: border-box;
   border-radius: 5px;
   background-color: #1e2d44;
-
+  padding: 0 4px;
   .title-wrap {
-    height: 40px;
-    font-weight: 700;
-    padding-left: 12px;
-    box-sizing: border-box;
-    font-size: 22px;
-    padding-bottom: 4px;
+    padding: 8px;
+    font-size: 18px;
+    line-height: 30px;
   }
-
+.scroll-wrap{
+  height: 446px;
+  overflow: auto;
+  overflow-y: overlay;
+  &::-webkit-scrollbar{
+    width:1px;
+  }
+  /*定义滚动条*/
+  &::-webkit-scrollbar-thumb {
+    border-radius:1px;
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+    background: #7c7c7c;
+  }
+  /*定义滚动条轨道*/
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
   ul {
     list-style: none;
     overflow: auto;
@@ -179,12 +182,7 @@ export default {
       height: 56px;
       transition: .3s;
       cursor: pointer;
-      border-bottom: 1px solid rgba(0, 0, 0, .1);
-      /*    &:nth-child(1){
-            border-top: 1px solid rgba(0,0,0,.05);
-            font-size: 18px;
-          }*/
-
+      //border-bottom: 1px solid rgba(0, 0, 0, 0);
       .content-wrap {
         display: flex;
         justify-content: space-between;
@@ -245,6 +243,8 @@ export default {
       }
     }
   }
+}
+
 }
 
 @keyframes breath {

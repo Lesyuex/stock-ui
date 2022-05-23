@@ -1,7 +1,10 @@
 <template>
   <div class="funding-wrap">
-    <div style="line-height: 40px;font-size: 18px;font-weight: 400;">资金</div>
-    <bar-line-chart :custom-option="s2n" style="height: 350px"/>
+    <h3 class="title-wrap">资金</h3>
+    <div class="bar-wrap">
+      <bar-line-chart :custom-option="s2n" />
+    </div>
+
   </div>
 </template>
 <script>
@@ -20,8 +23,8 @@ export default {
       n2sTurnover: '-',
       activeName: '北向资金',
       s2n: {
-        gridWidth: '96%',
-        gridLeft: 10,
+        gridWidth: '100%',
+        gridLeft: 'center',
         hideX1: true,
         hideSeriLabel: true,
         hideY1Line: true,
@@ -34,7 +37,8 @@ export default {
         labelColor: ['#ccc'],
         yLabelFormatter: '{value} 亿',
         showHelpX: true,
-        formatter: this.getFormatter()
+        formatter: this.getFormatter(),
+        legendTextFontSize: 12
       },
       n2s: {
         xAxisData: [],
@@ -142,8 +146,18 @@ export default {
 <style scoped lang="less">
 .funding-wrap {
   background-color: #1e2d44;
-  height: calc((100vh - 68px) / 2);
+  height: 486px;
 
+  .title-wrap {
+    padding: 8px;
+    font-size: 22px;
+    line-height: 30px;
+  }
+  .bar-wrap{
+    height: 440px;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
   .el-tabs {
     height: 100%;
 

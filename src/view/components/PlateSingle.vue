@@ -1,49 +1,17 @@
 <template>
   <div class="plate-wrap">
-    <h4>
-      领跌
-    </h4>
-    <div style="height: 40%;display: flex;justify-content: space-between;flex-wrap: wrap;align-content: space-around">
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
+    <h3 class="title-wrap">领涨板块</h3>
+    <div class="increase-wrap">
+      <div class="plate-box" :key="i"
+           v-for="i in [6,5,4,3,2,1]">
+        {{ i }}
       </div>
     </div>
-    <h4>
-      领跌
-    </h4>
-    <div style="height: 40%;display: flex;justify-content: space-between;flex-wrap: wrap;align-content: space-around">
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
-      </div>
-      <div style="height: 45%;float: left;width: 33%;background-color: #ee4957">
-
+    <h3 class="title-wrap">领跌板块</h3>
+    <div class="unincrease-wrap">
+      <div class="plate-box" :key="i"
+           v-for="i in [6,5,4,3,2,1]">
+        {{ i }}
       </div>
     </div>
   </div>
@@ -57,16 +25,39 @@ export default {
 
 <style scoped lang="less">
 .plate-wrap {
-  width: calc(100% - 8px);
-  margin: 0 4px;
-  height: calc((100vh - 68px)/2 - 8px);
-  min-height: 420px;
+  height: 486px;
+  padding: 8px 8px 0 8px;
+  box-sizing: border-box;
   background-color: #1e2d44;
   border-radius: 5px;
 
-  &:nth-child(1) {
-    border-right: 1px solid black;
-    box-sizing: border-box;
+  .title-wrap {
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .increase-wrap, .unincrease-wrap {
+    height: 209px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: space-around;
+
+    .plate-box {
+      width: calc((100% - 16px)/3);
+      height: 92.5px;
+      margin-bottom: 8px;
+      float: left;
+      background: #b63744;
+      &:nth-child(-n + 3) {
+        margin-top: 8px;
+      }
+
+      &:nth-child(2), &:nth-child(5) {
+        margin-left: 8px;
+        margin-right: 8px;
+      }
+    }
   }
 }
 </style>

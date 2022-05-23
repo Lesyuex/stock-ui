@@ -13,7 +13,6 @@ export default {
 <style scoped lang="less">
 .c-row{
   position: relative;
-  height: 100vh;
   /*清除浮动*/
   &::before, &::after {
     content: "";

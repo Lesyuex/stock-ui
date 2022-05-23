@@ -2,9 +2,9 @@
   <div class="main-wrap">
     <div class="title-wrap">
       <div class="single-wrap">
-        <span class="fs22 fw700">{{ stock.name }}</span>
+        <span class="fs18 fw700">{{ stock.name }}</span>
         <img src="../../../assets/nation/china.png" alt="123"/>
-        <span class="fs14 marginL6 fw500">{{ marketCode }}</span>
+        <span class="fs14 marginL6 fw500">{{ stock.marketCode }}</span>
       </div>
       <div class="single-wrap">
         <span class="fs22 marginL12 fw700" :style="color">{{ stock.currentPrice || '' }}&nbsp;</span>
@@ -111,8 +111,7 @@
 export default {
   name: 'NewestInfo',
   props: {
-    stock: Object,
-    marketCode: String
+    stock: Object
   },
   computed: {
     pe () {
@@ -172,7 +171,7 @@ export default {
   .title-wrap {
     position: relative;
     height: 40px;
-    padding: 4px 12px;
+    padding: 4px 8px;
     //box-sizing: border-box;
     .single-wrap {
       float: left;

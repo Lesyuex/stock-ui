@@ -1,5 +1,5 @@
 <template>
-  <header class="gz-header" :style="{ height,padding: '12px 12px 4px 12px' }">
+  <header class="gz-header" :style="{ height,padding: '8px 8px 0 8px' }">
     <slot/>
   </header>
 </template>
@@ -10,7 +10,7 @@ export default {
   props: {
     height: {
       type: String,
-      default: '56px'
+      default: '48px'
     }
   }
 }

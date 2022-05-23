@@ -93,7 +93,7 @@ export default {
               show: data.hideX1 ? false : !data.hideX1Label,
               interval: data.showX1AllLabel ? 0 : null,
               formatter: data.x1LableFormatter ? data.x1LableFormatter : '{value}',
-              color: data.x1LabelColor || '#adb4c2',
+              color: data.x1LabelColor || '#858585',
               fontSize: data.x1LabelFS || 12
             },
             splitLine: {
@@ -116,13 +116,21 @@ export default {
             interval: 1,
             axisLabel: {
               show: true,
-              color: '#ccc',
+              color: '#858585',
               formatter: function (value) {
-                if (value === 1) return '09:30'
+                if (value === 1) return '{right|09:30}'
                 if (value === 2) return '10:30'
                 if (value === 3) return '11:30/13:00'
                 if (value === 4) return '14:00'
-                if (value === 5) return '15:00'
+                if (value === 5) return '{left|15:00}'
+              },
+              rich: {
+                right: {
+                  padding: [0, 0, 0, 14]
+                },
+                left: {
+                  padding: [0, 14, 0, 0]
+                }
               }
             },
             axisLine: {
@@ -155,6 +163,7 @@ export default {
           },
           axisLabel: {
             show: !data.hideY1Label,
+            margin: -20,
             formatter: data.yLabelFormatter ? data.yLabelFormatter : null
           },
           splitLine: {

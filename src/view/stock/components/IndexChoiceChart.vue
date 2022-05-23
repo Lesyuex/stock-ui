@@ -1,7 +1,7 @@
 <template>
   <div class="minutes-wrap">
     <div class="info-wrap">
-      <newest-info :stock="stock" :marketCode="marketCode"/>
+      <newest-info :stock="stock"/>
     </div>
     <div class="nav-wrap">
       <ul>
@@ -101,6 +101,7 @@ export default {
   },
   watch: {
     marketCode: function () {
+      this.$refs[this.comInfo.kname].loadingData = true
       this.refreshData()
     }
   },
@@ -123,7 +124,7 @@ export default {
     getMinutesData () {
       const that = this
       this.$axiosGet(`/stock/get/minutes/2/${this.marketCode}`).then(res => {
-        that.stock = res.data
+        that.stock = Object.assign({marketCode:this.marketCode},res.data)
       }).finally(() => {
         this.$refs[this.comInfo.kname].loadingData = false
         if (this.timer) {
@@ -139,7 +140,7 @@ export default {
 </script>
 <style scoped lang="less">
 .minutes-wrap {
-  height: 524px;
+  height: 486px;
   background-color: #1e2d44;
   border-radius: 5px;
   box-shadow: 0 0 5px #181818;
@@ -160,7 +161,7 @@ export default {
   }
   .nav-wrap{
     height: 40px;
-    padding: 0 12px;
+    padding: 0 8px;
     ul {
       height: 40px;
       li {
@@ -197,8 +198,8 @@ export default {
     }
   }
   .chart-wrap {
-    padding: 0 12px;
-    height: 366px;
+    padding: 0 8px;
+    height: 324px;
   }
 
 }

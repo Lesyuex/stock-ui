@@ -1,10 +1,10 @@
 <template>
   <div class="count-wrap">
-    <h3 style="padding: 8px;position: absolute">总览</h3>
-    <div style="width: 330px;height: 130px;position: absolute;right: 0;z-index: 999">
+    <h3 class="title-wrap">总览</h3>
+    <div class="pie-wrap">
       <pie-chart :pieData="pieData" ref="pie"/>
     </div>
-    <bar-line-chart :custom-option="customOption" style="height: 100%"/>
+    <bar-line-chart :custom-option="customOption" class="bar-wrap"/>
   </div>
 </template>
 <script>
@@ -46,7 +46,7 @@ export default {
         showX1AllLabel: true,
         gridBottom: 4,
         barWidth: 22,
-        gridTop: 110
+        gridTop: 122
       }
     }
   },
@@ -99,11 +99,25 @@ export default {
 <style scoped lang="less">
 .count-wrap {
   position: relative;
-
-  height: calc((100vh - 68px) / 2);
-  min-height: 420px;
-
+  height: 486px;
   border-radius: 5px;
   background-color: #1e2d44;
+
+  .title-wrap {
+    position: absolute;
+    padding: 8px;
+    font-size: 18px;
+  }
+
+  .pie-wrap {
+    width: 330px;
+    height: 130px;
+    position: absolute;
+    right: 0;
+    z-index: 999;
+  }
+  .bar-wrap{
+    height: 100%;
+  }
 }
 </style>

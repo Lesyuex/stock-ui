@@ -169,10 +169,11 @@ export default {
           {
             // show: true,
             containLabel: true,
+            top: '2%',
             left: 'center',
             bottom: '30%',
             width: '100%',
-            height: '74%'
+            height: '72%'
           },
           {
             // show: true,
@@ -180,7 +181,7 @@ export default {
             left: 'center',
             bottom: 0,
             width: '100%',
-            height: '24%'
+            height: '22%'
           }
         ],
         xAxis: [
@@ -218,10 +219,9 @@ export default {
               show: true,
               // inside: true,
               color: '#858585',
-              margin: 8,
+              margin: 6,
               height: 20,
               lineHeight: 20,
-              padding: [0, 0, 20, 0],
               formatter: this.defaultOption.xFormatter,
               rich: {
                 right: {
@@ -470,7 +470,7 @@ export default {
 <style scoped lang="less">
 .select-wrap{
   position: absolute;
-  bottom: calc(30% + 4px);
+  bottom: calc(20% + 4px);
   width: 56px;
   height: 18px;
   text-align: center;

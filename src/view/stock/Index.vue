@@ -1,44 +1,27 @@
 <template>
   <v-card>
     <c-row>
-      <c-col :span="12" :sm="24" md="12" :lg="8" class="marginT8" style="padding: 0 6px">
+      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
         <index-choice-chart :marketCode="marketCode"/>
       </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8" class="marginT8" style="padding: 0 6px">
+      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
+        <count-view/>
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
+        <over-view></over-view>
+<!--        <market/>-->
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
+        <funding-detail/>
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
+        <plate-single></plate-single>
+
+      </c-col>
+      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 6px;">
         <contain-stock/>
       </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8" class="marginT8" style="padding: 0 6px">
-        <market/>
-      </c-col>
     </c-row>
-    <g-row>
-      <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
-        <count-view/>
-      </g-col>
-
-      <g-col sm="24" md="8" class="marginT8" style="padding: 0 6px">
-        <funding-detail/>
-      </g-col>
-      <g-col sm="24" md="6" class="marginT8" style="padding: 0 6px">
-        <plate-single></plate-single>
-      </g-col>
-      <g-col sm="24" md="8" class="marginT8">
-        <plate-single></plate-single>
-      </g-col>
-
-      <g-col sm="24" md="14" class="marginT8">
-        <g-row style="width: calc(100% - 8px);margin: 0 0 0 8px">
-          <g-col :sm="12" :md="12">
-            <plate-single></plate-single>
-          </g-col>
-          <g-col sm="12" md="12">
-            <plate-single></plate-single>
-          </g-col>
-        </g-row>
-
-      </g-col>
-
-    </g-row>
   </v-card>
 </template>
 

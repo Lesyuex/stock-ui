@@ -10,9 +10,9 @@ export default {
 </script>
 <style scoped>
 .card-wrap{
-  height: calc(100vh - 58px);
+  height: calc(100vh - 56px);
   background-color: transparent;
-  padding:0 6px;
+  padding:0 4px;
   overflow: auto;
   overflow-y: overlay;
   box-sizing: border-box;

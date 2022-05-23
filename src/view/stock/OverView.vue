@@ -98,14 +98,10 @@ export default {
 
 <style scoped lang="less">
 .carousel-wrap {
-  height: calc((100vh - 68px) / 2);
-  min-height: 420px;
-
+  height: 486px;
+  box-sizing: border-box;
   .main-stocks-wrap {
-    width: calc(100% - 8px);
-    margin: 0 4px;
     height: 100%;
-    box-sizing: border-box;
 
     &::before, &::after {
       content: '';
