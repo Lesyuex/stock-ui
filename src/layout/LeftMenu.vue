@@ -57,8 +57,7 @@ export default {
           ]
         },
         {name: '自选', path: '/self-collect', icon: 'el-icon-star-on'},
-        {name: '测试', path: '/test-page', icon: 'el-icon-toilet-paper'},
-        {name: '测试2', path: '/test-page-flex', icon: 'el-icon-toilet-paper'}
+        {name: '测试', path: '/test-page', icon: 'el-icon-toilet-paper'}
       ]
     }
   },

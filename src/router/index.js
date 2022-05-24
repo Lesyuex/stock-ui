@@ -13,7 +13,7 @@ export default new Router({
         {
           path: '/stock-home',
           name: 'Home',
-          component: () => import('../view/stock/Home')
+          component: () => import('../view/stock/Index')
         },
         {
           path: '/self-collect',
@@ -24,11 +24,6 @@ export default new Router({
           path: '/test-page',
           name: 'TestPage',
           component: () => import('../view/stock/Index')
-        },
-        {
-          path: '/test-page-flex',
-          name: 'Test2',
-          component: () => import('../view/test/Test2')
         }
       ]
     }

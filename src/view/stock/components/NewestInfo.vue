@@ -208,7 +208,7 @@ export default {
       flex: 1;
       min-width: 140px;
       box-sizing: border-box;
-      font-size: 12px;
+      font-size: 14px;
 
       &:nth-child(5), &:nth-child(10), &:nth-child(15) {
         padding-right: 0;

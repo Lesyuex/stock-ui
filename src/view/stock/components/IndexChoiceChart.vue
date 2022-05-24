@@ -124,7 +124,7 @@ export default {
     getMinutesData () {
       const that = this
       this.$axiosGet(`/stock/get/minutes/2/${this.marketCode}`).then(res => {
-        that.stock = Object.assign({marketCode:this.marketCode},res.data)
+        that.stock = Object.assign({marketCode: this.marketCode}, res.data)
       }).finally(() => {
         this.$refs[this.comInfo.kname].loadingData = false
         if (this.timer) {
