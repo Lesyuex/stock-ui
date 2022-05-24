@@ -1,6 +1,6 @@
 <template>
   <div class="plate-wrap">
-    <h2 class="title-wrap">领涨板块</h2>
+    <h3 class="title-wrap">领涨板块</h3>
     <div class="increase-wrap">
       <div
         class="plate-box"
@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <h2 class="title-wrap">领跌板块</h2>
+    <h3 class="title-wrap">领跌板块</h3>
     <div class="unincrease-wrap">
       <div
         class="plate-box"
@@ -78,7 +78,7 @@ export default {
   border-radius: 5px;
 
   .title-wrap {
-
+    font-size: 18px;
     line-height: 30px;
   }
 
