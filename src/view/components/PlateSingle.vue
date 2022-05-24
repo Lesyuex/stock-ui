@@ -9,10 +9,12 @@
         <div class="tac plate">{{ item.name }}</div>
         <div class="tac plate-percent" :style="getTextStyle(item.percent)">{{ item.percent.toFixed(2) }}%</div>
         <div class="tac stock">
-          {{ item.leadUpName }} &nbsp;
-          <span :style="getTextStyle(item.leadUpPercent)">
-            {{ item.leadUpPercent > 0 ? `+${item.leadUpPercent.toFixed(2)}` : item.leadUpPercent.toFixed(2) }}%
-          </span>
+          {{ item.leadUpName }}
+        </div>
+        <div class="tac" :style="getTextStyle(item.leadUpPercent)">
+          {{ item.leadUpPrice.toFixed(2)}}
+          &nbsp;
+          {{ item.leadUpPercent > 0 ? `+${item.leadUpPercent.toFixed(2)}` : item.leadUpPercent.toFixed(2) }}%
         </div>
       </div>
     </div>
@@ -25,10 +27,12 @@
         <div class="tac plate">{{ item.name }}</div>
         <div class="tac plate-percent" :style="getTextStyle(item.percent)">{{ item.percent.toFixed(2) }}%</div>
         <div class="tac stock">
-          {{ item.leadDownName }} &nbsp;
-          <span :style="getTextStyle(item.leadDownPercent)">
-            {{ item.leadDownPercent > 0 ? `+${item.leadDownPercent.toFixed(2)}` : item.leadDownPercent.toFixed(2) }}%
-          </span>
+          {{ item.leadDownName }}
+        </div>
+        <div class="tac" :style="getTextStyle(item.leadDownPercent)">
+          {{ item.leadDownPrice.toFixed(2)}}
+          &nbsp;
+          {{ item.leadDownPercent > 0 ? `+${item.leadDownPercent.toFixed(2)}` : item.leadDownPercent.toFixed(2) }}%
         </div>
       </div>
     </div>
@@ -98,7 +102,7 @@ export default {
       display: flex;
       justify-content: space-around;
       flex-direction: column;
-      background-color: #21304b;
+      background-color: #1e2b42;
 
       &:nth-child(2), &:nth-child(5) {
         margin-left: 8px;
@@ -110,7 +114,7 @@ export default {
         color: ghostwhite;
       }
       .plate-percent{
-        font-size: 1.5em;
+        font-size: 1.4em;
       }
       .stock{
         color: #ccc;
