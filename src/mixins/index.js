@@ -1,4 +1,4 @@
-export const opentimerOpen = {
+export const openTimer = {
   data () {
     return {
       timerIsOpen: false,
@@ -42,4 +42,4 @@ export const opentimerOpen = {
     this.$bus.$off(`${componentKey}StartRequest`)
   }
 }
-export default opentimerOpen
+export default openTimer
