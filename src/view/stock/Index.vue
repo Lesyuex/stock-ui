@@ -12,14 +12,14 @@
 <!--        <market/>-->
       </c-col>
       <c-col :span="12" :sm="24" md="8" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
-        <funding-detail/>
+        <contain-stock/>
       </c-col>
       <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 8px;">
 
         <count-view/>
       </c-col>
       <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 6px;">
-        <contain-stock/>
+        <funding-detail/>
       </c-col>
     </c-row>
   </v-card>
