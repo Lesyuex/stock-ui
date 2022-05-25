@@ -5,7 +5,7 @@
         <index-choice-chart :marketCode="marketCode"/>
       </c-col>
       <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 8px;">
-        <plate-single></plate-single>
+        <count-view/>
       </c-col>
       <c-col :span="12" :sm="24" md="8" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
         <over-view></over-view>
@@ -15,8 +15,7 @@
         <contain-stock/>
       </c-col>
       <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 8px;">
-
-        <count-view/>
+        <plate-single></plate-single>
       </c-col>
       <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 6px;">
         <funding-detail/>
