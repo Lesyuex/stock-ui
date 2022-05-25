@@ -75,7 +75,6 @@
         <span>换手率</span><span>{{ stock.turnoverRate }}%</span>
       </div>
 
-
       <div class="box-wrap">
         <span>外盘</span><span>{{ out }}手</span>
       </div>
