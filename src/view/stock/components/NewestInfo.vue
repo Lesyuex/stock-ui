@@ -2,7 +2,7 @@
   <div class="main-wrap">
     <div class="title-wrap">
       <div class="single-wrap">
-        <span class="fs18 fw700">{{ stock.name }}</span>
+        <span style="font-size: 18px;font-weight: 700" class="fs18 fw700">{{ stock.name }}</span>
         <img src="../../../assets/nation/china.png" alt="123"/>
         <span class="fs14 marginL6 fw500">{{ stock.marketCode }}</span>
       </div>
