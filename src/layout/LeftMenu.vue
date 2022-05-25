@@ -75,17 +75,11 @@ export default {
 </script>
 
 <style scoped lang="less">
-ul {
-
-  list-style: none;
-  font-size: 18px;
-}
-
 .menu {
+  font-size: 18px;
   .menu-item {
     padding: 0 20px;
     line-height: 56px;
-    color: #adb4c2;
     cursor: pointer;
     transition: .3s;
     i {

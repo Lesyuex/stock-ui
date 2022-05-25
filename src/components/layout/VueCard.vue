@@ -22,19 +22,5 @@ export default {
   display: block;
   clear: both;
 }
-.card-wrap::-webkit-scrollbar{
-  width:4px;
-}
-/*定义滚动条*/
-.card-wrap::-webkit-scrollbar-thumb {
-   border-radius:4px;
-  -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
-   background: white;
- }
-/*定义滚动条轨道*/
-.card-wrap::-webkit-scrollbar-track {
-   -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
-   border-radius: 0;
-   background: rgba(0, 0, 0, 0.2);
- }
+
 </style>

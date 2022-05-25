@@ -4,7 +4,7 @@
       <tooltip-menu v-if="collapse" ref="asideMenu"/>
       <left-menu v-else ref="asideMenu"/>
     </gz-aside>
-    <gz-container style="background-color: #142033" id="content-wrap">
+    <gz-container style="background-color: #1a1d2b" id="content-wrap">
       <gz-header>
         <right-header ref="header" @menuVisible="menuVisible" :collapse="collapse"></right-header>
       </gz-header>
@@ -63,6 +63,6 @@ export default {
 </script>
 <style>
 #content-wrap{
-  min-width: 584px;
+  min-width: 420px;
 }
 </style>

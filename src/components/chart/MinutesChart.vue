@@ -150,10 +150,10 @@ export default {
           formatter: tooltipFormatter
         },
         axisPointer: {
-          show: true,
+          show: false,
           triggerTooltip: false,
           lineStyle: {
-            type: 'solid'
+            // type: 'solid'
           },
           // x轴或者y轴联动
           link: [
@@ -202,7 +202,10 @@ export default {
               show: false
             },
             axisPointer: {
-              show: true
+              show: true,
+              label: {
+                show: false
+              }
             },
             data: this.defaultOption.xData
           },

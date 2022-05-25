@@ -44,7 +44,6 @@ export default {
             name: '',
             type: 'pie',
             radius: '50%',
-            startAngle: 270,
             center: ['55%', '50'],
             data: this.pieData,
             label: {
@@ -57,8 +56,8 @@ export default {
                 color: '#ccc'
               },
               smooth: 0.2,
-              length: 5,
-              length2: 10
+              length: 15,
+              length2: 15
             },
             emptyCircleStyle: {
               color: '#161a23'

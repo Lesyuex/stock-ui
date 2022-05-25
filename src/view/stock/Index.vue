@@ -1,24 +1,24 @@
 <template>
   <v-card>
     <c-row>
-      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
+      <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 8px;">
         <index-choice-chart :marketCode="marketCode"/>
       </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
+      <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 8px;">
         <count-view/>
       </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
+      <c-col :span="12" :sm="24" md="8" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
         <over-view></over-view>
 <!--        <market/>-->
       </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
+      <c-col :span="12" :sm="24" md="8" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
         <funding-detail/>
       </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
+      <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 8px;">
         <plate-single></plate-single>
 
       </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 6px;">
+      <c-col :span="12" :sm="24" md="8" :lg="8" style="padding: 0 4px;margin-top: 6px;">
         <contain-stock/>
       </c-col>
     </c-row>

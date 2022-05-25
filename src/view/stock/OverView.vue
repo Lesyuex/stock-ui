@@ -100,6 +100,7 @@ export default {
 .carousel-wrap {
   height: 486px;
   box-sizing: border-box;
+  color: #ffffff !important;
   .main-stocks-wrap {
     height: 100%;
 
@@ -114,7 +115,7 @@ export default {
       width: calc(50% - 4px);
       height: calc((100% - 24px) / 4);
       cursor: pointer;
-      color: #ffffff;
+
       text-align: center;
       background-color: #42b983;
 

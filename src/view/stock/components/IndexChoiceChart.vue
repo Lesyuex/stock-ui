@@ -141,7 +141,7 @@ export default {
 <style scoped lang="less">
 .minutes-wrap {
   height: 486px;
-  background-color: #1e2d44;
+  background-color: #1e2b42;
   border-radius: 5px;
   box-shadow: 0 0 5px #181818;
   &:before, &:after {
@@ -157,7 +157,7 @@ export default {
   }
 
   .info-wrap {
-    height: 110px;
+    height: 130px;
   }
   .nav-wrap{
     height: 40px;
@@ -199,7 +199,7 @@ export default {
   }
   .chart-wrap {
     padding: 0 8px;
-    height: 324px;
+    height: 300px;
   }
 
 }

@@ -15,65 +15,41 @@
       <el-link :underline="false" class="collect-btn fs12" @click="collectStock">+自选</el-link>
     </div>
     <div class="detail-wrap">
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>今开</span><span>{{ stock.todayOpenPrice }}</span>
-        </div>
-        <div class="box-wrap">
-          <span>昨收</span><span>{{ stock.yesterdayPrice }}</span>
-        </div>
-      </div>
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>最高</span><span>{{ stock.highest }}</span>
-        </div>
-        <div class="box-wrap">
-          <span>最低</span><span>{{ stock.lowest.toFixed(2) }}</span>
-        </div>
-      </div>
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>涨停价</span><span>{{ stock.dailyLimitPrice === -1 ? '0' : stock.dailyLimitPrice }}</span>
-        </div>
-        <div class="box-wrap">
-          <span>跌停价</span><span>{{ stock.limitDownPrice === -1 ? '0' : stock.limitDownPrice }}</span>
-        </div>
+      <div class="box-wrap">
+        <span>今开</span><span>{{ stock.todayOpenPrice }}</span>
       </div>
 
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>成交量</span><span>{{ volume }}</span>
-        </div>
-        <div class="box-wrap">
-          <span>成交额</span><span>{{ turnOver }}亿</span>
-        </div>
+      <div class="box-wrap">
+        <span>最高</span><span>{{ stock.highest }}</span>
       </div>
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>内盘</span><span>{{ inner }}手</span>
-        </div>
-        <div class="box-wrap">
-          <span>外盘</span><span>{{ out }}手</span>
-        </div>
+      <div class="box-wrap">
+        <span>涨停价</span><span>{{ stock.dailyLimitPrice === -1 ? '0' : stock.dailyLimitPrice }}</span>
+      </div>
+      <div class="box-wrap">
+        <span>成交量</span><span>{{ volume }}</span>
       </div>
 
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>换手率</span><span>{{ stock.turnoverRate }}%</span>
-        </div>
+      <div class="box-wrap">
+        <span>昨收</span><span>{{ stock.yesterdayPrice }}</span>
       </div>
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>振幅</span><span>{{ stock.amplitude }}%</span>
-        </div>
+      <div class="box-wrap">
+        <span>最低</span><span>{{ stock.lowest.toFixed(2) }}</span>
       </div>
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>均价</span><span>{{ stock.averagePrice }}</span>
-        </div>
+      <div class="box-wrap">
+        <span>跌停价</span><span>{{ stock.limitDownPrice === -1 ? '0' : stock.limitDownPrice }}</span>
       </div>
-      <div class="stock-info">
-        <div class="box-wrap">
+
+      <div class="box-wrap">
+        <span>成交额</span><span>{{ turnOver }}亿</span>
+      </div>
+
+      <div class="box-wrap">
+        <span>内盘</span><span>{{ inner }}手</span>
+      </div>
+      <div class="box-wrap">
+        <span>均价</span><span>{{ stock.averagePrice }}</span>
+      </div>
+      <div class="box-wrap">
           <span>市盈
               <el-popover
                 placement="right"
@@ -93,14 +69,23 @@
                 <span slot="reference"><i class="el-icon-info" style="cursor: pointer"/></span>
               </el-popover>
         </span>
-          <span>{{ pe.peRate }}</span>
-        </div>
+        <span>{{ pe.peRate }}</span>
       </div>
-      <div class="stock-info">
-        <div class="box-wrap">
-          <span>总市值</span>
-          <span>{{ (stock.marketValue * 1).toFixed(2) }}亿</span>
-        </div>
+      <div class="box-wrap">
+        <span>换手率</span><span>{{ stock.turnoverRate }}%</span>
+      </div>
+
+
+      <div class="box-wrap">
+        <span>外盘</span><span>{{ out }}手</span>
+      </div>
+
+      <div class="box-wrap">
+        <span>振幅</span><span>{{ stock.amplitude }}%</span>
+      </div>
+      <div class="box-wrap">
+        <span>总市值</span>
+        <span>{{ stock.marketValue.toFixed(0) }}亿</span>
       </div>
     </div>
 
@@ -199,30 +184,19 @@ export default {
 
   .detail-wrap {
     float: left;
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-    max-height: 60px;
-    overflow: hidden;
-    .stock-info {
-      flex: 1;
-      min-width: 140px;
+    width: 100%;
+
+    .box-wrap {
+      float: left;
+      width: 25%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 12px;
       box-sizing: border-box;
-      font-size: 14px;
+      font-size: 13px;
 
-      &:nth-child(5), &:nth-child(10), &:nth-child(15) {
-        padding-right: 0;
-      }
-
-      .box-wrap {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 12px;
-        box-sizing: border-box;
-
-        > span {
-          line-height: 20px;
-        }
+      > span {
+        line-height: 20px;
       }
     }
   }

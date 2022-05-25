@@ -24,6 +24,6 @@ export default {
 <style scoped>
   aside{
     height: 100vh;
-    background-color:  #1e2d44;
+    background-color:  #1e2b42;
   }
 </style>

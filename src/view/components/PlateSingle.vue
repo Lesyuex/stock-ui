@@ -12,9 +12,9 @@
           {{ item.leadUpName }}
         </div>
         <div class="tac" :style="getTextStyle(item.leadUpPercent)">
-          {{ item.leadUpPrice.toFixed(2)}}
+          {{ item.leadUpPrice | toFixedTwo}}
           &nbsp;
-          {{ item.leadUpPercent > 0 ? `+${item.leadUpPercent.toFixed(2)}` : item.leadUpPercent.toFixed(2) }}%
+          {{ item.leadUpPercent | toFixedTwo }}%
         </div>
       </div>
     </div>
@@ -30,9 +30,9 @@
           {{ item.leadDownName }}
         </div>
         <div class="tac" :style="getTextStyle(item.leadDownPercent)">
-          {{ item.leadDownPrice.toFixed(2)}}
+          {{ item.leadDownPrice | toFixedTwo}}
           &nbsp;
-          {{ item.leadDownPercent > 0 ? `+${item.leadDownPercent.toFixed(2)}` : item.leadDownPercent.toFixed(2) }}%
+          {{ item.leadDownPercent | toFixedTwo }}%
         </div>
       </div>
     </div>
@@ -111,7 +111,7 @@ export default {
 
       .plate {
         font-size: 1.2em;
-        color: ghostwhite;
+        color: #dfdfe5;
       }
       .plate-percent{
         font-size: 1.4em;

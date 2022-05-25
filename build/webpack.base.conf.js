@@ -32,7 +32,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json','.less'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
@@ -84,10 +84,12 @@ module.exports = {
           symbolId: 'icon-[name]'
         }
       },
+      //添加部分-----------start---------------------------------
       {
+        // 此种方法在控制台中标签样式显示的是style标签样式
         test: /\.less$/,
         loader: "style-loader!css-loader!less-loader",
-      }
+      },
     ]
   },
   node: {

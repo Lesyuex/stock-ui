@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import VueCard from './components/layout/VueCard'
@@ -13,6 +11,9 @@ import store from './store'
 import '@/icons'
 import {axiosGet, axiosPost, axiosPostWithFile} from './util/axios'
 import * as echarts from 'echarts'
+import * as allFilters from './util/filters'
+Object.keys(allFilters).forEach(key => Vue.filter(key, allFilters[key]))
+
 Vue.use(ElementUI)
 
 const bus = new Vue()
@@ -28,9 +29,9 @@ Vue.component('g-col', GCol)
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
   store,
-  components: { App },
-  template: '<App/>'
-})
+  render (createElement, context) {
+    return createElement(App)
+  }
+}).$mount('#app')
