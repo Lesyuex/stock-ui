@@ -1,12 +1,12 @@
 <template>
-  <section class="gz-container" :class="{ 'is-vertical': isVertical }">
+  <section class="c-container" :class="{ 'is-vertical': isVertical }">
     <slot/>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'GzContainer',
+  name: 'Container',
   computed: {
     isVertical () {
       if (this.direction === 'vertical') {
@@ -17,7 +17,7 @@ export default {
       return this.$slots && this.$slots.default
         ? this.$slots.default.some(vnode => {
           const tag = vnode.componentOptions && vnode.componentOptions.tag
-          return tag === 'gz-header' || tag === 'gz-footer'
+          return tag === 'c-header' || tag === 'c-footer'
         })
         : false
     }
@@ -26,13 +26,12 @@ export default {
 </script>
 
 <style scoped lang="less">
-.gz-container {
+.c-container {
   display: flex;
   flex: 1;
   flex-basis: auto;
   box-sizing: border-box;
   background-color: #1e2d44;
-  min-width: 0;
 }
 .is-vertical{
   flex-direction: column;

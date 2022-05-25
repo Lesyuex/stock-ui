@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <c-card>
     <c-row>
       <c-col :span="12" :sm="24" md="12" :lg="8">
         1
@@ -11,7 +11,7 @@
       3
       </c-col>
     </c-row>
-  </v-card>
+  </c-card>
 
 <!--  <div class="stock">
     <div class="minu">
@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import VueCard from '../../components/layout/VueCard'
-import CRow from '../../components/layout/c-row'
-import CCol from '../../components/layout/c-col'
+import VueCard from '../../components/card/Card'
+import CRow from '../../components/grid/Row'
+import CCol from '../../components/grid/Col'
 export default {
   name: 'Test2',
   components: {

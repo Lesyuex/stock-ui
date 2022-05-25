@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <c-card>
     <g-row>
       <g-col sm="24" md="10" class="marginT8">
         <index-choice-chart :marketCode="marketCode"/>
@@ -26,7 +26,7 @@
 
       </g-col>
     </g-row>
-  </v-card>
+  </c-card>
 </template>
 
 <script>

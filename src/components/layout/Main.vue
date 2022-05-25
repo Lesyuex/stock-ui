@@ -1,21 +1,19 @@
 <template>
-  <main class="gz-main">
+  <main class="c-main">
     <slot></slot>
   </main>
 </template>
 
 <script>
 export default {
-  name: 'GzMain'
+  name: 'Main'
 }
 </script>
 
 <style scoped>
-.gz-main {
-  display: block;
+.c-main {
   flex: 1;
   flex-basis: auto;
-  overflow: auto;
   box-sizing: border-box;
 }
 </style>

@@ -28,10 +28,18 @@ export default {
       }
     }
   },
+  beforeDestroy () {
+    this.$bus.$off('resizeChart')
+  },
   mounted () {
+    this.$bus.$on('resizeChart', () => {
+      this.$nextTick(() => {
+        this.resize()
+      })
+    })
     if (!this.chart) {
       if (!Object.hasOwnProperty('animation')) {
-        // this.options.animation = false
+        this.options.animation = false
       }
       this.drawChart(this.options)
     }
@@ -46,7 +54,7 @@ export default {
       if (!that.chart && this.$refs['chart']) {
         that.chart = that.$echarts.init(this.$refs['chart'], null, {
           renderer: 'svg',
-          devicePixelRatio: 2.5
+          devicePixelRatio: 2
         })
       }
       if (that.chart) {

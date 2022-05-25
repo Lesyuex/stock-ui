@@ -62,7 +62,7 @@
   </div>
 </template>
 <script>
-import VueCard from '../components/layout/VueCard'
+import VueCard from '../components/card/Card'
 import VueDialogModal from '../components/dialog/MinuChartDialog'
 import PinyinMatch from 'pinyin-match'
 
@@ -141,7 +141,6 @@ export default {
 <style scoped lang="less">
 
 .header-wrap {
-  width: 100%;
   height: 40px;
   border-radius: 5px;
   background-color: #1e2d44;

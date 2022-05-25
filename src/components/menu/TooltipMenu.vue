@@ -47,7 +47,7 @@ export default {
   },
   mounted () {
     this.$nextTick(function () {
-      initMenu()
+      initMenu(true)
     })
   },
   methods: {

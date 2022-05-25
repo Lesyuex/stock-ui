@@ -1,14 +1,14 @@
 <template>
-  <aside class="gz-aside">
+  <aside class="c-aside">
     <slot/>
   </aside>
 </template>
 
 <script>
-import LeftMenu from './LeftMenu'
-import TooltipMenu from '../components/menu/TooltipMenu'
+import LeftMenu from '../../layout/LeftMenu'
+import TooltipMenu from '../menu/TooltipMenu'
 export default {
-  name: 'GzAside',
+  name: 'Aside',
   components: {
     LeftMenu,
     TooltipMenu

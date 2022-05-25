@@ -35,7 +35,7 @@
 
 <script>
 import moment from 'moment'
-import VueCard from '../../components/layout/VueCard'
+import VueCard from '../../components/card/Card'
 import VueDialogModal from '../../components/dialog/MinuChartDialog'
 import openTimer from '../../mixins'
 export default {

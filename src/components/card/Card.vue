@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-  name: 'VueCard'
+  name: 'Card'
 }
 </script>
 <style scoped>

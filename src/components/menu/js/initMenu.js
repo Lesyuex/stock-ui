@@ -1,5 +1,5 @@
 
-export default function () {
+export default function (isTooltipMenu = false) {
   const styleSheet = document.styleSheets
   // 查询到所有父菜单
   const submenuTitleList = document.getElementsByClassName('submenu_title')
@@ -39,7 +39,9 @@ export default function () {
     }
     const handle = function (menu, open) {
       open === 'true' ? showMenu(menu) : hideMenu(menu)
-      showTip(open)
+      if (!isTooltipMenu) {
+        showTip(open)
+      }
     }
     handle(menu, open)
     title.addEventListener('click', function () {

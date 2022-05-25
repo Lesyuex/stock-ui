@@ -33,10 +33,10 @@
         <span>昨收</span><span>{{ stock.yesterdayPrice }}</span>
       </div>
       <div class="box-wrap">
-        <span>最低</span><span>{{ stock.lowest.toFixed(2) }}</span>
+        <span>最低</span><span>{{ stock.lowest | toFixedTwo }}</span>
       </div>
       <div class="box-wrap">
-        <span>跌停价</span><span>{{ stock.limitDownPrice === -1 ? '0' : stock.limitDownPrice }}</span>
+        <span>跌停价</span><span>{{ stock.limitDownPrice | toFixedTwo}}</span>
       </div>
 
       <div class="box-wrap">
@@ -47,7 +47,7 @@
         <span>内盘</span><span>{{ inner }}手</span>
       </div>
       <div class="box-wrap">
-        <span>均价</span><span>{{ stock.averagePrice }}</span>
+        <span>均价</span><span>{{ stock.averagePrice | toFixedTwo }}</span>
       </div>
       <div class="box-wrap">
           <span>市盈
@@ -72,7 +72,7 @@
         <span>{{ pe.peRate }}</span>
       </div>
       <div class="box-wrap">
-        <span>换手率</span><span>{{ stock.turnoverRate }}%</span>
+        <span>换手率</span><span>{{ stock.turnoverRate | toFixedTwo}}%</span>
       </div>
 
       <div class="box-wrap">
@@ -190,7 +190,7 @@ export default {
       width: 25%;
       display: flex;
       justify-content: space-between;
-      padding: 0 12px;
+      padding: 0  12px 1px 12px;
       box-sizing: border-box;
       font-size: 13px;
 

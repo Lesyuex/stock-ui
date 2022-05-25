@@ -1,12 +1,12 @@
 <template>
-  <header class="gz-header" :style="{ height,padding: '8px 8px 0 8px' }">
+  <header class="c-header" :style="{ height,padding: '8px 8px 0 8px' }">
     <slot/>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'GzHeader',
+  name: 'Header',
   props: {
     height: {
       type: String,

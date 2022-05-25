@@ -1,31 +1,27 @@
 <template>
-  <div class="g-row">
-    <slot></slot>
-  </div>
+<div class="c-row">
+  <slot/>
+</div>
 </template>
 
 <script>
 export default {
-  name: 'GRow'
+  name: 'Row'
 }
 </script>
 
 <style scoped lang="less">
-.g-row {
+.c-row{
   position: relative;
-  width: 100%;
   /*清除浮动*/
   &::before, &::after {
-    content: '';
-    display: table;
+    content: "";
+    display: block;
     clear: both;
   }
-  *{
-    box-sizing: border-box;
-  }
-  >div{
-    /*使用float布局*/
+  .c-col{
     float: left;
+    box-sizing: border-box;
   }
 }
 </style>
