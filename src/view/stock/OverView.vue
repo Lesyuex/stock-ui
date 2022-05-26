@@ -5,7 +5,7 @@
         <div class="main-stocks-wrap">
           <div
             v-for="(item) in arr"
-            :class="{'stock-single-info':true,'green-class':item.upDownValue<0,'red-class':item.upDownValue>0,'default-class':item.upDownValue===0}"
+            :class="getClass(item)"
             :key="item.code"
             @click="checkStock(item.marketCode)">
             <div class="title-wrap fs13">{{ item.name }}</div>
@@ -55,6 +55,16 @@ export default {
     this.getSingleInfo()
   },
   methods: {
+    getClass (item) {
+      const value = Number(item.upDownValue)
+      console.log(value)
+      return {
+        'stock-single-info': true,
+        'green-class': value < 0,
+        'red-class': value > 0,
+        'default-color': value === 0
+      }
+    },
     refreshData () {
       this.getSingleInfo()
     },
@@ -101,6 +111,7 @@ export default {
   height: 486px;
   box-sizing: border-box;
   color: #ffffff !important;
+
   .main-stocks-wrap {
     height: 100%;
 
@@ -152,13 +163,15 @@ export default {
         justify-content: center;
         align-items: center;
         color: white;
+
         &.title-wrap, &.updown-wrap {
           height: 30%;
         }
 
         &.index-wrap {
           height: 40%;
-          i{
+
+          i {
             color: white;
           }
         }
@@ -171,11 +184,13 @@ export default {
   }
 
   .green-class {
-    background: linear-gradient(to bottom, #1d9a63, 100%, #161a23);
+    background-color: #1d9a63;
+    // background: linear-gradient(to bottom, #1d9a63, 100%, #161a23);
   }
 
   .red-class {
-    background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
+    background-color: #ef4257;
+    // background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
   }
 
   /deep/ .el-carousel__container {
