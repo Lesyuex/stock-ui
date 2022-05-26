@@ -151,13 +151,16 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-
+        color: white;
         &.title-wrap, &.updown-wrap {
           height: 30%;
         }
 
         &.index-wrap {
           height: 40%;
+          i{
+            color: white;
+          }
         }
       }
     }
