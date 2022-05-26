@@ -28,7 +28,7 @@
       </ul>
     </div>
     <c-row style="height: 100%;">
-      <c-col :md="comInfo.code === '1' ? 20 :24" style="height: 100%;">
+      <c-col :span="comInfo.code === '1' ? 20 :24" style="height: 100%;">
         <div class="chart-wrap">
           <keep-alive>
             <component :is="comInfo.com" :stock="stock" :marketCode="marketCode" :comInfo="comInfo"
@@ -36,7 +36,7 @@
           </keep-alive>
         </div>
       </c-col>
-      <c-col :md="4" v-if="comInfo.code === '1'">
+      <c-col :span="4" v-if="comInfo.code === '1'">
         <handicap :stock="stock" :marketCode="marketCode"/>
       </c-col>
     </c-row>
