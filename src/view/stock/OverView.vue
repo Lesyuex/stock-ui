@@ -58,12 +58,17 @@ export default {
     getClass (item) {
       const value = Number(item.upDownValue)
       console.log(value)
-      return {
-        'stock-single-info': true,
-        'green-class': value < 0,
-        'red-class': value > 0,
-        'default-color': value === 0
+      const classList = ['stock-single-info']
+      let color
+      if (value > 0) {
+        color = 'red-color'
+      } else if (value < 0) {
+        color = 'green-color'
+      } else {
+        color = 'default-color'
       }
+      classList.push(color)
+      return classList
     },
     refreshData () {
       this.getSingleInfo()
@@ -126,10 +131,7 @@ export default {
       width: calc(50% - 4px);
       height: calc((100% - 24px) / 4);
       cursor: pointer;
-
       text-align: center;
-      background-color: #42b983;
-
       &:nth-child(-n+6) {
         margin-bottom: 8px;
       }
@@ -176,23 +178,22 @@ export default {
           }
         }
       }
+
+    }
+    .default-color {
+      background-color: lightgray;
+    }
+
+    .green-color {
+      background-color: #1d9a63 !important;
+      // background: linear-gradient(to bottom, #1d9a63, 100%, #161a23);
+    }
+
+    .red-color {
+      background-color: #ef4257 !important;
+      // background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
     }
   }
-
-  .default-color {
-    background-color: lightgray;
-  }
-
-  .green-class {
-    background-color: #1d9a63;
-    // background: linear-gradient(to bottom, #1d9a63, 100%, #161a23);
-  }
-
-  .red-class {
-    background-color: #ef4257;
-    // background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
-  }
-
   /deep/ .el-carousel__container {
     height: 100% !important;
   }

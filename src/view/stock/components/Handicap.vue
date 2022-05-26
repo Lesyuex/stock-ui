@@ -106,11 +106,10 @@ export default {
         })
         this.mingxiArr = res.data
       }).finally(() => {
-        if (this.timer) {
-          window.clearTimeout(that.timer)
-          that.timer = setTimeout(function () {
+        if (this.timerIsOpen) {
+          setTimeout(function () {
             that.refreshData()
-          }, 2000)
+          }, 3000)
         }
       })
     },
@@ -134,7 +133,7 @@ export default {
     getMarkColor (mark) {
       return mark === 'M' ? 'gray' : (mark === 'B' ? '#ee4957' : '#01d078')
     },
-    getPriceColor (price) {
+    getPriceColor () {
       return this.stock.upDownValue === 0 ? 'gray' : (this.stock.upDownValue > 0 ? '#9b3038' : '#049155')
     }
   }

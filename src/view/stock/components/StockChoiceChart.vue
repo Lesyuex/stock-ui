@@ -132,10 +132,8 @@ export default {
       this.$axiosGet(`/stock/get/minutes/1/${this.marketCode}`).then(res => {
         that.stock = res.data
       }).finally(() => {
-        this.$nextTick(function () {
-          this.$refs[this.comInfo.kname].loadingData = false
-        })
-        if (this.timer) {
+        this.$refs[this.comInfo.kname].loadingData = false
+        if (this.timerIsOpen) {
           window.clearTimeout(that.timer)
           that.timer = setTimeout(function () {
             that.refreshData()
