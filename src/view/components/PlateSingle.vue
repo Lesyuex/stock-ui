@@ -110,11 +110,11 @@ export default {
       }
 
       .plate {
-        font-size: 14px;
+        font-size: 16px;
         color: #dfdfe5;
       }
       .plate-percent{
-        font-size: 16px;
+        font-size: 18px;
       }
       .stock{
         color: #ccc;
