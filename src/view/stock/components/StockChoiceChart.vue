@@ -27,19 +27,19 @@
         </li>
       </ul>
     </div>
-    <g-row style="height: 100%;">
-      <g-col :md="comInfo.code === '1' ? 20 :24" style="height: 100%;">
+    <c-row style="height: 100%;">
+      <c-col :md="comInfo.code === '1' ? 20 :24" style="height: 100%;">
         <div class="chart-wrap">
           <keep-alive>
             <component :is="comInfo.com" :stock="stock" :marketCode="marketCode" :comInfo="comInfo"
                        :ref="comInfo.kname" :refName="comInfo.kname"/>
           </keep-alive>
         </div>
-      </g-col>
-      <g-col :md="4" v-if="comInfo.code === '1'">
+      </c-col>
+      <c-col :md="4" v-if="comInfo.code === '1'">
         <handicap :stock="stock" :marketCode="marketCode"/>
-      </g-col>
-    </g-row>
+      </c-col>
+    </c-row>
 
   </div>
 </template>
