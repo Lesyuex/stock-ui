@@ -4,11 +4,9 @@
       <li v-for="(menu,index) in menuArr" :key="index" :class="{'menu-item':!menu.children,'submenu':menu.children}"
           @click="routeTo(menu)">
         <c-icon :name="menu.icon" :size="18" v-if="!menu.children"></c-icon>
-
         <span v-if="!menu.children">{{ menu.name }}</span>
         <div class="menu-item submenu_title" v-if="menu.children" aria-expanded="true">
           <c-icon :name="menu.icon" :size="18"></c-icon>
-<!--          <font-awesome-icon :icon="['fas',menu.icon]"/>-->
           <span>{{ menu.name }}</span>
           <i class="el-icon-arrow-up tip"></i>
         </div>
@@ -20,17 +18,6 @@
         </ul>
       </li>
     </ul>
-<!--    <submenu>
-      <template slot="title">
-        <i class="el-icon-s-grid"></i>
-        <span>板块</span>
-      </template>
-    </submenu>
-    <sub-menu2>
-      <template>
-        板块
-      </template>
-    </sub-menu2>-->
   </div>
 </template>
 

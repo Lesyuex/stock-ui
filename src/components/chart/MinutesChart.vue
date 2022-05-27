@@ -1,10 +1,11 @@
 <template>
   <div style="width: 100%;height: 100%;position: relative">
     <echarts :options="options"/>
-    <el-icon
-      v-if="loadingData"
-      class="el-icon-loading"
-      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
+    <c-icon
+      :name="'loading-one'"
+       v-if="loadingData"
+      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"
+    ></c-icon>
     <div class="select-wrap">
       {{value}}&nbsp;<i class="el-icon-caret-bottom"></i>
       <ul >
