@@ -5,10 +5,9 @@
       :name="'loading-one'"
       class="test"
       v-if="loadingData"
-      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"
-    ></c-icon>
+      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
     <div class="select-wrap">
-      {{value}}&nbsp;<i class="el-icon-caret-bottom"></i>
+      {{value}}&nbsp;<c-icon :name="'down-one'" theme="two-tone" :fill="['#ccc', '#ccc']" size="12"></c-icon>
       <ul >
         <li v-for="(item,index) in selectArr" @click="selectFn(item)" :style="{color:item === value ? '#708bf5': '#ccc'}" :key="index">{{item}}</li>
       </ul>
@@ -87,10 +86,6 @@ export default {
         market = 'hk'
       }
       return market ? this.marketOptions[market] : null
-    },
-    upDownColor () {
-      const value = this.stock.upDownValue
-      return value > 0 ? '#ee4957' : '#01d078'
     }
   },
   mounted () {
@@ -517,9 +512,10 @@ export default {
 @keyframes loading-rotate {
   from{
 
-  }to{
-  transform: rotate(360deg);
-     }
+  }
+  to{
+    transform: rotate(360deg);
+  }
 
 }
 </style>

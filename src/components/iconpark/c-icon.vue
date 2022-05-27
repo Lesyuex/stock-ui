@@ -15,25 +15,19 @@ export default {
       default: 24
     },
     fill: {
-      type: String,
+      type: [String, Array],
       default: '#ccc'
     }
   },
-  data () {
-    return {
-
-    }
-  },
-  /*   render: function (createElement) {
-    return createElement('h1', '23232')
-  } */
   render: function (h) {
     const {name, theme, size, fill} = this.$props
-    console.log(this.$props)
-    const icon = {
-      template: `<ipark-${name} theme="${theme}" size="${size}" fill="${fill}"></ipark-home>`
+    const props = {
+      theme,
+      size,
+      fill
     }
-    return h(icon)
+    const tagName = `ipark-${name}`
+    return h(tagName, {...{props}})
   }
 }
 </script>

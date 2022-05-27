@@ -16,8 +16,13 @@
     </div>
     <div class="chart-wrap">
       <keep-alive>
-        <component :is="comInfo.com" :stock="stock" :marketCode="marketCode" :comInfo="comInfo"
-                   :ref="comInfo.kname" :refName="comInfo.kname"/>
+        <component
+          :is="comInfo.com"
+          :stock="stock"
+          :marketCode="marketCode"
+          :comInfo="comInfo"
+          :ref="comInfo.kname"
+          :refName="comInfo.kname"/>
       </keep-alive>
     </div>
   </div>
@@ -114,9 +119,8 @@ export default {
         that.stock = Object.assign({marketCode: this.marketCode}, res.data)
       }).finally(() => {
         this.$refs[this.comInfo.kname].loadingData = false
-        if (this.timer) {
-          window.clearTimeout(that.timer)
-          that.timer = setTimeout(function () {
+        if (this.timerIsOpen) {
+          setTimeout(function () {
             that.refreshData()
           }, 3000)
         }
