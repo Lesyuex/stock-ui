@@ -4,7 +4,7 @@
       <tooltip-menu v-if="collapse" ref="asideMenu"/>
       <left-menu v-else ref="asideMenu"/>
     </c-aside>
-    <c-container style="background-color: #1a1d2b" id="content-wrap">
+    <c-container style="background-color: #151a22" id="content-wrap">
       <c-header>
         <right-header ref="header" @menuVisible="menuVisible" :collapse="collapse"></right-header>
       </c-header>

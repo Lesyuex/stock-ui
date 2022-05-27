@@ -101,7 +101,7 @@ export default {
   position: relative;
   height: 486px;
   border-radius: 5px;
-  background-color: #1e2b42;
+  background-color: #1a2029;
 
   .title-wrap {
     position: absolute;

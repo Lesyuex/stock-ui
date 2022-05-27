@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
+import {install} from '@icon-park/vue/es/all'
+import '@icon-park/vue/styles/index.css'
 import './components/index'
-import 'element-ui/lib/theme-chalk/index.css'
-import 'font-awesome/css/font-awesome.min.css'
 import store from './store'
 import '@/icons'
 import {axiosGet, axiosPost, axiosPostWithFile} from './util/axios'
 import * as echarts from 'echarts'
 import * as allFilters from './util/filters'
 Object.keys(allFilters).forEach(key => Vue.filter(key, allFilters[key]))
-Vue.use(ElementUI)
+Vue.use(ViewUI)
 
 const bus = new Vue()
 Vue.prototype.$bus = bus
@@ -20,7 +21,7 @@ Vue.prototype.$axiosGet = axiosGet
 Vue.prototype.$axiosPost = axiosPost
 Vue.prototype.$axiosPostWithFile = axiosPostWithFile
 Vue.config.productionTip = false
-
+install(Vue, 'ipark')
 /* eslint-disable no-new */
 new Vue({
   router,

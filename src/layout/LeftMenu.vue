@@ -3,16 +3,18 @@
     <ul class="menu">
       <li v-for="(menu,index) in menuArr" :key="index" :class="{'menu-item':!menu.children,'submenu':menu.children}"
           @click="routeTo(menu)">
-        <i :class="menu.icon" v-if="!menu.children"></i>
+        <c-icon :name="menu.icon" :size="18" v-if="!menu.children"></c-icon>
+
         <span v-if="!menu.children">{{ menu.name }}</span>
         <div class="menu-item submenu_title" v-if="menu.children" aria-expanded="true">
-          <i :class="menu.icon"></i>
+          <c-icon :name="menu.icon" :size="18"></c-icon>
+<!--          <font-awesome-icon :icon="['fas',menu.icon]"/>-->
           <span>{{ menu.name }}</span>
           <i class="el-icon-arrow-up tip"></i>
         </div>
         <ul v-if="menu.children" class="menu" style="overflow:hidden">
           <li v-for="(chil,index) in menu.children" :key="index" class="menu-item">
-            <i :class="chil.icon"></i>
+            <c-icon :name="chil.icon" :size="18"></c-icon>
             <span>{{ chil.name }}</span>
           </li>
         </ul>
@@ -45,19 +47,19 @@ export default {
   data () {
     return {
       menuArr: [
-        {name: '癌股', path: '/stock-home', icon: 'el-icon-s-platform'},
-        {name: '资金', path: '', icon: 'el-icon-coin'},
+        {name: '癌股', path: '/stock-home', icon: 'stock-market'},
+        {name: '资金', path: '', icon: 'funds'},
         {
           name: '板块',
-          icon: 'el-icon-s-grid',
+          icon: 'grid-two',
           children: [
-            {name: '行业', path: '', icon: 'el-icon-office-building'},
-            {name: '概念', path: '', icon: 'el-icon-s-opportunity'},
-            {name: '地域', path: '', icon: 'el-icon-place'}
+            {name: '行业', path: '', icon: 'shopping-mall'},
+            {name: '概念', path: '', icon: 'tips'},
+            {name: '地域', path: '', icon: 'local'}
           ]
         },
-        {name: '自选', path: '/self-collect', icon: 'el-icon-star-on'},
-        {name: '测试', path: '/test-page', icon: 'el-icon-toilet-paper'}
+        {name: '自选', path: '/self-collect', icon: 'like'},
+        {name: '测试', path: '/test-page', icon: 'experiment'}
       ]
     }
   },
@@ -76,16 +78,21 @@ export default {
 
 <style scoped lang="less">
 .menu {
+  .icon{
+    width: 25px;
+    height: 25px;
+    margin-right: 6px;
+    color:white;
+  }
   font-size: 18px;
   .menu-item {
     padding: 0 20px;
     line-height: 56px;
     cursor: pointer;
     transition: .3s;
-    i {
-      width: 24px;
+    .i-icon {
       text-align: center;
-      margin-right: 6px;
+      margin-right: 8px;
     }
 
     &:hover {
@@ -127,4 +134,5 @@ export default {
     display: none;
   }
 }
+
 </style>

@@ -78,7 +78,7 @@ export default {
   height: 486px;
   padding: 8px;
   box-sizing: border-box;
-  background-color: #1e2d44;
+  background-color: #1a2029;
   border-radius: 5px;
 
   .title-wrap {
@@ -102,7 +102,7 @@ export default {
       display: flex;
       justify-content: space-around;
       flex-direction: column;
-      background-color: #1e2b42;
+      background-color: rgba(0,0,0,.1);
 
       &:nth-child(2), &:nth-child(5) {
         margin-left: 8px;

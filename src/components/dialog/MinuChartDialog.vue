@@ -1,14 +1,12 @@
 <template>
-  <el-dialog
-    :visible.sync="dialogVisible"
-    destroy-on-close
+  <Modal
+    v-model="dialogVisible"
     width="900px"
-    height="500px"
-    :modal-append-to-body="true"
-    :append-to-body="true"
-    style="border-radius: 5px">
+    footer-hide
+    draggable>
+      <div slot="header"></div>
     <choice-chart :market-code="marketCode" v-if="dialogVisible"/>
-  </el-dialog>
+  </Modal>
 </template>
 <script>
 import ChoiceChart from '../../view/stock/components/StockChoiceChart'
@@ -30,28 +28,16 @@ export default {
 }
 </script>
 <style scoped>
-/deep/ .el-dialog{
-  background-color: #161a23 !important;
+/deep/ .ivu-modal-content{
+  background-color:   #161a23;
 }
-/deep/ .el-dialog__header,/deep/ .el-dialog__body{
-  padding: 8px;
-  background-color:  #161a23;
+/deep/ .ivu-modal-header{
+  border-bottom-color: transparent;
 }
-/deep/ .el-dialog__header{
-  padding: 0;
+/deep/ .ivu-modal-body{
+  padding: 0 8px;
 }
-/deep/ .el-dialog__header{
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-/deep/ .el-dialog__body{
-  height: 500px;
-  min-width: 625px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-/deep/ .el-dialog__headerbtn{
-  top:5px;
-  right:5px;
+/deep/ .ivu-modal-header{
+ padding: 8px 8px 12px 8px;
 }
 </style>

@@ -2,13 +2,12 @@
   <c-card>
     <c-row>
       <c-col :span="12" :sm="24" md="12" :lg="8">
-        1
+        <CIcon name="bill" :size="24"></CIcon>
       </c-col>
       <c-col :span="12" :sm="24" md="12" :lg="8">
-  2
+        <ipark-home theme="outline" size="24" fill="#333"/>
       </c-col>
       <c-col :span="12" :sm="24" md="12" :lg="8">
-      3
       </c-col>
     </c-row>
   </c-card>
@@ -30,12 +29,14 @@
 import VueCard from '../../components/card/Card'
 import CRow from '../../components/grid/Row'
 import CCol from '../../components/grid/Col'
+import CIcon from '../../components/iconpark/c-icon'
 export default {
   name: 'Test2',
   components: {
     CCol,
     VueCard,
-    CRow
+    CRow,
+    CIcon
   }
 }
 </script>

@@ -145,7 +145,7 @@ export default {
 </script>
 <style scoped lang="less">
 .funding-wrap {
-  background-color: #1e2d44;
+  background-color: #1a2029;
   height: 486px;
 
   .title-wrap {

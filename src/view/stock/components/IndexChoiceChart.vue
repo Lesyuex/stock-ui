@@ -12,19 +12,6 @@
           v-for="(choice,index) in choiceArr">
           {{ choice.name }}
         </li>
-        <li>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              更多<el-icon class="el-icon-caret-bottom"/>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-for="minu in moreChoice" :key="minu.code">{{ minu.name }}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </li>
-        <li style="float: right">
-          <el-icon class="el-icon-setting"/>
-        </li>
       </ul>
     </div>
     <div class="chart-wrap">
@@ -141,7 +128,7 @@ export default {
 <style scoped lang="less">
 .minutes-wrap {
   height: 486px;
-  background-color: #1e2b42;
+  background-color: #1a2029;
   border-radius: 5px;
   box-shadow: 0 0 5px #181818;
   &:before, &:after {

@@ -1,8 +1,8 @@
 <template>
   <div class="header-wrap">
-    <div class="left-wrap tal">
-      <i class="el-icon-s-unfold" @click="menuVisible" v-if="!collapse"></i>
-      <i class="el-icon-s-fold" @click="menuVisible" v-else></i>
+    <div class="left-wrap tal" @click="menuVisible">
+      <c-icon :name="'menu-unfold-one'" :size="26" v-if="!collapse"></c-icon>
+      <c-icon :name="'menu-fold-one'" :size="26" v-else></c-icon>
     </div>
     <div class="right-wrap">
       <div class="search-wrap">
@@ -143,7 +143,7 @@ export default {
 .header-wrap {
   height: 40px;
   border-radius: 5px;
-  background-color: #1e2d44;
+  background-color: #1a2029;
   /*清楚浮动导致父元素高度为0*/
   &::before, &::after {
     display: block;
@@ -159,10 +159,9 @@ export default {
   .left-wrap {
     float: left;
 
-    i {
-      padding: 0 12px;
+    .i-icon {
+      padding: 7px 12px;
       font-size: 26px;
-      line-height: 40px;
       cursor: pointer;
     }
   }

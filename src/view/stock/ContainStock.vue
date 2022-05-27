@@ -147,7 +147,7 @@ export default {
   height: 486px;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: #1e2d44;
+  background-color: #1a2029;
   padding: 0 4px;
   .title-wrap {
     padding: 8px;
