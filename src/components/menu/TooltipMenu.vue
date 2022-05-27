@@ -4,7 +4,7 @@
       <li v-for="(menu,index) in menuArr" :key="index" :class="{'menu-item':!menu.children,'submenu':menu.children}"
           @click="routeTo(menu)">
         <c-icon :name="menu.icon" :size="18" v-if="!menu.children"></c-icon>
-        <span class="tool-tip" v-if="!menu.children" style>
+        <span class="tool-tip" v-if="!menu.children">
         {{menu.name}}
       </span>
         <div class="menu-item submenu_title" v-if="menu.children" aria-expanded="true">
@@ -90,7 +90,7 @@ ul {
       padding: 0 10px;
       line-height: 40px;
       font-size: 12px;
-      color: #adb4c2;
+      color: #fff;
       background-color: #303133;
       border-radius: 5px;
       white-space: nowrap;

@@ -1,9 +1,10 @@
 <template>
-  <div style="width: 100%;height: 100%;position: relative">
+  <div  class="minutes-wrap">
     <echarts :options="options"/>
     <c-icon
       :name="'loading-one'"
-       v-if="loadingData"
+      class="test"
+      v-if="loadingData"
       style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"
     ></c-icon>
     <div class="select-wrap">
@@ -472,35 +473,53 @@ export default {
 }
 </script>
 <style scoped lang="less">
-.select-wrap{
-  position: absolute;
-  bottom: calc(20% + 4px);
-  width: 56px;
-  height: 18px;
-  text-align: center;
-  padding: 1px 2px;
-  box-sizing: border-box;
-  line-height: 18px;
-  color: #ccc;
-  font-size: 12px;
-  background-color: #39425b;
-  cursor: pointer;
-  border-radius: 2px;
-  z-index: 999;
-  ul{
+.minutes-wrap{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  .test{
+    animation: loading-rotate 2s linear forwards infinite;
+  }
+  .select-wrap{
     position: absolute;
-    left: 0;
-    width: 100%;
-    display: none;
-    background-color: #1b212c;
+    bottom: calc(20% + 4px);
+    width: 56px;
+    height: 18px;
+    text-align: center;
+    padding: 1px 2px;
+    box-sizing: border-box;
+    line-height: 18px;
+    color: #ccc;
+    font-size: 12px;
+    background-color: #39425b;
+    cursor: pointer;
+    border-radius: 2px;
+    z-index: 999;
 
-    li{
-      padding: 6px 2px;
-      text-align: center;
+    ul{
+      position: absolute;
+      left: 0;
+      width: 100%;
+      display: none;
+      background-color: #1b212c;
+
+      li{
+        padding: 6px 2px;
+        text-align: center;
+      }
+    }
+    &:hover ul{
+      display: block;
     }
   }
-  &:hover ul{
-    display: block;
-  }
+}
+
+@keyframes loading-rotate {
+  from{
+
+  }to{
+  transform: rotate(360deg);
+     }
+
 }
 </style>

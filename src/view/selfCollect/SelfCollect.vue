@@ -1,36 +1,7 @@
 <template>
   <vue-card>
-    <div class="my-table">
-      <el-table
-        size="small"
-        :data="tableData"
-        style="width: 100%">
-        <el-table-column
-          prop="name"
-          label="股票"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="code"
-          label="代码"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="currentPrice"
-          label="最新价"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="upDownPercent"
-          label="涨跌幅">
-          <template slot-scope="scope">
-            <el-button :type="scope.row.upDownPercent >= 0 ?'danger':'success'" size="mini">{{scope.row.upDownPercent + '%'}}</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
+    <Table :columns="columns" :data="tableData"></Table>
   </vue-card>
-
 </template>
 
 <script>
@@ -51,17 +22,14 @@ export default {
       columns: [
         {
           title: '股票',
-          dataIndex: 'name',
           key: 'name'
         },
         {
           title: '最新价',
-          dataIndex: 'currentPrice',
           key: 'currentPrice'
         },
         {
           title: '涨跌幅',
-          dataIndex: 'upDownPercent',
           key: 'upDownPercent'
         }
       ],

@@ -1,7 +1,7 @@
 <template>
   <div class="carousel-wrap">
-    <el-carousel indicator-position="none" style="background-color: transparent;height: 100%;" :autoplay="false">
-      <el-carousel-item v-for="(arr,index) in singleList" :key="index">
+    <Carousel loop dots="none" style="width: 100%;height: 100%;">
+      <CarouselItem v-for="(arr,index) in singleList" :key="index" style="width: 100%;height: 100%;">
         <div class="main-stocks-wrap">
           <div
             v-for="(item) in arr"
@@ -18,8 +18,9 @@
             <div class="updown-wrap fs12">{{ item.upDownValue }}&nbsp;{{ item.upDownPercent }}%</div>
           </div>
         </div>
-      </el-carousel-item>
-    </el-carousel>
+      </CarouselItem>
+    </Carousel>
+
   </div>
 </template>
 
@@ -194,7 +195,10 @@ export default {
       // background: linear-gradient(to bottom, #ef4257, 100%, #161a23);
     }
   }
-  /deep/ .el-carousel__container {
+  /deep/ .ivu-carousel-list {
+    height: 100% !important;
+  }
+  /deep/ .ivu-carousel-track {
     height: 100% !important;
   }
 }

@@ -133,7 +133,7 @@ export default {
 </script>
 <style scoped lang="less">
 .minutes-wrap {
-  background-color: #161a23;
+  background-color: #1a2029;
   border-radius: 5px;
   height: 600px;
   margin: 8px 4px;

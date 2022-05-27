@@ -12,7 +12,7 @@
       <div class="single-wrap">
         <span class="fs14 marginL6 fw500" :style="color">{{ valueChange }}&nbsp;&nbsp;{{ percentChange }}</span>
       </div>
-      <el-link :underline="false" class="collect-btn fs12" @click="collectStock">+自选</el-link>
+      <span class="collect-btn fs12" @click="collectStock">+自选</span>
     </div>
     <div class="detail-wrap">
       <div class="box-wrap">
@@ -36,7 +36,7 @@
         <span>最低</span><span>{{ stock.lowest | toFixedTwo }}</span>
       </div>
       <div class="box-wrap">
-        <span>跌停价</span><span>{{ stock.limitDownPrice | toFixedTwo}}</span>
+        <span>跌停价</span><span>{{ stock.limitDownPrice | toFixedTwo }}</span>
       </div>
 
       <div class="box-wrap">
@@ -51,28 +51,30 @@
       </div>
       <div class="box-wrap">
           <span>市盈
-              <el-popover
-                placement="right"
-                popper-class="peClass"
-                trigger="hover">
-                <template v-slot="content">
-                  <span>市盈<sup style="font-size: 12px;transform: scale(0.4)">TTM</sup>&nbsp;&nbsp;{{ pe.peRate }}</span>
-                  <br>
-                  <span>市盈<sup style="font-size: 12px;transform: scale(0.4)">动&nbsp;&nbsp;&nbsp;&nbsp;</sup>&nbsp;&nbsp;{{
-                      pe.dyPriceRate
-                    }}</span>
+             <Poptip trigger="hover" :title="null" placement="right">
+               <sup>
+                   <c-icon :name="'info'" size="10"></c-icon>
+               </sup>
+
+             <template v-slot:content>
+                    <span>市盈<sup style="font-size: 12px;transform: scale(0.4)">TTM</sup>&nbsp;&nbsp;{{
+                        pe.peRate
+                      }}</span>
                     <br>
-                  <span>市盈<sup style="font-size: 12px;transform: scale(0.4)">静&nbsp;&nbsp;&nbsp;&nbsp;</sup>&nbsp;&nbsp;{{
-                      pe.staPriceRate
-                    }}</span>
-                </template>
-                <span slot="reference"><i class="el-icon-info" style="cursor: pointer"/></span>
-              </el-popover>
+                    <span>市盈<sup style="font-size: 12px;transform: scale(0.4)">动&nbsp;&nbsp;&nbsp;&nbsp;</sup>&nbsp;&nbsp;{{
+                        pe.dyPriceRate
+                      }}</span>
+                      <br>
+                    <span>市盈<sup style="font-size: 12px;transform: scale(0.4)">静&nbsp;&nbsp;&nbsp;&nbsp;</sup>&nbsp;&nbsp;{{
+                        pe.staPriceRate
+                      }}</span>
+             </template>
+        </Poptip>
         </span>
         <span>{{ pe.peRate }}</span>
       </div>
       <div class="box-wrap">
-        <span>换手率</span><span>{{ stock.turnoverRate | toFixedTwo}}%</span>
+        <span>换手率</span><span>{{ stock.turnoverRate | toFixedTwo }}%</span>
       </div>
 
       <div class="box-wrap">
@@ -190,12 +192,22 @@ export default {
       width: 25%;
       display: flex;
       justify-content: space-between;
-      padding: 0  12px 1px 12px;
+      padding: 0 12px 1px 12px;
       box-sizing: border-box;
       font-size: 13px;
 
       > span {
         line-height: 20px;
+      }
+      /deep/.ivu-poptip-arrow {
+        border-right-color: #1f242a;
+        &::after{
+          border-right-color: #1f242a;
+        }
+      }
+      /deep/ .ivu-poptip-inner{
+        background-color: #1f242a;
+        color: white;
       }
     }
   }

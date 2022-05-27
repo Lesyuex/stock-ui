@@ -29,7 +29,7 @@ export default {
 </script>
 <style scoped>
 /deep/ .ivu-modal-content{
-  background-color:   #161a23;
+  background-color:   #1a2029;
 }
 /deep/ .ivu-modal-header{
   border-bottom-color: transparent;
