@@ -12,7 +12,7 @@
       <div class="single-wrap">
         <span class="fs14 marginL6 fw500" :style="color">{{ valueChange }}&nbsp;&nbsp;{{ percentChange }}</span>
       </div>
-      <span class="collect-btn fs12" @click="collectStock">+自选</span>
+      <Button type="error" @click="collectStock" size="small" class="collect-btn">加入自选</Button>
     </div>
     <div class="detail-wrap">
       <div class="box-wrap">
@@ -174,12 +174,11 @@ export default {
 
     .collect-btn {
       position: absolute;
-      right: 0;
-      top: 18px;
-      background-color: #f56c6c;
+      right: 8px;
+      top: 10px;
+      background-color: #ef4257;
       color: #fcecff;
-      border-radius: 2px;
-      padding: 3px 8px;
+      padding: 0 3px;
     }
   }
 

@@ -30,7 +30,7 @@ export default {
         hideY1Line: true,
         xAxisData: [],
         seriesData: [],
-        seriesNameArr: ['沪股通', '深股通', '北向资金'],
+        seriesNameArr: ['北向资金', '沪股通', '深股通'],
         seriesType: ['line', 'line', 'line'],
         labelShow: false,
         doubleYLine: false,
@@ -71,7 +71,6 @@ export default {
     getFormatter () {
       const s = moment().format('YYYY-MM-DD ')
       return (params) => {
-        console.log(params)
         let html = '<div>' + moment(s + params[0].axisValue).format('YYYY-MM-DD HH:mm') + '</div>'
         const value1 = params[0].value !== 'NaN' ? (params[0].value * 1).toFixed(2) : '-'
         const value2 = params[1].value !== 'NaN' ? (params[1].value * 1).toFixed(2) : '-'
@@ -106,7 +105,7 @@ export default {
           }
           s2nFoudingDiff.push(foudingDiff)
           if (foudingDiff.value) {
-            this.s2n.seriesNameArr = [`北向资金净流入:${foudingDiff.value || '-'}亿`, `沪股通净流入:${shParam.value || '-'}亿`, `深股通净流入:${szParam.value || '-'}亿`]
+            this.s2n.seriesNameArr = [`北向资金:${foudingDiff.value || '-'}亿`, `沪股通:${shParam.value || '-'}亿`, `深股通:${szParam.value || '-'}亿`]
           }
         })
         const n2sXdata = []
@@ -130,10 +129,10 @@ export default {
         })
         this.s2n.xAxisData = s2nXdata
         this.s2n.seriesData = [s2nFoudingDiff, s2nshDiff, s2nszDiff]
-        this.s2n.xAxisData = n2sXdata
-        this.s2n.seriesData = [n2sshDiff, n2sszDiff, n2sFoudingDiff]
+        this.n2s.xAxisData = n2sXdata
+        this.n2s.seriesData = [n2sshDiff, n2sszDiff, n2sFoudingDiff]
       }).finally(() => {
-        if (this.timer) {
+        if (this.timerIsOpen) {
           setTimeout(function () {
             that.getCount()
           }, 3333)

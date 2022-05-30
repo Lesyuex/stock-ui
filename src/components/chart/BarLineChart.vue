@@ -40,7 +40,7 @@ export default {
       const data = this.customOption
       this.option = {
         // 自定义系列颜色
-        color: data.color || ['#fac858', '#5485E8', '#59D7A5'],
+        // color: data.color || ['#fac858', '#5485E8', '#59D7A5'],
         title: {
           text: data.title || '',
           left: data.titleLeft || 4,

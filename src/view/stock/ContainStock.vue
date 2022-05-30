@@ -35,7 +35,7 @@
             </div>
             <!--收藏 -->
             <div class="collect-wrap">
-              <i class="el-icon-circle-plus-outline"></i>
+              <c-icon name="plus" size="24"></c-icon>
             </div>
           </div>
         </li>
