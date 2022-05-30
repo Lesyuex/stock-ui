@@ -9,7 +9,11 @@
       </div>
     </div>
     <echarts :options="options" :eventName="'globalout'" @handleEvent="handleEvent"/>
-    <el-icon class="el-icon-loading" style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px" v-if="loading"/>
+    <c-icon
+      :name="'loading-one'"
+      class="loading-data"
+      v-if="loadingData"
+      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
   </div>
 </template>
 
@@ -29,7 +33,7 @@ export default {
   },
   data () {
     return {
-      loading: true,
+      loadingData: true,
       mouseOnChart: false,
       dom: document.getElementById('spinning'),
       options: {},
@@ -599,16 +603,22 @@ export default {
           }
         ]
       }
-      this.loading = false
+      this.loadingData = false
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .k-chart {
   height: 100%;
   width: 100%;
   position: relative;
+  .loading-data{
+    position: absolute;
+    top:30%;
+    left:calc(50% - 15px);
+    font-size: 30px;
+  }
 }
 </style>

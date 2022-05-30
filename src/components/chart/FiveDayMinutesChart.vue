@@ -1,6 +1,11 @@
 <template>
   <div>
     <echarts :options="options"/>
+    <c-icon
+      :name="'loading-one'"
+      class="test"
+      v-if="loadingData"
+      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
   </div>
 </template>
 

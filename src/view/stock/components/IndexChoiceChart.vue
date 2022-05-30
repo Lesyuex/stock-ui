@@ -39,6 +39,10 @@ export default {
     marketCode: {
       type: String,
       required: true
+    },
+    name: {
+      type: String,
+      default: 'bookmark-one'
     }
   },
   components: {
@@ -99,6 +103,7 @@ export default {
   },
   mounted () {
     this.refreshData()
+    console.log(this.isCom)
   },
   methods: {
     choiceCom (choice) {
@@ -135,6 +140,7 @@ export default {
   background-color: #1a2029;
   border-radius: 5px;
   box-shadow: 0 0 5px #181818;
+
   &:before, &:after {
     content: '';
     display: block;
@@ -150,11 +156,14 @@ export default {
   .info-wrap {
     height: 130px;
   }
-  .nav-wrap{
+
+  .nav-wrap {
     height: 40px;
     padding: 0 8px;
+
     ul {
       height: 40px;
+
       li {
         float: left;
         position: relative;
@@ -188,6 +197,7 @@ export default {
       }
     }
   }
+
   .chart-wrap {
     padding: 0 8px;
     height: 300px;

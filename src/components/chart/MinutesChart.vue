@@ -3,9 +3,8 @@
     <echarts :options="options"/>
     <c-icon
       :name="'loading-one'"
-      class="test"
-      v-if="loadingData"
-      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
+      class="loading-data"
+      v-if="loadingData"/>
     <div class="select-wrap">
       {{value}}&nbsp;<c-icon :name="'down-one'" theme="two-tone" :fill="['#ccc', '#ccc']" size="12"></c-icon>
       <ul >
@@ -472,7 +471,11 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  .test{
+  .loading-data{
+    position: absolute;
+    top:30%;
+    left:calc(50% - 15px);
+    font-size: 30px;
     animation: loading-rotate 2s linear forwards infinite;
   }
   .select-wrap{
@@ -509,13 +512,4 @@ export default {
   }
 }
 
-@keyframes loading-rotate {
-  from{
-
-  }
-  to{
-    transform: rotate(360deg);
-  }
-
-}
 </style>

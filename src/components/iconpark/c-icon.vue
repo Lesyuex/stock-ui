@@ -26,8 +26,8 @@ export default {
       size,
       fill
     }
-    const tagName = `ipark-${name}`
-    return h(tagName, {...{props}})
+    // const tagName = `ipark-${name}`
+    return h(name, {...{props}})
   }
 }
 </script>
