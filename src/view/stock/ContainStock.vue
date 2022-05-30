@@ -149,101 +149,109 @@ export default {
   border-radius: 5px;
   background-color: #1a2029;
   padding: 0 4px;
+
   .title-wrap {
     padding: 8px;
     font-size: 18px;
     line-height: 30px;
   }
-.scroll-wrap{
-  height: 446px;
-  overflow: auto;
-  overflow-y: overlay;
-  &::-webkit-scrollbar{
-    width:1px;
-  }
-  /*定义滚动条*/
-  &::-webkit-scrollbar-thumb {
-    border-radius:1px;
-    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-    background: #7c7c7c;
-  }
-  /*定义滚动条轨道*/
-  &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-    border-radius: 0;
-    background: rgba(0, 0, 0, 0.2);
-  }
-  ul {
-    list-style: none;
+
+  .scroll-wrap {
+    height: 446px;
     overflow: auto;
+    overflow-y: overlay;
 
-    li {
-      position: relative;
-      height: 56px;
-      transition: .3s;
-      cursor: pointer;
-      //border-bottom: 1px solid rgba(0, 0, 0, 0);
-      .content-wrap {
-        display: flex;
-        justify-content: space-between;
+    &::-webkit-scrollbar {
+      width: 1px;
+    }
+
+    /*定义滚动条*/
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 1px;
+      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+      background: #7c7c7c;
+    }
+
+    /*定义滚动条轨道*/
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
+      border-radius: 0;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    ul {
+      list-style: none;
+      overflow: auto;
+
+      li {
+        position: relative;
+        height: 56px;
+        transition: .3s;
         cursor: pointer;
-        padding-left: 12px;
-        box-sizing: border-box;
+        //border-bottom: 1px solid rgba(0, 0, 0, 0);
+        .content-wrap {
+          display: flex;
+          justify-content: space-between;
+          cursor: pointer;
+          padding-left: 12px;
+          box-sizing: border-box;
 
-        .name-wrap {
-          position: relative;
-          flex: 6;
-        }
-
-        .change-wrap {
-          flex: 3;
-          line-height: 56px;
-          text-align: center;
-        }
-
-        .name-wrap {
-          > div {
-            &:nth-child(1) {
-              font-size: 15px;
-              line-height: 36px;
-            }
-
-            &:nth-child(2) {
-              font-size: 14px;
-              line-height: 20px;
-            }
+          .name-wrap {
+            position: relative;
+            flex: 6;
           }
 
-        }
+          .change-wrap {
+            flex: 3;
+            line-height: 56px;
+            text-align: center;
+          }
 
-        .collect-wrap {
-          flex: 2;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          .name-wrap {
+            > div {
+              &:nth-child(1) {
+                font-size: 15px;
+                line-height: 36px;
+              }
 
-          i {
-            font-size: 20px;
+              &:nth-child(2) {
+                font-size: 14px;
+                line-height: 20px;
+              }
+            }
+
+          }
+
+          .collect-wrap {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            i {
+              font-size: 20px;
+            }
           }
         }
       }
-    }
 
-    .breath-li {
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
-        background-color: rgba(0, 0, 0, .2);
-        animation: breath 1.5s linear;
+      .breath-li {
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          background-color: rgba(0, 0, 0, .2);
+          animation: breath 1.5s linear;
+        }
       }
     }
   }
-}
 
 }
 

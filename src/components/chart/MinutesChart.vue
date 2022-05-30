@@ -165,11 +165,11 @@ export default {
           {
             // show: true,
             containLabel: true,
-            top: '2%',
+            top: '5%',
             left: 'center',
             bottom: '30%',
             width: '100%',
-            height: '72%'
+            height: '70%'
           },
           {
             // show: true,
@@ -177,7 +177,7 @@ export default {
             left: 'center',
             bottom: 0,
             width: '100%',
-            height: '22%'
+            height: '20%'
           }
         ],
         xAxis: [
