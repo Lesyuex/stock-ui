@@ -113,7 +113,7 @@ export default {
           self.getMore()
         }
       }, 500)
-    },false)
+    }, false)
   },
   methods: {
     getMore () {
