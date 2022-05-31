@@ -3,6 +3,7 @@
     <c-row>
       <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
         <index-choice-chart :marketCode="marketCode"/>
+        <contain-stock/>
       </c-col>
       <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
         <count-view/>
@@ -10,9 +11,6 @@
       <c-col :span="12" :sm="24" md="12" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
         <over-view></over-view>
 <!--        <market/>-->
-      </c-col>
-      <c-col :span="12" :sm="24" md="12" :lg="8"  style="padding: 0 4px;margin-top: 8px;">
-        <contain-stock/>
       </c-col>
       <c-col :span="12" :sm="24" md="12" :lg="8" style="padding: 0 4px;margin-top: 8px;">
         <plate-single></plate-single>

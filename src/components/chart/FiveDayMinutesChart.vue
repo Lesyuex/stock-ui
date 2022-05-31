@@ -3,9 +3,8 @@
     <echarts :options="options"/>
     <c-icon
       :name="'loading-one'"
-      class="test"
-      v-if="loadingData"
-      style="position: absolute;top:30%;left:calc(50% - 15px);font-size: 30px"/>
+      class="loading-data"
+      v-if="loadingData"/>
   </div>
 </template>
 
@@ -14,6 +13,7 @@ import {aStockAxisData} from '../../static/js/axisData'
 import {tooltipFormatter} from '../../static/js/echartsOption'
 import Echarts from './Echarts'
 import openTimer from '../../mixins'
+
 export default {
   props: {
     marketCode: String
@@ -27,7 +27,7 @@ export default {
     return {
       aStockAxisData,
       tooltipFormatter,
-      loadingData: false,
+      loadingData: true,
       stockData: {},
       options: {},
       axis: null
@@ -46,9 +46,9 @@ export default {
         this.stockData = res.data
       }).finally(() => {
         this.initSeriesData()
-        if (this.timer) {
-          window.clearTimeout(that.timer)
-          that.timer = setTimeout(function () {
+        this.loadingData = false
+        if (this.timerIsOpen) {
+          setTimeout(function () {
             that.refreshData()
           }, 2000)
         }
@@ -508,9 +508,18 @@ export default {
 }
 </script>
 
-<style scoped>
-  div{
-    width: 100%;
-    height: 100%;
+<style scoped lang="less">
+div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  .loading-data {
+    position: absolute;
+    top: 30%;
+    left: calc(50% - 15px);
+    font-size: 30px;
+    animation: loading-rotate 2s linear forwards infinite;
   }
+}
 </style>

@@ -29,7 +29,7 @@ export default {
       },
       pieData: [],
       customOption: {
-        hideTooltip: true,
+        hideTooltip: false,
         hideY1Split: true,
         hideY1Line: true,
         hideY1Label: true,
@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted () {
-    this.getCount()
+    this.refreshData()
   },
   methods: {
     refreshData () {
@@ -85,11 +85,10 @@ export default {
           {value: data.allDownNum * 1, name: '跌'}
         ]
       }).finally(() => {
-        if (this.timer) {
-          window.clearTimeout(that.timer)
-          that.timer = setTimeout(function () {
+        if (this.timerIsOpen) {
+          setTimeout(function () {
             that.refreshData()
-          }, 2000)
+          }, 3000)
         }
       })
     }

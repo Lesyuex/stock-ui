@@ -2,7 +2,8 @@ export const openTimer = {
   data () {
     return {
       timerIsOpen: false,
-      componentKey: null
+      componentKey: null,
+      timer: null
     }
   },
   created () {
@@ -26,9 +27,11 @@ export const openTimer = {
     startRequestInterval () {
       const that = this
       this.timerIsOpen = true
-      setTimeout(function () {
+      if (this.timer !== null) window.clearTimeout(this.timer)
+      this.timer = setTimeout(function () {
+        console.log(`${that.componentKey} 开始数据轮询`)
         that.refreshData()
-      }, 3000)
+      }, 3333)
     },
     stopRequestInterval () {
       this.timerIsOpen = false

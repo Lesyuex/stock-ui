@@ -4,6 +4,7 @@ import store from '../../store'
 const tooltipFormatter = (params) => {
   params.sort((a, b) => a.seriesIndex - b.seriesIndex)
   const data = params[0].data || {}
+  if (!data.price) return null
   // 涨跌幅
   const date = data.date || '2088-08-08 08:08'
   let html = '<div style="font-size: 13px">' + moment(date).format('YYYY-MM-DD HH:mm') + '</div>'

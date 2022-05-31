@@ -58,7 +58,6 @@ export default {
   methods: {
     getClass (item) {
       const value = Number(item.upDownValue)
-      console.log(value)
       const classList = ['stock-single-info']
       let color
       if (value > 0) {

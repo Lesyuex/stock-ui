@@ -77,7 +77,7 @@ export default {
       otherArr: [
         {name: '成分股', com: 'MinutesChart', code: '1'}
       ],
-      comInfo: {
+      comInfo: localStorage.getItem('preChoice') ? JSON.parse(localStorage.getItem('preChoice')) : {
         com: 'MinutesChart',
         code: '1',
         kname: 'minu',
@@ -97,13 +97,11 @@ export default {
   },
   watch: {
     marketCode: function () {
-      this.$refs[this.comInfo.kname].loadingData = true
       this.refreshData()
     }
   },
   mounted () {
     this.refreshData()
-    console.log(this.isCom)
   },
   methods: {
     choiceCom (choice) {
@@ -114,6 +112,7 @@ export default {
         ktype: choice.ktype,
         stockType: 1
       }
+      localStorage.setItem('preChoice', JSON.stringify(this.comInfo))
     },
     refreshData () {
       this.getMinutesData()
@@ -123,9 +122,10 @@ export default {
       this.$axiosGet(`/stock/get/minutes/2/${this.marketCode}`).then(res => {
         that.stock = Object.assign({marketCode: this.marketCode}, res.data)
       }).finally(() => {
-        this.$refs[this.comInfo.kname].loadingData = false
+        // this.$refs[this.comInfo.kname].loadingData = false
         if (this.timerIsOpen) {
-          setTimeout(function () {
+          if (this.timer !== null) window.clearTimeout(this.timer)
+          this.timer = setTimeout(function () {
             that.refreshData()
           }, 3000)
         }

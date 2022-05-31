@@ -167,9 +167,9 @@ export default {
             containLabel: true,
             top: '5%',
             left: 'center',
-            bottom: '30%',
+            // bottom: '30%',
             width: '100%',
-            height: '70%'
+            height: '68%'
           },
           {
             // show: true,
@@ -200,7 +200,7 @@ export default {
             axisPointer: {
               show: true,
               label: {
-                show: false
+                show: true
               }
             },
             data: this.defaultOption.xData
@@ -462,6 +462,7 @@ export default {
 
         ]
       }
+      this.loadingData = false
     }
   }
 }
@@ -471,13 +472,6 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  .loading-data{
-    position: absolute;
-    top:30%;
-    left:calc(50% - 15px);
-    font-size: 30px;
-    animation: loading-rotate 2s linear forwards infinite;
-  }
   .select-wrap{
     position: absolute;
     bottom: calc(20% + 4px);

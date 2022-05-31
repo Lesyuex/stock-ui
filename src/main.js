@@ -11,8 +11,12 @@ import store from './store'
 import '@/icons'
 import {axiosGet, axiosPost, axiosPostWithFile} from './util/axios'
 import * as echarts from 'echarts'
-import * as allFilters from './util/filters'
-Object.keys(allFilters).forEach(key => Vue.filter(key, allFilters[key]))
+
+import {toFixedTwo, fomatValue} from './util/filters'
+Vue.filter('toFixedTwo', toFixedTwo)
+Vue.filter('fomatValue', fomatValue)
+// import * as allFilters from './util/filters'
+// Object.keys(allFilters).forEach(key => Vue.filter(key, allFilters[key]))
 Vue.use(ViewUI)
 
 const bus = new Vue()

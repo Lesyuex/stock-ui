@@ -1,12 +1,10 @@
 <template>
   <div class="k-chart" :id="refName" :key="refName">
-    <div style="height: 20px;width:98%;background-color: #161922;position: absolute;left:12px;top:9px;z-index: 999"
-         v-if="mouseOnChart">
-      <div v-for="(ma,index) in chartData.maName" :key="index"
-           style="display: inline-block;width: 113px;font-size: 13px;">
-        <span :style="{color:chartData.maColor[index],display:'inline-block',fontWeight:500 }">
+    <div class="tooltip-class" v-if="mouseOnChart">
+      <div v-for="(ma,index) in chartData.maName" :key="index" class="ma-class">
+        <span :style="{color:chartData.maColor[index]}" class="ma-name">
           {{ ma }}
-          <span style="color: #cccccc;display:inline-block">: {{ getCurrentMa[ma] }}</span>
+          <span class="ma-value">: {{ getCurrentMa[ma] | toFixedTwo }}</span>
         </span>
       </div>
     </div>
@@ -24,7 +22,7 @@ import Echarts from './Echarts'
 import moment from 'moment'
 
 export default {
-  name: 'DayChart',
+  name: 'KChart',
   components: {
     Echarts
   },
@@ -48,7 +46,7 @@ export default {
         newestPrice: 0,
         selectIndex: 0,
         ma: {},
-        maName: ['M5', 'M10', 'M20', 'M30', 'M60', 'M120'],
+        maName: ['MA5', 'MA10', 'MA20', 'MA30', 'MA60', 'MA120'],
         maColor: ['#ff4b4b', '#f8d58a', '#068afd', '#ff9100', 'pink', '#64be6d']
       }
     }
@@ -56,13 +54,13 @@ export default {
   computed: {
     getCurrentMa () {
       const dataIndex = this.chartData.selectIndex
-      const M5 = this.chartData.ma['M5'][dataIndex]
-      const M10 = this.chartData.ma['M10'][dataIndex]
-      const M20 = this.chartData.ma['M20'][dataIndex]
-      const M30 = this.chartData.ma['M30'][dataIndex]
-      const M60 = this.chartData.ma['M60'][dataIndex]
-      const M120 = this.chartData.ma['M120'][dataIndex]
-      return {M5, M10, M20, M30, M60, M120}
+      const MA5 = this.chartData.ma['MA5'][dataIndex]
+      const MA10 = this.chartData.ma['MA10'][dataIndex]
+      const MA20 = this.chartData.ma['MA20'][dataIndex]
+      const MA30 = this.chartData.ma['MA30'][dataIndex]
+      const MA60 = this.chartData.ma['MA60'][dataIndex]
+      const MA120 = this.chartData.ma['MA120'][dataIndex]
+      return {MA5, MA10, MA20, MA30, MA60, MA120}
     },
     tooltipFormatter () {
       const that = this
@@ -196,18 +194,18 @@ export default {
         this.chartData.turnoverRateArr = rateArr
         this.chartData.percentArr = percentArr
         this.chartData.selectIndex = this.chartData.xData.length - 1
-        const M5 = this.calculateM(5)
-        const M10 = this.calculateM(10)
-        const M20 = this.calculateM(20)
-        const M30 = this.calculateM(30)
-        const M60 = this.calculateM(60)
-        const M120 = this.calculateM(120)
-        this.chartData.ma = {M5, M10, M20, M30, M60, M120}
+        const MA5 = this.calculateM(5)
+        const MA10 = this.calculateM(10)
+        const MA20 = this.calculateM(20)
+        const MA30 = this.calculateM(30)
+        const MA60 = this.calculateM(60)
+        const MA120 = this.calculateM(120)
+        this.chartData.ma = {MA5, MA10, MA20, MA30, MA60, MA120}
       }).finally(() => {
         this.initOptions()
+        this.loadingData = false
       })
     },
-
     initOptions () {
       const ma = this.getCurrentMa
       const color = this.chartData.maColor
@@ -222,72 +220,83 @@ export default {
           formatter: this.tooltipFormatter
         },
         legend: {
-          left: -8,
+          left: -12,
           icon: 'none',
-          itemWidth: 10,
+          width: '100%',
+          itemWidth: 6,
+          itemGap: 0,
+          // align: 'left',
           textStyle: {
+            // fontSize: 5,
             rich: {
               value: {
+                fontSize: 10,
                 color: 'white'
               }
             }
           },
           data: [
             {
-              name: 'M5',
+              name: 'MA5',
               textStyle: {
                 rich: {
                   name: {
+                    fontSize: 10,
                     color: color[0]
                   }
                 }
               }
             },
             {
-              name: 'M10',
+              name: 'MA10',
               textStyle: {
                 rich: {
                   name: {
+                    fontSize: 10,
                     color: color[1]
                   }
                 }
               }
             },
             {
-              name: 'M20',
+              name: 'MA20',
               textStyle: {
                 rich: {
                   name: {
+                    fontSize: 10,
                     color: color[2]
                   }
                 }
               }
             },
             {
-              name: 'M30',
+              name: 'MA30',
               textStyle: {
                 rich: {
                   name: {
+                    fontSize: 10,
                     color: color[3]
                   }
                 }
               }
             },
             {
-              name: 'M60',
+              name: 'MA60',
               textStyle: {
                 rich: {
                   name: {
+                    fontSize: 10,
                     color: color[4]
                   }
                 }
               }
             },
             {
-              name: 'M120',
+              name: 'MA120',
               textStyle: {
                 rich: {
                   name: {
+                    fontSize: 10,
                     color: color[5]
                   }
                 }
@@ -301,7 +310,7 @@ export default {
         grid: [
           {
             left: '2%',
-            top: 32,
+            top: 42,
             height: '50%',
             width: this.chartData.xData.length < 60 ? this.chartData.xData.length + '%' : '96%',
             backgroundColor: 'transparent',
@@ -309,7 +318,7 @@ export default {
           },
           {
             left: '2%',
-            top: '70%',
+            top: '72%',
             height: '15%',
             width: this.chartData.xData.length < 60 ? this.chartData.xData.length + '%' : '96%',
             backgroundColor: 'red',
@@ -538,9 +547,9 @@ export default {
             }
           },
           {
-            name: 'M5',
+            name: 'MA5',
             type: 'line',
-            data: this.chartData.ma['M5'],
+            data: this.chartData.ma['MA5'],
             smooth: true,
             symbol: 'none',
             lineStyle: {
@@ -548,9 +557,9 @@ export default {
             }
           },
           {
-            name: 'M10',
+            name: 'MA10',
             type: 'line',
-            data: this.chartData.ma['M10'],
+            data: this.chartData.ma['MA10'],
             smooth: true,
             symbol: 'none',
             lineStyle: {
@@ -558,9 +567,9 @@ export default {
             }
           },
           {
-            name: 'M20',
+            name: 'MA20',
             type: 'line',
-            data: this.chartData.ma['M20'],
+            data: this.chartData.ma['MA20'],
             smooth: true,
             symbol: 'none',
             lineStyle: {
@@ -568,9 +577,9 @@ export default {
             }
           },
           {
-            name: 'M30',
+            name: 'MA30',
             type: 'line',
-            data: this.chartData.ma['M30'],
+            data: this.chartData.ma['MA30'],
             smooth: true,
             symbol: 'none',
             lineStyle: {
@@ -578,9 +587,9 @@ export default {
             }
           },
           {
-            name: 'M60',
+            name: 'MA60',
             type: 'line',
-            data: this.chartData.ma['M60'],
+            data: this.chartData.ma['MA60'],
             smooth: true,
             symbol: 'none',
             lineStyle: {
@@ -588,9 +597,9 @@ export default {
             }
           },
           {
-            name: 'M120',
+            name: 'MA120',
             type: 'line',
-            data: this.chartData.ma['M120'],
+            data: this.chartData.ma['MA120'],
             smooth: true,
             symbol: 'none',
             lineStyle: {
@@ -617,7 +626,6 @@ export default {
           }
         ]
       }
-      this.loadingData = false
     }
   }
 }
@@ -628,6 +636,30 @@ export default {
   height: 100%;
   width: 100%;
   position: relative;
+
+  .tooltip-class {
+    width: 100%;
+    background-color: #1a2029;
+    position: absolute;
+    left: 0;
+    //top: 12px;
+    z-index: 999;
+
+    .ma-class {
+      display: inline-block;
+      font-size: 12px;
+      transform: scale(0.86);
+      //padding-right: 2px;
+
+      .ma-name, .ma-value {
+        display: inline-block;
+      }
+
+      .ma-value {
+        color: #cccccc;
+      }
+    }
+  }
 
   .loading-data {
     position: absolute;

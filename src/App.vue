@@ -24,7 +24,6 @@ export default {
     const that = this
     // 监听需要开启定时任务的子组件的timerCreated事件
     this.$bus.$on('timerCreated', componentKey => {
-      console.log(`${componentKey}需要开启定时任务`)
       that.setScheduledTask(componentKey)
     })
   },
@@ -35,13 +34,11 @@ export default {
       const diffSeconds = startTime.diff(currentTime, 'seconds')
       setTimeout(() => {
         // 告知所有组件可以开始请求数据
-        console.log(`通知[${componentKey}]-> 开启定时任务`)
         that.$bus.$emit(`${componentKey}StartRequest`)
       }, diffSeconds * 1000)
       const validSeconds = endTime.diff(currentTime, 'seconds')
       setTimeout(function () {
         // 告知所有组件可以停止请求数据
-        console.log(`通知[${componentKey}] -> 关闭定时任务`)
         that.$bus.$emit(`${componentKey}StopRequest`)
       }, validSeconds * 1000)
     },
@@ -66,8 +63,6 @@ export default {
         this.timeoutTask(currentTime, currentTime, marketTime.pm1500, componentKey)
       }
       if (currentTime.isSameOrAfter(marketTime.pm1500)) {
-        console.log(currentTime.format('YYYY-MM-DD HH:mm:ss'))
-        console.log('第二天重新开启定时任务')
         const diffTime = marketTime.pm2400.diff(currentTime, 'seconds')
         setTimeout(function () {
           that.setScheduledTask(componentKey)

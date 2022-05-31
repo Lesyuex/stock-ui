@@ -30,7 +30,6 @@ export default {
     customOption: {
       deep: true,
       handler: function () {
-        console.log('customOption')
         this.initOptions()
       }
     }

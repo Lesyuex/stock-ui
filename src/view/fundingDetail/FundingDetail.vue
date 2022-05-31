@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted () {
-    this.getCount()
+    this.refreshData()
   },
   methods: {
     handleClick (tab, event) {
@@ -80,6 +80,9 @@ export default {
         const text3 = '<div style="text-align: left">' + params[2].marker + params[2].seriesName.replaceAll('-', value3) + '</div>'
         return html + text1 + text2 + text3
       }
+    },
+    refreshData () {
+      this.getCount()
     },
     getCount () {
       const that = this
@@ -134,7 +137,7 @@ export default {
       }).finally(() => {
         if (this.timerIsOpen) {
           setTimeout(function () {
-            that.getCount()
+            that.refreshData()
           }, 3333)
         }
       })

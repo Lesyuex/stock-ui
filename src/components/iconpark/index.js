@@ -15,15 +15,16 @@ const useComs = [
   'loading-one',
   'info',
   'plus',
+  'up-one',
   'down-one',
   'menu-unfold-one',
-  'menu-fold-one'
+  'menu-fold-one',
+  'sort-one',
+  'sort'
 ]
 
 useComs.forEach(com => {
   const key = format(com)
-  console.log(key)
-  console.log(coms[key])
   Vue.component(key, coms[key])
 })
 

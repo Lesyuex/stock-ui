@@ -1,36 +1,38 @@
 <template>
   <div class="main-wrap">
     <div class="title-wrap">
-      <div class="single-wrap">
-        <span style="font-size: 18px;font-weight: 700" class="fs18 fw700">{{ stock.name }}</span>
-        <img src="../../../assets/nation/china.png" alt="123"/>
-        <span class="fs14 marginL6 fw500">{{ stock.marketCode }}</span>
-      </div>
-      <div class="single-wrap">
-        <span class="fs22 marginL12 fw700" :style="color">{{ stock.currentPrice || '' }}&nbsp;</span>
-      </div>
-      <div class="single-wrap">
-        <span class="fs14 marginL6 fw500" :style="color">{{ valueChange }}&nbsp;&nbsp;{{ percentChange }}</span>
-      </div>
+      <span class="stock-name">
+          {{ stock.name }}
+      </span>
+      <img :src="getImg(stock.marketCode)" alt=""/>
+      <span>
+          {{ stock.marketCode }}
+      </span>
+      <span :style="color" class="stock-price">
+          {{ stock.currentPrice | toFixedTwo }}&nbsp;
+      </span>
+      <span :style="color" class="stock-change">
+          {{ stock.upDownValue | toFixedTwo }}&nbsp;&nbsp;{{ stock.upDownPercent | toFixedTwo(true) }}
+      </span>
       <Button type="error" @click="collectStock" size="small" class="collect-btn">加入自选</Button>
     </div>
     <div class="detail-wrap">
       <div class="box-wrap">
-        <span>今开</span><span>{{ stock.todayOpenPrice }}</span>
+        <span>今开</span><span>{{ stock.todayOpenPrice | toFixedTwo }}</span>
       </div>
 
       <div class="box-wrap">
-        <span>最高</span><span>{{ stock.highest }}</span>
+        <span>最高</span><span>{{ stock.highest | toFixedTwo }}</span>
       </div>
       <div class="box-wrap">
         <span>涨停价</span><span>{{ stock.dailyLimitPrice === -1 ? '0' : stock.dailyLimitPrice }}</span>
       </div>
       <div class="box-wrap">
-        <span>成交量</span><span>{{ volume }}</span>
+        <span>成交量</span><span>{{ stock.volume | fomatValue }}</span>
       </div>
 
       <div class="box-wrap">
-        <span>昨收</span><span>{{ stock.yesterdayPrice }}</span>
+        <span>昨收</span><span>{{ stock.yesterdayPrice | toFixedTwo }}</span>
       </div>
       <div class="box-wrap">
         <span>最低</span><span>{{ stock.lowest | toFixedTwo }}</span>
@@ -40,11 +42,11 @@
       </div>
 
       <div class="box-wrap">
-        <span>成交额</span><span>{{ turnOver }}亿</span>
+        <span>成交额</span><span>{{ stock.turnover | fomatValue }}亿</span>
       </div>
 
       <div class="box-wrap">
-        <span>内盘</span><span>{{ inner }}手</span>
+        <span>内盘</span><span>{{ stock.innerPlate | fomatValue }}手</span>
       </div>
       <div class="box-wrap">
         <span>均价</span><span>{{ stock.averagePrice | toFixedTwo }}</span>
@@ -78,15 +80,15 @@
       </div>
 
       <div class="box-wrap">
-        <span>外盘</span><span>{{ out }}手</span>
+        <span>外盘</span><span>{{ stock.outerDisk | fomatValue }}手</span>
       </div>
 
       <div class="box-wrap">
-        <span>振幅</span><span>{{ stock.amplitude }}%</span>
+        <span>振幅</span><span>{{ stock.amplitude | toFixedTwo }}%</span>
       </div>
       <div class="box-wrap">
         <span>总市值</span>
-        <span>{{ stock.marketValue.toFixed(0) }}亿</span>
+        <span>{{ stock.marketValue | fomatValue }}亿</span>
       </div>
     </div>
 
@@ -106,44 +108,27 @@ export default {
       const staPriceRate = this.stock.staPriceRate < 0 ? '亏损' : this.stock.staPriceRate
       return {peRate, dyPriceRate, staPriceRate}
     },
-    volume () {
-      const volume = this.stock.volume
-      if (!volume) return ''
-      if (volume >= 100000000) return (volume / 100000000).toFixed(2) + '亿'
-      return volume
-    },
-    turnOver () {
-      const turnover = this.stock.turnover
-      return turnover ? (turnover / 10000).toFixed(2) : ''
-    },
-    inner () {
-      const innerPlate = this.stock.innerPlate
-      if (!innerPlate) return ''
-      if (innerPlate > 100000000) return (innerPlate / 100000000).toFixed(2) + '亿'
-      if (innerPlate > 10000) return (innerPlate / 10000).toFixed(2) + '万'
-      return innerPlate
-    },
-    out () {
-      const outerDisk = this.stock.outerDisk
-      if (!outerDisk) return ''
-      if (outerDisk > 100000000) return (outerDisk / 100000000).toFixed(2) + '亿'
-      if (outerDisk > 10000) return (outerDisk / 10000).toFixed(2) + '万'
-      return outerDisk
-    },
-    valueChange () {
-      return this.stock.upDownValue
-    },
-    percentChange () {
-      return `${this.stock.upDownPercent}%`
-    },
     color () {
-      if (this.valueChange === 0) return ''
-      return this.valueChange > 0 ? 'color:#ee4957' : 'color:#01d078'
+      const value = this.stock.upDownValue
+      if (!value || value === 0) return ''
+      return value > 0 ? 'color:#ee4957' : 'color:#01d078'
     }
   },
   methods: {
     collectStock (stock) {
-      this.$message.success('恭喜你，请登录！')
+      console.log(stock)
+      this.$Message.success('恭喜你，请登录！')
+    },
+    getImg (marketCode) {
+      if (!marketCode) return null
+      let name
+      if (marketCode.indexOf('sh') > -1 || marketCode.indexOf('sz') > -1) {
+        name = 'china'
+      } else if (marketCode.indexOf('hk') > -1) {
+        name = 'hk'
+      }
+      console.log(name)
+      return require(`../../../assets/nation/${name}.png`)
     }
   }
 }
@@ -152,26 +137,33 @@ export default {
 <style scoped lang="less">
 .main-wrap {
   height: 100%;
-  color: #ccc;
 
   .title-wrap {
     position: relative;
-    height: 40px;
+    //height: 40px;
     padding: 4px 8px;
     //box-sizing: border-box;
-    .single-wrap {
-      float: left;
-      position: relative;
-      line-height: 40px;
-
-      img {
-        position: relative;
-        left: 3px;
-        top: 3px;
-        height: 20px;
-      }
+    // line-height: 40px;
+    span{
+      display: inline-block;
+      padding-right: 2px;
     }
-
+    img {
+      display: inline-block;
+      height: 22px;
+      vertical-align: text-bottom;
+    }
+    .stock-name{
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .stock-price{
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .stock-change{
+      font-size: 14px;
+    }
     .collect-btn {
       position: absolute;
       right: 8px;
@@ -198,13 +190,16 @@ export default {
       > span {
         line-height: 20px;
       }
-      /deep/.ivu-poptip-arrow {
+
+      /deep/ .ivu-poptip-arrow {
         border-right-color: #1f242a;
-        &::after{
+
+        &::after {
           border-right-color: #1f242a;
         }
       }
-      /deep/ .ivu-poptip-inner{
+
+      /deep/ .ivu-poptip-inner {
         background-color: #1f242a;
         color: white;
       }

@@ -17,7 +17,8 @@ export default {
   },
   data () {
     return {
-      chart: null
+      chart: null,
+      resizeTimer: null
     }
   },
   watch: {
@@ -65,8 +66,13 @@ export default {
           })
         }
         window.addEventListener('resize', () => {
-          that.resize()
-        })
+          // 防抖
+          if (that.resizeTimer !== null) window.clearTimeout(that.resizeTimer)
+          that.resizeTimer = setTimeout(function () {
+            console.log('resizeChart')
+            that.resize()
+          }, 600)
+        }, false)
       }
     }
   }

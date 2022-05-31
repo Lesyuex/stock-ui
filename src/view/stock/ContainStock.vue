@@ -1,46 +1,59 @@
 <template>
   <div id="contain-wrap">
     <h3 class="title-wrap">成分股</h3>
-    <div class="scroll-wrap">
-      <ul id="index-wrap">
-        <li v-for="(stock, index) in indexList" :key="index" class="stock-li">
-          <div class="content-wrap">
-            <!--股票名称-->
-            <div class="name-wrap">
-              <div>
-                <img
-                  src="../../assets/nation/china.png"
-                  alt="股票"
-                  style="height: 16px;vertical-align: middle;">
-                {{ stock.name }}
-              </div>
-              <div>
-                {{ stock.marketCode }}
-
-              </div>
-              <span style="position: absolute;left: 88px;bottom: 2px;font-size: 12px">
-              <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
+    <ul class="nav-wrap">
+      <li>
+        <span>股票名称</span>
+      </li>
+      <li>
+        <span>最新价</span>
+        <svg-icon icon-name="sort" class-name="sort-class"></svg-icon>
+      </li>
+      <li>
+        <span>涨跌幅</span>
+        <svg-icon icon-name="sort-check" class-name="sort-class"></svg-icon>
+      </li>
+      <li>
+        <span>换手率</span>
+        <svg-icon icon-name="sort" class-name="sort-class"></svg-icon>
+      </li>
+    </ul>
+    <ul class="scroll-wrap" id="index-wrap">
+      <li v-for="(stock, index) in indexList" :key="index" class="stock-li">
+        <div class="content-wrap">
+          <!--股票名称-->
+          <div class="name-wrap">
+            <div>
+              <img
+                src="../../assets/nation/china.png"
+                alt="股票"
+                style="height: 16px;vertical-align: middle;">
+              {{ stock.name }}
+            </div>
+            <div>
+              {{ stock.marketCode }}
+            </div>
+            <span style="position: absolute;left: 88px;bottom: 2px;font-size: 12px">
+              <svg-icon iconName='fast' className='icon'></svg-icon>&nbsp;快速上涨
             </span>
-
-            </div>
-            <!--股价涨跌幅-->
-            <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
-              <span>{{ stock.currentPrice }}</span>
-            </div>
-            <div class="change-wrap">
-              <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownValue }}</span>
-            </div>
-            <div class="change-wrap">
-              <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownPercent }}%</span>
-            </div>
-            <!--收藏 -->
-            <div class="collect-wrap">
-              <c-icon name="plus" size="24"></c-icon>
-            </div>
           </div>
-        </li>
-      </ul>
-    </div>
+          <!--股价涨跌幅-->
+          <div class="change-wrap" :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">
+            <span>{{ stock.currentPrice }}</span>
+          </div>
+          <div class="change-wrap">
+            <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownValue }}</span>
+          </div>
+          <div class="change-wrap">
+            <span :style="{color:stock.upDownPercent > 0 ? '#ee4957' : '#01d078'}">{{ stock.upDownPercent }}%</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <c-icon
+      :name="'loading-one'"
+      class="loading-data"
+      v-if="loadingData"/>
   </div>
 </template>
 
@@ -78,17 +91,41 @@ export default {
       marketCode: 'sh000001',
       breathTimer: null,
       breathLiIndexArr: [],
-      liArr: []
+      liArr: [],
+      loadingData: false
     }
   },
   created () {
     this.getSingleInfo()
   },
   mounted () {
+    const self = this
     const dom = document.getElementById('contain-wrap')
     this.liArr = dom.getElementsByClassName('stock-li')
+    const scorllDom = document.getElementById('index-wrap')
+    // 防抖
+    let timer = null
+    scorllDom.addEventListener('scroll', function () {
+      if (timer !== null) window.clearTimeout(timer)
+      timer = setTimeout(function () {
+        console.log(scorllDom.clientHeight - scorllDom.scrollTop)
+        if (scorllDom.clientHeight - scorllDom.scrollTop < 12) {
+          self.getMore()
+        }
+      }, 500)
+    },false)
   },
   methods: {
+    getMore () {
+      const self = this
+      self.loadingData = true
+      return new Promise(resolve => {
+        setTimeout(function () {
+          self.loadingData = false
+        }, 3000)
+        resolve()
+      })
+    },
     breath () {
       const that = this
       for (let i = 0; i < that.breathLiIndexArr.length; i++) {
@@ -131,7 +168,8 @@ export default {
           this.breath()
         })
         if (this.timerIsOpen) {
-          setTimeout(function () {
+          if (this.timer !== null) window.clearTimeout(this.timer)
+          this.timer = setTimeout(function () {
             that.refreshData()
           }, 3000)
         }
@@ -144,7 +182,7 @@ export default {
 <style scoped lang="less">
 #contain-wrap {
   position: relative;
-  height: 486px;
+  height: 494px;
   box-sizing: border-box;
   border-radius: 5px;
   background-color: #1a2029;
@@ -156,103 +194,97 @@ export default {
     line-height: 30px;
   }
 
-  .scroll-wrap {
-    height: 446px;
-    overflow: auto;
-    overflow-y: overlay;
+  ul {
+    list-style: none;
 
-    &::-webkit-scrollbar {
-      width: 1px;
-    }
-
-    /*定义滚动条*/
-
-    &::-webkit-scrollbar-thumb {
-      border-radius: 1px;
-      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-      background: #7c7c7c;
-    }
-
-    /*定义滚动条轨道*/
-
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-      border-radius: 0;
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    ul {
-      list-style: none;
-      overflow: auto;
-
-      li {
-        position: relative;
-        height: 56px;
-        transition: .3s;
+    li {
+      position: relative;
+      height: 56px;
+      transition: .3s;
+      cursor: pointer;
+      //border-bottom: 1px solid rgba(0, 0, 0, 0);
+      .content-wrap {
+        display: flex;
+        justify-content: space-between;
         cursor: pointer;
-        //border-bottom: 1px solid rgba(0, 0, 0, 0);
-        .content-wrap {
-          display: flex;
-          justify-content: space-between;
-          cursor: pointer;
-          padding-left: 12px;
-          box-sizing: border-box;
+        padding-left: 12px;
+        box-sizing: border-box;
 
-          .name-wrap {
-            position: relative;
-            flex: 6;
-          }
+        .name-wrap {
+          position: relative;
+          flex: 6;
+        }
 
-          .change-wrap {
-            flex: 3;
-            line-height: 56px;
-            text-align: center;
-          }
+        .change-wrap {
+          flex: 3;
+          line-height: 56px;
+          text-align: center;
+        }
 
-          .name-wrap {
-            > div {
-              &:nth-child(1) {
-                font-size: 15px;
-                line-height: 36px;
-              }
-
-              &:nth-child(2) {
-                font-size: 14px;
-                line-height: 20px;
-              }
+        .name-wrap {
+          > div {
+            &:nth-child(1) {
+              font-size: 15px;
+              line-height: 36px;
             }
 
-          }
-
-          .collect-wrap {
-            flex: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            i {
-              font-size: 20px;
+            &:nth-child(2) {
+              font-size: 14px;
+              line-height: 20px;
             }
           }
         }
       }
+    }
 
-      .breath-li {
-        &::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          background-color: rgba(0, 0, 0, .2);
-          animation: breath 1.5s linear;
-        }
+    .breath-li {
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background-color: rgba(0, 0, 0, .2);
+        animation: breath 1.5s linear;
       }
     }
   }
 
+  .scroll-wrap {
+    height: 410px;
+    overflow: auto;
+    overflow-y: overlay;
+  }
+
+  .nav-wrap {
+    padding-left: 12px;
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      position: relative;
+      flex: 3;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+
+      &:nth-child(1) {
+        flex: 6;
+        text-align: left;
+      }
+
+      .sort-class {
+        width: 14px;
+        height: 14px;
+      }
+
+      .sort-down {
+        transform: rotate(180deg);
+      }
+    }
+  }
 }
 
 @keyframes breath {

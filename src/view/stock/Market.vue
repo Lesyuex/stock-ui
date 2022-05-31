@@ -19,7 +19,7 @@
 
               </div>
               <span style="position: absolute;left: 88px;bottom: 2px;font-size: 12px">
-              <svg-icon iconClass='fast' className='icon'></svg-icon>&nbsp;快速上涨
+              <svg-icon iconName='fast' className='icon'></svg-icon>&nbsp;快速上涨
             </span>
 
             </div>

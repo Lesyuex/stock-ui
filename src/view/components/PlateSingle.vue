@@ -64,7 +64,6 @@ export default {
     },
     refreshData () {
       this.$axiosGet('/plate/get/leadUpAndDown/2').then(res => {
-        console.log(res)
         this.leadDownList = res.data.leadDownList
         this.leadUpList = res.data.leadUpList
       })
@@ -96,12 +95,16 @@ export default {
     overflow: hidden;
 
     .plate-box {
-      width: calc((100% - 16px) / 3);
-      height: 98.5px;
       float: left;
       display: flex;
       justify-content: space-around;
       flex-direction: column;
+      width: calc((100% - 16px) / 3);
+      height: 98.5px;
+      padding: 3px 0;
+      box-sizing: border-box;
+      border-radius: 5px;
+      cursor: pointer;
       background-color: rgba(0,0,0,.1);
 
       &:nth-child(2), &:nth-child(5) {
@@ -110,7 +113,7 @@ export default {
       }
 
       .plate {
-        font-size: 16px;
+        font-size: 15px;
         color: #dfdfe5;
       }
       .plate-percent{
