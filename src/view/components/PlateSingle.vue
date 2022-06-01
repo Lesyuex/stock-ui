@@ -67,7 +67,7 @@ export default {
       this.$axiosGet('/plate/get/leadUpAndDown/2').then(res => {
         this.leadDownList = res.data.leadDownList
         this.leadUpList = res.data.leadUpList
-      }).finally(()=>{
+      }).finally(() => {
         if (this.timerIsOpen) {
           if (this.timer !== null) window.clearTimeout(this.timer)
           this.timer = setTimeout(function () {
