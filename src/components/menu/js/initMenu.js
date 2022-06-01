@@ -34,7 +34,7 @@ export default function (isTooltipMenu = false) {
       menu.setAttribute('aria-expanded', 'false')
     }
     const showTip = function (isOpen) {
-      const tip = parentNode.querySelectorAll('i.tip')[0]
+      const tip = parentNode.querySelectorAll('span.tip')[0]
       tip.style.transform = isOpen === 'true' ? 'rotate(-180deg)' : null
     }
     const handle = function (menu, open) {

@@ -20,7 +20,8 @@ const useComs = [
   'menu-unfold-one',
   'menu-fold-one',
   'sort-one',
-  'sort'
+  'sort',
+  'bill'
 ]
 
 useComs.forEach(com => {

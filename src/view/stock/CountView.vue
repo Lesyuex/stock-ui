@@ -86,7 +86,8 @@ export default {
         ]
       }).finally(() => {
         if (this.timerIsOpen) {
-          setTimeout(function () {
+          if (this.timer !== null) window.clearTimeout(this.timer)
+          this.timer = setTimeout(function () {
             that.refreshData()
           }, 3000)
         }

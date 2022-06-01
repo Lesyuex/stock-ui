@@ -9,9 +9,9 @@
         <i class="el-icon-search"></i>
         <input
           v-model="inputTextValue"
+          id="stockInput"
           type="text"
           placeholder="搜索股票/板块"
-          @input="inputText"
           @blur="inputBlur"
           @focus="inputFocus"/>
         <!--小三角形-->
@@ -92,6 +92,29 @@ export default {
     this.$axiosGet('/stock/list/all').then(res => {
       this.stockList = res.data
     })
+  },
+  mounted () {
+    const self = this
+    const input = document.getElementById('stockInput')
+    const createFunc = (handle, delay) => {
+      let timer = null
+      const context = this
+      // 返回节流方法
+      return function (...args) {
+        if (!timer) {
+          timer = setTimeout(function () {
+            handle.apply(context, args)
+            window.clearTimeout(timer)
+            timer = null
+          }, delay)
+        }
+      }
+    }
+    const handle = (e) => {
+      self.inputText(e)
+    }
+    input.addEventListener('input', createFunc(handle, 500))
+    // 节流
   },
   methods: {
     showUserMenu () {

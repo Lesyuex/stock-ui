@@ -136,7 +136,8 @@ export default {
         this.n2s.seriesData = [n2sshDiff, n2sszDiff, n2sFoudingDiff]
       }).finally(() => {
         if (this.timerIsOpen) {
-          setTimeout(function () {
+          if (this.timer !== null) window.clearTimeout(this.timer)
+          this.timer = setTimeout(function () {
             that.refreshData()
           }, 3333)
         }

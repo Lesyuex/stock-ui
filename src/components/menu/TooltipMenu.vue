@@ -52,6 +52,8 @@ export default {
   },
   methods: {
     routeTo (menu) {
+      const path = this.$route.path
+      if (menu.path === path) return
       if (menu.path) this.$router.push({path: menu.path})
     }
   }

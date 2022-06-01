@@ -63,9 +63,17 @@ export default {
       return style
     },
     refreshData () {
+      const self = this
       this.$axiosGet('/plate/get/leadUpAndDown/2').then(res => {
         this.leadDownList = res.data.leadDownList
         this.leadUpList = res.data.leadUpList
+      }).finally(()=>{
+        if (this.timerIsOpen) {
+          if (this.timer !== null) window.clearTimeout(this.timer)
+          this.timer = setTimeout(function () {
+            self.refreshData()
+          }, 3000)
+        }
       })
     }
   }

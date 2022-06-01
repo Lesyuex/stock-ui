@@ -99,9 +99,9 @@ export default {
         }
       }).finally(() => {
         this.singleList = singleList.length === 0 ? [this.indexList] : singleList
-        if (this.timer) {
-          window.clearTimeout(that.timer)
-          that.timer = setTimeout(function () {
+        if (this.timerIsOpen) {
+          if (this.timer !== null) window.clearTimeout(this.timer)
+          this.timer = setTimeout(function () {
             that.refreshData()
           }, 3000)
         }
