@@ -5,7 +5,6 @@
         <CIcon name="bill" :size="24"></CIcon>
       </c-col>
       <c-col :span="12" :sm="24" md="12" :lg="8">
-        <ipark-home theme="outline" size="24" fill="#333"/>
       </c-col>
       <c-col :span="12" :sm="24" md="12" :lg="8">
       </c-col>

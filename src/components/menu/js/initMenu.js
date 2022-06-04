@@ -1,15 +1,32 @@
 
 export default function (isTooltipMenu = false) {
+  const menuItemList = document.getElementsByClassName('menu-item')
+  for (let i = 0; i < menuItemList.length; i++) {
+    const menu = menuItemList[i]
+    menu.onclick = function () {
+      // 点击父菜单
+      // if (menu.classList.contains('submenu_title')) return //createMenuStyleSheet 父菜单会覆盖onclick方法
+      // 排他
+      for (let j = 0; j < menuItemList.length; j++) {
+        menuItemList[j].classList.remove('is-active')
+      }
+      menu.classList.add('is-active')
+    }
+  }
+  createMenuStyleSheet(isTooltipMenu)
+}
+
+function createMenuStyleSheet (isTooltipMenu) {
   const styleSheet = document.styleSheets
-  // 查询到所有父菜单
+  // 找到拥有子菜单的父菜单
   const submenuTitleList = document.getElementsByClassName('submenu_title')
   const menuKeyframes = {}
-  Array.from(submenuTitleList).forEach(title => {
-    // 父元素submenu
-    const parentNode = title.parentNode
-    const open = title.getAttribute('aria-expanded')
-    const menu = parentNode.querySelector('ul.menu')
-    const li = menu.querySelectorAll(':scope > li')
+  for (let i = 0; i < submenuTitleList.length; i++) {
+    // div.submenu_title
+    const submenuTitle = submenuTitleList[i]
+    // 获取ul
+    const chilMenuUl = getSibing(submenuTitle)
+    const li = chilMenuUl.getElementsByTagName('li')
     const height = li[0].offsetHeight
     const chilLength = li.length
     // 展开过度动画
@@ -27,46 +44,32 @@ export default function (isTooltipMenu = false) {
     }
     const showMenu = function (menu) {
       menu.style.animation = `${show} .3s ease-in-out`
-      menu.setAttribute('aria-expanded', 'true')
+      submenuTitle.setAttribute('aria-expanded', 'true')
     }
     const hideMenu = function (menu) {
       menu.style.animation = `${hide} .3s ease-out forwards`
-      menu.setAttribute('aria-expanded', 'false')
+      submenuTitle.setAttribute('aria-expanded', 'false')
     }
     const showTip = function (isOpen) {
-      const tip = parentNode.querySelectorAll('span.tip')[0]
+      const tip = submenuTitle.querySelector('.tip')
       tip.style.transform = isOpen === 'true' ? 'rotate(-180deg)' : null
     }
-    const handle = function (menu, open) {
-      open === 'true' ? showMenu(menu) : hideMenu(menu)
+    const handle = function (menu, expanded) {
+      expanded === 'true' ? showMenu(menu) : hideMenu(menu)
       if (!isTooltipMenu) {
-        showTip(open)
+        showTip(expanded)
       }
     }
-    handle(menu, open)
-    title.addEventListener('click', function () {
-      const currentOpenStatus = menu.getAttribute('aria-expanded')
-      const to = currentOpenStatus === 'true' ? 'false' : 'true'
-      handle(menu, to)
-    })
-  })
+    const expanded = submenuTitle.getAttribute('aria-expanded')
+    handle(chilMenuUl, expanded)
+    submenuTitle.onclick = function () {
+      const currentOpenStatus = submenuTitle.getAttribute('aria-expanded')
+      const expanded = currentOpenStatus === 'true' ? 'false' : 'true'
+      handle(chilMenuUl, expanded)
+    }
+  }
+}
 
-  const menuItemList = document.getElementsByClassName('menu-item')
-  const elements = Array.from(menuItemList)
-  elements.forEach((item, index) => {
-    item.addEventListener('click', function () {
-      if (item.classList.contains('submenu_title')) return
-      if (!item.classList.contains('is-active')) {
-        item.classList.add('is-active')
-      }
-      elements.forEach((el, elIndex) => {
-        if (elIndex !== index) {
-          const active = el.classList.contains('is-active')
-          if (active) {
-            el.classList.remove('is-active')
-          }
-        }
-      })
-    })
-  })
+function getSibing (element) {
+  return element.nextElementSibling
 }
